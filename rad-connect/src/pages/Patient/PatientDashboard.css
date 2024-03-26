@@ -6,7 +6,7 @@
 } */
 
 .container{
-    background-color: aqua;
+    /* background-color: aqua; */
     /* height: calc(100% - 50px); */
     height: 100%;
 }
@@ -16,7 +16,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #964c4c;
+    /* background: #964c4c; */
 
 }
 
@@ -25,12 +25,40 @@
     width: 60vw;
     /* justify-content: flex-start; */
     /* align-items: flex-start; */
-    background-color: #544141;
+    /* background-color: #544141; */
 }
 .personal-info {
 width: 60vw;
 background-color: bisque;
-height: 10px;
+/* height: 10px; */
+display: flex;
+
+
+}
+
+.patient-image{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 30%;
+    border-right: 2px solid var(--grey-light);
+}
+
+.image-circle-box{
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: #9c9999;
+    
+}
+
+.edit-option{
+
+}
+.patient-info{
+    padding: 1rem;
+    
 }
 
 .other-info {
@@ -38,7 +66,7 @@ height: 10px;
     display: flex;
     justify-content: space-evenly;
     /* align-items: center; */
-    background-color:rgb(217, 204, 230);
+    /* background-color:rgb(217, 204, 230); */
     /* height: 60px; */
     padding-top: 1rem;
     padding-bottom: 1rem;
@@ -121,7 +149,7 @@ margin-bottom: -5px;
     background-color: var(--text-white-light);
     padding: 1rem;
     border-radius: 16px;
-    background-color: #d47676;
+    /* background-color: #d47676; */
 }
 
 .lifestyle li{
@@ -155,7 +183,7 @@ margin-bottom: -5px;
     flex-wrap: wrap;
     justify-content: space-evenly;
     /* align-items: center; */
-    background-color: #544141;
+    /* background-color: #544141; */
 
 }
 
