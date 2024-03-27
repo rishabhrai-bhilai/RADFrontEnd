@@ -39,14 +39,14 @@
 .nav-1{
     border-bottom: 3px solid var(--text-blue-dark);
 }
-
+/* 
 .nav-2{
 
 }
 
 .nav-3{
 
-}
+} */
 
 .element-name-filter {
     display: flex;
@@ -60,7 +60,7 @@
     width: 30%;
 }
 
-.filter-type-dropdown{
+/* .filter-type-dropdown{
     
 }
 
@@ -70,7 +70,7 @@
 
 .filter-type-filter-by{
 
-}
+} */
 
 
 
@@ -79,13 +79,13 @@
     margin-top: 2rem;
 }
 
-.report-heading{
+/* .report-heading{
 
 }
 
 .patient-reports-list{
 
-}
+} */
 
 .report-list-box{
     display: flex;
