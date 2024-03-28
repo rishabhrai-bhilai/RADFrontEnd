@@ -5,7 +5,12 @@ import { useUserIdContext } from '../Common/UserIdContext';
 
 function PatientDashboard() {  
 
-  const [patient, setPatient] = useState({});
+  const [patient, setPatient] = useState(() => {
+    // Initialize patient state from localStorage if available
+    const storedPatient = localStorage.getItem('patient');
+    return storedPatient ? JSON.parse(storedPatient) : {};
+  });
+
   const [loading, setLoading] = useState(true);
   const [age, setAge] = useState(null);
   const { data } = useUserIdContext();
@@ -13,8 +18,7 @@ function PatientDashboard() {
   console.log(data);
 
   useEffect(() => {
-    const fetchPatient = async () => {
-      console.log("Hi");
+    const fetchPatient = async () => {      
         try {
             const response = await fetch('http://localhost:8080/teleRadiology/getPatient', {
                 method: 'POST',
@@ -27,9 +31,6 @@ function PatientDashboard() {
                 throw new Error('Failed to fetch patient');
             }
             const patientData = await response.json();
-            setPatient(patientData);
-            setLoading(false);
-            console.log(patientData);
 
             const currentDate = new Date();
             const birthDate = new Date(patientData.dateOfBirth);
@@ -38,9 +39,17 @@ function PatientDashboard() {
             if (currentDate.getMonth() < birthDate.getMonth() || 
               (currentDate.getMonth() === birthDate.getMonth() && currentDate.getDate() < birthDate.getDate())) {
                yearsDiff--;
-            }
+            }                         
 
-             setAge(yearsDiff);                            
+             setAge(yearsDiff);
+             
+             patientData.age=yearsDiff;
+
+             setPatient(patientData);
+             setLoading(false);
+             console.log(patientData);
+
+             localStorage.setItem('patient', JSON.stringify(patientData));
         } catch (error) {
             console.error('Error fetching patient:', error);
             setLoading(false);
@@ -72,7 +81,7 @@ function PatientDashboard() {
                 <p><span className="text-blue-extradark">{patient.firstName}&nbsp;{patient.lastName}</span></p>
                 <p>Email: <span className="text-blue-extradark">{patient.email}</span></p>
                 <p>Phone No: <span className="text-blue-extradark">{patient.phoneNumber}</span></p>
-                <p>Age: <span className="text-blue-extradark">{age}</span></p>
+                <p>Age: <span className="text-blue-extradark">{patient.age}</span></p>
                 <p>Height: <span className="text-blue-extradark">{patient.height}</span></p>
                 <p>Weight: <span className="text-blue-extradark">{patient.weight}</span></p>
                 <p>Blood Group: <span className="text-blue-extradark">{patient.bloodGroup}</span></p>

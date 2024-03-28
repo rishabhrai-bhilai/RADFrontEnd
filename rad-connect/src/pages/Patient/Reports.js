@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useUserIdContext } from '../Common/UserIdContext';
 import "./Reports.css";
+import Navbar from '../../components/navbar/Navbar';
 import imgg from "../../assets/mri_img.png";
 
 function Reports() {
@@ -93,6 +94,7 @@ function Reports() {
 
     return (        
             <section className="home">
+              <Navbar/>
               <div className="patient-report-container">
                 <div className="all-items">
                   <div className="element-name-heading | text-blue-extradark">
