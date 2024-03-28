@@ -6,14 +6,15 @@ import Navbar from './components/navbar/Navbar';
 import ReportUpload from './pages/Lab/ReportUpload';
 import PatientDashboard from './pages/Patient/PatientDashboard';
 import Reports from './pages/Patient/Reports';
+
 function App() {
   return (
-    <div className="App">
-      <Navbar></Navbar>
+    <div className="App">    
       <Routes>
           <Route path="/" element={<Login/>}/>
           {/* <Route path="/patientregistration" element={<PatientRegistrationForm/>}/> */}
           <Route path="/patientdashboard" element={<PatientDashboard/>}/>
+          <Route path="/patientreports" element={<Reports/>}/>
           {/* <Route path="/labprofile" element={<LabProfile/>}/> */}
           {/* <Route path="/doctorprofile" element={<DoctorProfile/>}/> */}
       </Routes>
