@@ -1,0 +1,117 @@
+/* styles.css */
+
+p {
+    font-size: 16px; /* Adjust font size as needed */
+    font-family: Arial, sans-serif; /* Specify font family */
+    color: #333; /* Set text color */
+    margin: 0 0 10px 0; /* Adjust margins (top, right, bottom, left) */
+    padding: 0; 
+    font-size: 30px;
+  }
+  
+  .login-container {
+      display: flex;
+      width: 20%;
+      /* width: 300px; */
+      margin: 0 auto;
+      /* padding: 20px; */
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #fafcff;
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+    }
+    
+    .login-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    /* .role-selection {
+      display: block;
+      margin-bottom: 5px;
+      padding: 10px;
+      background-color: transparent;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+      align-items: center;
+    } */
+    
+    .login-form label:hover {
+      cursor: pointer;
+      background-color: #f0f0f0;
+      border-radius: 5px;
+    }
+  
+    /* Login.css */
+  
+    .role-link {
+      display: flex;
+      justify-content: space-between;
+    }
+    .role {
+      padding-left: 10px;
+    }
+  .role-link {
+      text-decoration: none; 
+      color: #036eff; 
+      cursor: pointer;
+      /* display: block; */
+      /* margin-bottom: 5px; */
+      padding: 10px;
+      background-color: #ffffff;
+      border: 2px solid #036eff;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 18px;
+      padding-left: 20px;
+      width: 80%; 
+      /* height: 20%; */
+      line-height: 1.5;
+      text-align: left;
+      padding-left: 10px;
+      transition: 0.5s;
+      margin-left: 20px
+    }
+  
+    body {
+      /* background-image: linear-gradient(180deg, #f7f700, white); */
+      background-color: #e8f1ff;
+    }
+    
+    .role-link:hover {
+      text-decoration: none; /* Remove underline on hover */
+      border: 2px solid #036eff;
+      background-color: #dbebff;
+    }
+  
+    .selected-role-container {
+      display: flex;
+      padding-right: 50px;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+  
+    .left {
+      width: 15%;
+      margin: 0;
+      padding: 0;
+      background-color: #036eff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+    }
+    .extra {
+      margin: 0;
+      padding: 0;
+      color: #036eff;
+      /* border: 1px solid #000; */
+    }
+  
+    .heading {
+      padding: 20px;
+    }

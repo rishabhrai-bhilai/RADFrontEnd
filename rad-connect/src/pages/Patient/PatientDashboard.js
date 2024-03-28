@@ -1,11 +1,11 @@
 import React from "react";
 import "../Patient/PatientDashboard.css";
+import Navbar from "../../components/navbar/Navbar";
 
-function PatientDashboard() {
+function PatientDashboard() {  
   return (
     <section className="home">
-      
-
+      <Navbar/>
       <div className="container">
         <div className="box">
           

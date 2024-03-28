@@ -3,14 +3,20 @@ import React, { useState } from 'react';
 import '../navbar/navbar.css'; // Import your CSS file
 import '../../../src/index.css';
 import logo from '../../assets/final1.png';
+import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
   const [sidebarClosed, setSidebarClosed] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
+  const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setSidebarClosed(!sidebarClosed);
   };
+
+  const navigateToNewComponent=()=>{
+    navigate('/patientreports')
+  }
 
   const handleSearchClick = () => {
     const body = document.querySelector("body"); // Define 'body'
@@ -18,7 +24,6 @@ function Navbar() {
     const sidebar = body.querySelector(".sidebar");
     sidebar.classList.remove("close");
 };
-
 
   const handleModeSwitch = () => {
     const body = document.querySelector("body");
@@ -65,7 +70,7 @@ function Navbar() {
             <li className="nav-link">
               <a href="#">
                 <i className="bx bx-chart icon"></i>
-                <span className="text nav-text">Revenue</span>
+                <span className="text nav-text" onClick ={navigateToNewComponent}>Reports</span>
               </a>
             </li>
             <li className="nav-link">
