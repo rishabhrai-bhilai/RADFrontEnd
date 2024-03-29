@@ -57,7 +57,7 @@ const CredentialForm = ({ onSubmit }) => {
         if(data === 'Patient')
         navigate('/patientdashboard')
         if(data === 'Lab')
-        navigate('/labprofile')
+        navigate('/labdashboard')
         if(data === 'Doctor')
         navigate('/doctorprofile')  
 

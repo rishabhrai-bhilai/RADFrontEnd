@@ -22,6 +22,7 @@ function App() {
           {/* <Route path="/patientregistration" element={<PatientRegistrationForm/>}/> */}
           <Route path="/patientdashboard" element={<PatientDashboard/>}/>
           <Route path="/patientreports" element={<Reports/>}/>
+          <Route path="/labdashboard" element={<ReportUpload/>}/>
           
           {/* <Route path="/labprofile" element={<LabProfile/>}/> */}
           {/* <Route path="/doctorprofile" element={<DoctorProfile/>}/> */}

@@ -67,10 +67,10 @@ function Navbar() {
                 <span className="text nav-text">Dashboard</span>
               </a>
             </li>
-            <li className="nav-link">
+            <li className="nav-link" onClick ={navigateToNewComponent}>
               <a href="#">
                 <i className="bx bx-chart icon"></i>
-                <span className="text nav-text" onClick ={navigateToNewComponent}>Reports</span>
+                <span className="text nav-text" >Reports</span>
               </a>
             </li>
             <li className="nav-link">

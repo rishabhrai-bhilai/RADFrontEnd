@@ -1,8 +1,11 @@
 import React from "react";
+import Navbar from '../../components/navbar/Navbar';
 
 import LabUploadForm from "../../components/form/LabUploadForm";
 function ReportUpload() {
   return (
+    <>
+      <Navbar></Navbar>
     <section class="home">
       <div className="parent-container">
         <div className="all-items">
@@ -14,6 +17,7 @@ function ReportUpload() {
         </div>
       </div>
     </section>
+    </>
   );
 }
 
