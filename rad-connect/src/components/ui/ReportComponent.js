@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Modal from "./Modal";
-import imgg from '../../assets/mri_img.png'
+import { useUserIdContext } from "../../pages/Common/UserIdContext";
+import imgg from "../../assets/mri_img.png";
 import ButtonComponent from "./ButtonComponent";
-import './ReportComponent.css';
+import "./ReportComponent.css";
 
 function ReportComponent() {
-
-    const [showModal, setShowModal] = useState(false);
-
+  const [showModal, setShowModal] = useState(false);
+  const [patient, setPatient] = useState(null);
+  const { data } = useUserIdContext();
+  
   const openModal = () => {
     setShowModal(true);
     // console.log("hh");
@@ -15,6 +17,59 @@ function ReportComponent() {
 
   const closeModal = () => {
     setShowModal(false);
+  };
+
+  const [reports, setReports] = useState([]);
+  useEffect(() => {
+    if (data) {
+      fetchPatient(data);
+    }
+  }, [data]);
+
+  const fetchPatient = async (data) => {
+    try {
+      const response = await fetch(
+        "http://192.168.0.108:8080/teleRadiology/getPatient",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: data }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch patient");
+      }
+      const patientData = await response.json();
+      setPatient(patientData);
+      fetchReports(patientData.userId);
+    } catch (error) {
+      console.error("Error fetching patient:", error);
+    }
+  };
+
+  const fetchReports = async (patientId) => {
+    try {
+      const response = await fetch(
+        "http://192.168.0.108:8080/teleRadiology/getPatientReports",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: patientId }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch reports");
+      }
+      const responseData = await response.json();
+      setReports(responseData || []); // Ensure reports is always an array
+    } catch (error) {
+      console.error("Error fetching reports:", error);
+    }
   };
 
   return (
@@ -39,293 +94,41 @@ function ReportComponent() {
                 <div>buttons</div>
               </div>
             </li>
-            <li>
-              <div className="report-list-box | report-data">
-                <div className="report-image">
-                  <div className="image-box">
-                    <img src={imgg} alt="logo" />
-                  </div>
-                </div>
-                <div className="">9345688</div>
-                <div className="">Full Body MRI</div>
-                <div className="">CT Scan</div>
-                <div className="">23/77/2024</div>
-
-                <div className="report-button-container">
-                  <div className="icon-buttons">
-                    <div className="icon-box">
-                      <i class="bx bxs-bell-ring"></i>
-                    </div>
-                    <div className="icon-box">
-                      <ButtonComponent openModal={openModal} />
-                      {showModal && <Modal closeModal={closeModal} />}
-                    </div>
-                    <div className="icon-box">
-                      <i class="bx bxs-download"></i>
-                    </div>
-                    <div className="icon-box">
-                      <i class="bx bx-trash"></i>
+            {reports.map((report) => (
+              <li>
+                <div className="report-list-box | report-data">
+                  <div className="report-image">
+                    <div className="image-box">
+                      <img
+                        src="D:/HAD/teleradio/public/logo192.png"
+                        alt="logo"
+                      />
                     </div>
                   </div>
-                </div>
-              </div>
-            </li>
-
-            <li>
-              <div className="report-list-box | report-data">
-                <div className="report-image">
-                  <div className="image-box">
-                    <img src={imgg} alt="logo" />
-                  </div>
-                </div>
-                <div className="">9345688</div>
-                <div className="">Full Body MRI</div>
-                <div className="">CT Scan</div>
-                <div className="">23/77/2024</div>
-
-                <div className="report-button-container">
-                  <div className="icon-buttons">
-                    <div className="icon-box">
-                      <i class="bx bxs-bell-ring"></i>
-                    </div>
-                    <div className="icon-box">
-                      <ButtonComponent openModal={openModal} />
-                      {showModal && <Modal closeModal={closeModal} />}
-                    </div>
-                    <div className="icon-box">
-                      <i class="bx bxs-download"></i>
-                    </div>
-                    <div className="icon-box">
-                      <i class="bx bx-trash"></i>
+                  <div className="">{report.id}</div>
+                  <div className="">{report.reportType}</div>
+                  <div className="">{report.reportType}</div>
+                  <div className="">{report.dateOfIssue}</div>
+                  <div className="report-button-container">
+                    <div className="icon-buttons">
+                      <div className="icon-box">
+                        <i class="bx bxs-bell-ring"></i>
+                      </div>
+                      <div className="icon-box">
+                        <ButtonComponent openModal={openModal} />
+                        {showModal && <Modal closeModal={closeModal} />}
+                      </div>
+                      <div className="icon-box">
+                        <i class="bx bxs-download"></i>
+                      </div>
+                      <div className="icon-box">
+                        <i class="bx bx-trash"></i>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </li>
-
-            <li>
-              <div className="report-list-box | report-data">
-                <div className="report-image">
-                  <div className="image-box">
-                    <img src={imgg} alt="logo" />
-                  </div>
-                </div>
-                <div className="">9345688</div>
-                <div className="">Full Body MRI</div>
-                <div className="">CT Scan</div>
-                <div className="">23/77/2024</div>
-
-                <div className="report-button-container">
-                  <div className="icon-buttons">
-                    <div className="icon-box">
-                      <i class="bx bxs-bell-ring"></i>
-                    </div>
-                    <div className="icon-box">
-                      <ButtonComponent openModal={openModal} />
-                      {showModal && <Modal closeModal={closeModal} />}
-                    </div>
-                    <div className="icon-box">
-                      <i class="bx bxs-download"></i>
-                    </div>
-                    <div className="icon-box">
-                      <i class="bx bx-trash"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
-
-            <li>
-              <div className="report-list-box | report-data">
-                <div className="report-image">
-                  <div className="image-box">
-                    <img src={imgg} alt="logo" />
-                  </div>
-                </div>
-                <div className="">9345688</div>
-                <div className="">Full Body MRI</div>
-                <div className="">CT Scan</div>
-                <div className="">23/77/2024</div>
-
-                <div className="report-button-container">
-                  <div className="icon-buttons">
-                    <div className="icon-box">
-                      <i class="bx bxs-bell-ring"></i>
-                    </div>
-                    <div className="icon-box">
-                      <ButtonComponent openModal={openModal} />
-                      {showModal && <Modal closeModal={closeModal} />}
-                    </div>
-                    <div className="icon-box">
-                      <i class="bx bxs-download"></i>
-                    </div>
-                    <div className="icon-box">
-                      <i class="bx bx-trash"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
-
-            <li>
-              <div className="report-list-box | report-data">
-                <div className="report-image">
-                  <div className="image-box">
-                    <img src={imgg} alt="logo" />
-                  </div>
-                </div>
-                <div className="">9345688</div>
-                <div className="">Full Body MRI</div>
-                <div className="">CT Scan</div>
-                <div className="">23/77/2024</div>
-
-                <div className="report-button-container">
-                  <div className="icon-buttons">
-                    <div className="icon-box">
-                      <i class="bx bxs-bell-ring"></i>
-                    </div>
-                    <div className="icon-box">
-                      <ButtonComponent openModal={openModal} />
-                      {showModal && <Modal closeModal={closeModal} />}
-                    </div>
-                    <div className="icon-box">
-                      <i class="bx bxs-download"></i>
-                    </div>
-                    <div className="icon-box">
-                      <i class="bx bx-trash"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
-
-            <li>
-              <div className="report-list-box | report-data">
-                <div className="report-image">
-                  <div className="image-box">
-                    <img src={imgg} alt="logo" />
-                  </div>
-                </div>
-                <div className="">9345688</div>
-                <div className="">Full Body MRI</div>
-                <div className="">CT Scan</div>
-                <div className="">23/77/2024</div>
-
-                <div className="report-button-container">
-                  <div className="icon-buttons">
-                    <div className="icon-box">
-                      <i class="bx bxs-bell-ring"></i>
-                    </div>
-                    <div className="icon-box">
-                      <ButtonComponent openModal={openModal} />
-                      {showModal && <Modal closeModal={closeModal} />}
-                    </div>
-                    <div className="icon-box">
-                      <i class="bx bxs-download"></i>
-                    </div>
-                    <div className="icon-box">
-                      <i class="bx bx-trash"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
-
-            <li>
-              <div className="report-list-box | report-data">
-                <div className="report-image">
-                  <div className="image-box">
-                    <img src={imgg} alt="logo" />
-                  </div>
-                </div>
-                <div className="">9345688</div>
-                <div className="">Full Body MRI</div>
-                <div className="">CT Scan</div>
-                <div className="">23/77/2024</div>
-
-                <div className="report-button-container">
-                  <div className="icon-buttons">
-                    <div className="icon-box">
-                      <i class="bx bxs-bell-ring"></i>
-                    </div>
-                    <div className="icon-box">
-                      <ButtonComponent openModal={openModal} />
-                      {showModal && <Modal closeModal={closeModal} />}
-                    </div>
-                    <div className="icon-box">
-                      <i class="bx bxs-download"></i>
-                    </div>
-                    <div className="icon-box">
-                      <i class="bx bx-trash"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
-
-            <li>
-              <div className="report-list-box | report-data">
-                <div className="report-image">
-                  <div className="image-box">
-                    <img src={imgg} alt="logo" />
-                  </div>
-                </div>
-                <div className="">9345688</div>
-                <div className="">Full Body MRI</div>
-                <div className="">CT Scan</div>
-                <div className="">23/77/2024</div>
-
-                <div className="report-button-container">
-                  <div className="icon-buttons">
-                    <div className="icon-box">
-                      <i class="bx bxs-bell-ring"></i>
-                    </div>
-                    <div className="icon-box">
-                      <ButtonComponent openModal={openModal} />
-                      {showModal && <Modal closeModal={closeModal} />}
-                    </div>
-                    <div className="icon-box">
-                      <i class="bx bxs-download"></i>
-                    </div>
-                    <div className="icon-box">
-                      <i class="bx bx-trash"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
-
-            <li>
-              <div className="report-list-box | report-data">
-                <div className="report-image">
-                  <div className="image-box">
-                    <img src={imgg} alt="logo" />
-                  </div>
-                </div>
-                <div className="">9345688</div>
-                <div className="">Full Body MRI</div>
-                <div className="">CT Scan</div>
-                <div className="">23/77/2024</div>
-
-                <div className="report-button-container">
-                  <div className="icon-buttons">
-                    <div className="icon-box">
-                      <i class="bx bxs-bell-ring"></i>
-                    </div>
-                    <div className="icon-box">
-                      <ButtonComponent openModal={openModal} />
-                      {showModal && <Modal closeModal={closeModal} />}
-                    </div>
-                    <div className="icon-box">
-                      <i class="bx bxs-download"></i>
-                    </div>
-                    <div className="icon-box">
-                      <i class="bx bx-trash"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
+              </li>
+            ))}{" "}
           </ul>
         </div>
       </div>

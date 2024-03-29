@@ -1,5 +1,11 @@
+
 // import React from "react";
-import "../Patient/Reports.css";
+// import "../Patient/Reports.css";
+
+
+import { useUserIdContext } from '../Common/UserIdContext';
+import "./Reports.css";
+import Navbar from '../../components/navbar/Navbar';
 import imgg from "../../assets/mri_img.png";
 import React, { useState } from "react";
 import ButtonComponent from "../../components/ui/ButtonComponent";
@@ -7,6 +13,8 @@ import Modal from "../../components/ui/Modal";
 import ReportComponent from "../../components/ui/ReportComponent";
 
 function Reports() {
+
+
   
 
   return (
@@ -35,3 +43,7 @@ function Reports() {
 }
 
 export default Reports;
+
+  
+
+  
