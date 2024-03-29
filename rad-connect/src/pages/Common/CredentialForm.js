@@ -24,13 +24,13 @@ const CredentialForm = ({ onSubmit }) => {
       let role = 0;
 
       if (data === 'Patient')
-      role = 1;
+      role = 'ROLE_PATIENT';
       if (data === 'Doctor')
-      role = 2;
+      role = 'ROLE_DOCTOR';
       if (data === 'Radiologist')
-      role = 3;
+      role = 'ROLE_RADIOLOGIST';
       if (data === 'Lab')
-      role = 4;
+      role = 'ROLE_LAB';
 
       const requestBody = {
         email: username,
@@ -38,7 +38,7 @@ const CredentialForm = ({ onSubmit }) => {
         role: role
       };
       
-      const response = await fetch('http://192.168.0.108:8080/teleRadiology/loginCredentials', {
+      const response = await fetch('http://localhost:8080/teleRadiology/loginCredentials', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

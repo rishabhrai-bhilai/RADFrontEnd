@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "./Modal";
 import { useUserIdContext } from "../../pages/Common/UserIdContext";
 import imgg from "../../assets/mri_img.png";
@@ -7,29 +7,25 @@ import "./ReportComponent.css";
 
 function ReportComponent() {
   const [showModal, setShowModal] = useState(false);
-  const [patient, setPatient] = useState(null);
   const { data } = useUserIdContext();
-  
+  const [reports, setReports] = useState([]);
+  const [patient, setPatient] = useState(-1);
+  const [images, setImages] = useState([]);
+  const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(true); // Loading state
+
   const openModal = () => {
     setShowModal(true);
-    // console.log("hh");
   };
 
   const closeModal = () => {
     setShowModal(false);
   };
 
-  const [reports, setReports] = useState([]);
-  useEffect(() => {
-    if (data) {
-      fetchPatient(data);
-    }
-  }, [data]);
-
   const fetchPatient = async (data) => {
     try {
       const response = await fetch(
-        "http://192.168.0.108:8080/teleRadiology/getPatient",
+        "http://localhost:8080/teleRadiology/getPatient",
         {
           method: "POST",
           headers: {
@@ -43,7 +39,6 @@ function ReportComponent() {
       }
       const patientData = await response.json();
       setPatient(patientData);
-      fetchReports(patientData.userId);
     } catch (error) {
       console.error("Error fetching patient:", error);
     }
@@ -52,7 +47,7 @@ function ReportComponent() {
   const fetchReports = async (patientId) => {
     try {
       const response = await fetch(
-        "http://192.168.0.108:8080/teleRadiology/getPatientReports",
+        "http://localhost:8080/teleRadiology/getPatientReports",
         {
           method: "POST",
           headers: {
@@ -66,11 +61,52 @@ function ReportComponent() {
         throw new Error("Failed to fetch reports");
       }
       const responseData = await response.json();
-      setReports(responseData || []); // Ensure reports is always an array
+      setReports(responseData.reports || []);
     } catch (error) {
       console.error("Error fetching reports:", error);
     }
   };
+
+  const getReportImages = async (ids) => {
+    let arr = [];
+    try {
+      const fetchPromises = ids.map(async (id) => {
+        const response = await fetch(
+          `http://192.168.0.102:8080/images/getReport/${id}`
+        );
+        if (!response.ok) {
+          throw new Error(`Failed to fetch image for report ID ${id}`);
+        }
+        const imageData = await response.json();
+        arr.push(imageData.report);
+      });
+      await Promise.all(fetchPromises); // Wait for all fetches to complete
+      setImages(arr);
+      setLoading(false); // Set loading to false after images are fetched
+    } catch (error) {
+      console.error("Error fetching report images:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPatient(data);
+  }, []);
+
+  useEffect(() => {
+    fetchReports(patient.id);
+  }, [patient]);
+
+  useEffect(() => {
+    let ids = [];
+    reports.forEach((element) => {
+      ids.push(element.id);
+    });
+    getReportImages(ids);
+  }, [reports]);
+
+  useEffect(() => {
+    setShow(true);
+  }, [images]);
 
   return (
     <div>
@@ -94,41 +130,43 @@ function ReportComponent() {
                 <div>buttons</div>
               </div>
             </li>
-            {reports.map((report) => (
-              <li>
-                <div className="report-list-box | report-data">
-                  <div className="report-image">
-                    <div className="image-box">
-                      <img
-                        src="D:/HAD/teleradio/public/logo192.png"
-                        alt="logo"
-                      />
+            {show &&
+              (loading ? (
+                <div>Loading...</div> // Display loading indicator
+              ) : (
+                images.map((image, index) => (
+                  <li key={reports[index].id}>
+                    <div className="report-list-box | report-data">
+                      <div className="report-image">
+                        <div className="image-box">
+                          <img src={image} alt="Report" />
+                        </div>
+                      </div>
+                      <div className="">{reports[index].id}</div>
+                      <div className="">{reports[index].reportType}</div>
+                      <div className="">{reports[index].reportType}</div>
+                      <div className="">{reports[index].dateOfIssue}</div>
+                      <div className="report-button-container">
+                        <div className="icon-buttons">
+                          <div className="icon-box">
+                            <i className="bx bxs-bell-ring"></i>
+                          </div>
+                          <div className="icon-box">
+                            <ButtonComponent openModal={openModal} />
+                            {showModal && <Modal closeModal={closeModal} />}
+                          </div>
+                          <div className="icon-box">
+                            <i className="bx bxs-download"></i>
+                          </div>
+                          <div className="icon-box">
+                            <i className="bx bx-trash"></i>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div className="">{report.id}</div>
-                  <div className="">{report.reportType}</div>
-                  <div className="">{report.reportType}</div>
-                  <div className="">{report.dateOfIssue}</div>
-                  <div className="report-button-container">
-                    <div className="icon-buttons">
-                      <div className="icon-box">
-                        <i class="bx bxs-bell-ring"></i>
-                      </div>
-                      <div className="icon-box">
-                        <ButtonComponent openModal={openModal} />
-                        {showModal && <Modal closeModal={closeModal} />}
-                      </div>
-                      <div className="icon-box">
-                        <i class="bx bxs-download"></i>
-                      </div>
-                      <div className="icon-box">
-                        <i class="bx bx-trash"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            ))}{" "}
+                  </li>
+                ))
+              ))}
           </ul>
         </div>
       </div>
