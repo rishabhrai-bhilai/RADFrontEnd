@@ -1,0 +1,61 @@
+.lab-upload-form-container{
+    /* background: #b98c8c; */
+    /* border: 2px solid red; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    padding: 1rem 1rem;
+    color: var(--text-blue-extradark);
+}
+
+
+.lab-upload-form-box {
+    min-width: 40%;
+    padding: 1rem;
+    background-color: var(--white-light);
+    /* border: 1px solid var(--text-blue-dark); */
+    
+}
+
+.lab-upload-form-item{
+    width: 100%;
+    /* border:2px solid blue; */
+    margin-bottom: 0.6rem;
+}
+
+.lab-upload-form-email,.lab-upload-form-remarks{
+    width: 100%;
+    display: block;
+    margin-bottom: 0.2rem;
+   
+    /* border: 2px solid yellowgreen; */
+}
+
+textarea,input{
+    line-height: 2;
+    border: 1px solid var(--grey-light);
+}
+
+
+.lab-upload-form-btn-submit{
+    padding: 0.6rem 1rem;
+    /* margin: 1rem; */
+    margin-top: 1rem;
+    margin-bottom: 0rem;
+  display: block;
+  width: 100%;
+  background-color: rgba(5, 25, 96, 1);
+  /* background-color: var(--blue-dark); */
+  cursor: pointer;
+    text-decoration: none;
+    border: 0;
+    font-size: var(--fs-button);
+    letter-spacing: 2px;
+    line-height: 1.5;
+    color: var(--text-white-light);
+}
+
+
+

@@ -1,0 +1,81 @@
+
+
+
+/* FILE UPLOAD */
+
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; 
+  /* height: 400px; */
+  border: 1px solid var(--grey-light);
+  padding: 1.5rem 2rem;
+}
+
+.active {
+  background-color: #5f5959;
+}
+
+button.drop-file-btn {
+  padding: 0.6rem 1rem;
+  margin: 1rem;
+  margin-bottom: 0rem;
+  display: block;
+  width: 100%;
+  background-color: rgba(45, 156, 219, 1);
+  /* background-color: var(--blue-dark); */
+  cursor: pointer;
+    text-decoration: none;
+    border: 0;
+    font-size: var(--fs-button);
+    letter-spacing: 2px;
+    line-height: 1;
+    color: var(--text-white-light);
+}
+
+
+/* .list-item {
+  display: flex;
+  padding: 0;
+  margin: 8px 0;
+  min-width: 300px;
+  font-size: 22px;
+  background-color: #d4d2d2;
+  cursor: grab;
+  border-radius: 10px;
+} */
+
+/* .list-item > h3 {
+  padding: 10px;
+  margin: 0;
+} */
+
+/* .list-item > span {
+  margin-right: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  border-right: 2px solid white;
+  padding: 10px;
+  padding-right: 16px;
+} */
+
+
+
+.next-position {
+  border: 2px solid #34d44f;
+  opacity: 0.2;
+}
+
+
+
+.dropzone  span{
+    font-size: 0.8rem;
+  }
+
+  .dropzone .bx{
+    font-size: 3rem;
+    color: var(--blue-dark);
+    color: rgba(45, 156, 219, 1);
+  }
+  

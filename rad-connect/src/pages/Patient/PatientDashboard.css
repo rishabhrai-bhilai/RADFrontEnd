@@ -5,10 +5,17 @@
     background: #ca9b9b;
 } */
 
-.container{
+.Patient-dashboard-container{
     /* background-color: aqua; */
     /* height: calc(100% - 50px); */
     height: 100%;
+    font-size: 1rem;
+    font-size: 0.8rem;
+}
+
+.Patient-dashboard-container .bx{
+    font-size: 1rem;
+    font-weight: var(--fw-bold);
 }
 
 .box {
@@ -22,64 +29,32 @@
 
 .dashboard-heading{
     /* display: flex; */
-    width: 60vw;
+    /* width: 60vw; */
     /* justify-content: flex-start; */
     /* align-items: flex-start; */
     /* background-color: #544141; */
 }
-.personal-info {
-width: 60vw;
-background-color: bisque;
-/* height: 10px; */
-display: flex;
-
-
-}
-
-.patient-image{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    width: 30%;
-    border-right: 2px solid var(--grey-light);
-}
-
-.image-circle-box{
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    background: #9c9999;
-    
-}
-
-.edit-option{
-
-}
-.patient-info{
-    padding: 1rem;
-    
-}
 
 .other-info {
-    width: 60vw;
+    width: 100%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     /* align-items: center; */
     /* background-color:rgb(217, 204, 230); */
     /* height: 60px; */
     padding-top: 1rem;
-    padding-bottom: 1rem;
+    /* padding-bottom: 1rem; */
 }
 
 
 .medical {
-width: 55%;
+width: 57%;
 background-color: var(--text-white-light);
 padding: 1rem;
 border-radius: 16px;
 
 }
+
 
 
 .medical  li {
@@ -145,15 +120,20 @@ margin-bottom: -5px;
 
 
 .lifestyle {
-    width: 40%;
+    width: 41%;
     background-color: var(--text-white-light);
     padding: 1rem;
     border-radius: 16px;
+    
     /* background-color: #d47676; */
+}
+.lifestyle .lifestyle-topic {
+    margin-bottom: 1rem;
+    color: var(--text-blue-extradark);
 }
 
 .lifestyle li{
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
 }
 
 .lifestyle li:nth-child(1) {
@@ -172,9 +152,18 @@ margin-bottom: -5px;
 }
 
 
+.lifestyle-list-item .topic{
+    display: flex;
+    /* align-items: center; */
+}
+
+.lifestyle-list-item .bx{
+    font-size: 1rem;
+    margin-right: 0.5rem;
+}
 
 .topic {
-    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
     padding-left: 1.2rem;
     color: var(--text-blue-extradark);
 }
@@ -191,7 +180,7 @@ margin-bottom: -5px;
     color: var(--text-blue-dark);
     background-color:rgba(3, 110, 255, 0.2);
     border-radius: 16px;
-    font-size: 0.8rem;
+    font-size: 0.6rem;
     min-width: 25%;
     padding: 0.2rem 0.4rem;
     text-align: center;
@@ -202,7 +191,30 @@ margin-bottom: -5px;
 }
 
 .lifestyle-list-item{
-    padding: 1rem;
+    padding: 0.5rem;
     border-radius: 16px;
 
+}
+
+
+
+
+/* Common Values  */
+
+.medical .topic, .lifestyle-topic{
+    font-size: 1rem;
+}
+
+.medical, .lifestyle {
+    overflow: auto;
+    height: 400px;
+}
+
+.medical::-webkit-scrollbar, .lifestyle::-webkit-scrollbar {
+   display: none;
+}
+
+.medical, .lifestyle {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }

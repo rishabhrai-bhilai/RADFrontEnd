@@ -1,0 +1,98 @@
+
+
+
+.dashboard-heading{
+    /* display: flex; */
+    /* width: 60vw; */
+    /* justify-content: flex-start; */
+    /* align-items: flex-start; */
+    /* background-color: #544141; */
+}
+.personal-info {
+width: 100%;
+border-radius: 16px;
+background-color: var(--white-light);
+/* height: 10px; */
+display: flex;
+
+
+}
+
+.patient-image{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    /* width: 30%; */
+    flex: 2;
+    border-right: 2px solid var(--grey-light);
+    /* background-color: #9c9999; */
+}
+
+.image-circle-box{
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    /* background: #9c9999; */
+    
+}
+
+img{
+    width: 100%;
+    object-fit: contain;
+}
+
+.edit-option{
+
+}
+.patient-info{
+    padding: 1rem;
+    flex: 8;
+    letter-spacing: 1px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    /* background-color: rgb(117, 90, 55); */
+    
+}
+
+.patient-info-name{
+    font-size: 1.5rem;
+    margin-bottom: 0.2rem;
+    letter-spacing: 1px;
+    /* width: 100%; */
+    /* background-color: aqua; */
+    font-weight: var(--fw-bold);
+}
+.patient-info--attribute-container{
+    display: flex;
+    /* flex-direction: column; */
+    flex-wrap: wrap;
+}
+
+.patient-info--attribute{
+    display: flex;
+    margin-top: 0.3rem;
+    /* background-color: aquamarine; */
+    width: 40%;
+}
+
+.patient-info--attribute > div{
+    min-width: 100px;
+
+
+    /* background-color: rgb(134, 104, 64); */
+}
+
+.patient-info--attribute .extra-margin{
+    margin-left: 1rem;
+    
+}
+
+
+
+
+/* .patient-info span{
+
+    margin-left: 1rem;
+} */

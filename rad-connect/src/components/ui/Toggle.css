@@ -1,0 +1,30 @@
+.toggle-container {
+    display: inline-block;
+    position: relative;
+    width: 40px;
+    height: 20px;
+    border-radius: 20px;
+    background-color: #ccc;
+    cursor: pointer;
+  }
+  
+  .slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    /* background-color: #fff; */
+    transition: transform 0.3s ease, background-color 0.3s ease; /* Added background-color transition */
+  }
+  
+  .slider.active {
+    transform: translateX(20px);
+    background-color: #28a745; /* Green color when active */
+  }
+  
+  .slider:not(.active) {
+    background-color: #EB5757; /* Red color when inactive */
+  }
+  
