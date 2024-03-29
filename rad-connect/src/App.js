@@ -14,12 +14,15 @@ import PatientInformation from './pages/Doctor/PatientInformation';
 
 function App() {
   return (
-    <div className="App">    
+    <div className="App">   
+
+    
       <Routes>
           <Route path="/" element={<Login/>}/>
           {/* <Route path="/patientregistration" element={<PatientRegistrationForm/>}/> */}
           <Route path="/patientdashboard" element={<PatientDashboard/>}/>
           <Route path="/patientreports" element={<Reports/>}/>
+          
           {/* <Route path="/labprofile" element={<LabProfile/>}/> */}
           {/* <Route path="/doctorprofile" element={<DoctorProfile/>}/> */}
       </Routes>
