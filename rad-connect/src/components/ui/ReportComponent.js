@@ -12,10 +12,12 @@ function ReportComponent() {
   const [patient, setPatient] = useState(-1);
   const [images, setImages] = useState([]);
   const [show, setShow] = useState(false);
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(true); // Loading 
+  const [reportIdInModal,setReportIdInModal]=useState(null);
 
-  const openModal = () => {
+  const openModal = (reportId) => {
     setShowModal(true);
+    setReportIdInModal(reportId);
   };
 
   const closeModal = () => {
@@ -62,6 +64,7 @@ function ReportComponent() {
       }
       const responseData = await response.json();
       setReports(responseData.reports || []);
+      console.log(responseData.reports);
     } catch (error) {
       console.error("Error fetching reports:", error);
     }
@@ -72,7 +75,7 @@ function ReportComponent() {
     try {
       const fetchPromises = ids.map(async (id) => {
         const response = await fetch(
-          `http://192.168.0.102:8080/images/getReport/${id}`
+          `http://192.168.0.105:8080/images/getReport/${id}`
         );
         if (!response.ok) {
           throw new Error(`Failed to fetch image for report ID ${id}`);
@@ -152,8 +155,10 @@ function ReportComponent() {
                             <i className="bx bxs-bell-ring"></i>
                           </div>
                           <div className="icon-box">
-                            <ButtonComponent openModal={openModal} />
-                            {showModal && <Modal closeModal={closeModal} />}
+                            <ButtonComponent openModal={() => openModal(reports[index].id)} />
+                            {showModal && reportIdInModal === reports[index].id && ( // Check if showModal is true and the report id matches
+              <Modal closeModal={closeModal} reportId={reportIdInModal} /> // Pass report id to Modal
+            )}
                           </div>
                           <div className="icon-box">
                             <i className="bx bxs-download"></i>
