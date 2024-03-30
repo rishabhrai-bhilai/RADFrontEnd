@@ -8,6 +8,7 @@ import PatientDashboard from './pages/Patient/PatientDashboard';
 import Reports from './pages/Patient/Reports';
 import DoctorDashboard from './pages/Doctor/DoctorDashboard';
 import PatientInformation from './pages/Doctor/PatientInformation';
+import ChatPopup from './components/ui/ChatPopup';
 
 
 
@@ -18,7 +19,7 @@ function App() {
 
     
       <Routes>
-          <Route path="/" element={<Login/>}/>
+          <Route path="/" element={<PatientDashboard/>}/>
           {/* <Route path="/patientregistration" element={<PatientRegistrationForm/>}/> */}
           <Route path="/patientdashboard" element={<PatientDashboard/>}/>
           <Route path="/patientreports" element={<Reports/>}/>
@@ -27,6 +28,7 @@ function App() {
           {/* <Route path="/labprofile" element={<LabProfile/>}/> */}
           {/* <Route path="/doctorprofile" element={<DoctorProfile/>}/> */}
       </Routes>
+      <ChatPopup></ChatPopup>
     </div>
     // <div className="App">
     //   {/* <Navbar></Navbar> */}
