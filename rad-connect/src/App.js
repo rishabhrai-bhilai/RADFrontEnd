@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/navbar/Navbar'; 
 import ReportUpload from './pages/Lab/ReportUpload';
 import PatientDashboard from './pages/Patient/PatientDashboard';
+import PatientRegistration from './pages/Patient/PatientRegistration';
 import Reports from './pages/Patient/Reports';
 import DoctorDashboard from './pages/Doctor/DoctorDashboard';
 import PatientInformation from './pages/Doctor/PatientInformation';
@@ -20,7 +21,7 @@ function App() {
     
       <Routes>
           <Route path="/" element={<Login/>}/>
-          {/* <Route path="/patientregistration" element={<PatientRegistrationForm/>}/> */}
+          <Route path="/patientregistration" element={<PatientRegistration/>}/>
           <Route path="/patientdashboard" element={<PatientDashboard/>}/>
           <Route path="/patientreports" element={<Reports/>}/>
           <Route path="/labdashboard" element={<ReportUpload/>}/>

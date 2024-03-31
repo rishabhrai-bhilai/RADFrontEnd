@@ -1,0 +1,149 @@
+.formHeadings {
+    /* background-color: #007bff; */
+    display: flex;
+}
+
+.headings {
+    flex: 1;
+    background-color: #d4e2f5;
+    border: 1px solid black;
+    text-align: center;
+    padding: 10px;
+}
+
+.headings-true {
+    flex: 1;
+    background-color: #6fcf97;
+    border: 1px solid black;
+    text-align: center;
+    padding: 10px;
+}
+
+/* .personalInfoForm {
+    display: flex;
+    flex-direction: column;
+} */
+
+.item label {
+    font-weight: bold;
+    font-size: 20px;
+    /* margin-bottom: 5px; */   
+}
+
+.item input {
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.item select {
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 200%;
+    text-align: center;
+    padding: 2%;
+}
+
+.threePartRow, .onePartRow, .fourPartRow{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2%;
+}
+
+.item {
+    display: flex;
+    width: 30%;
+    flex-direction: column;
+}
+
+.onePartRow div {
+    width: 97%;
+}
+
+.fourPartRow div {
+    width: 22%;
+}
+
+/* ------------------------------------------- */
+
+.smoking-button-group {
+    display: inline-block;
+}
+
+.smoking-button-group input[type="radio"] {
+    display: none;
+}
+
+.smoking-button-group label {
+    display: inline-block;
+    padding: 5px 20px;
+    margin: 5px 10px 0px 0px;
+    background-color: #cdf0fc;
+    border: 1px solid #999;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.smoking-button-group input[type="radio"]:checked + label {
+    background-color: #2d9cdb;
+    color: white;
+}
+
+.smoking-label-heading {
+    background-color: #2d9cdb;
+}
+
+.drinking-button-group {
+    display: inline-block;
+}
+
+.drinking-button-group input[type="radio"] {
+    display: none;
+}
+
+.drinking-button-group label {
+    display: inline-block;
+    padding: 5px 20px;
+    margin: 5px 10px 0px 0px;
+    background-color: #fcefca;
+    border: 1px solid #999;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.drinking-button-group input[type="radio"]:checked + label {
+    background-color: #f2994a;
+    color: white;
+}
+
+.drinking-label-heading {
+    background-color: #f2994a;
+}
+
+.food-button-group {
+    display: inline-block;
+}
+
+.food-button-group input[type="radio"] {
+    display: none;
+}
+
+.food-button-group label {
+    display: inline-block;
+    padding: 5px 20px;
+    margin: 5px 10px 0px 0px;
+    background-color: #f9cdcd;
+    border: 1px solid #999;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.food-button-group input[type="radio"]:checked + label {
+    background-color: #eb5757;
+    color: white;
+}
+
+.food-label-heading {
+    background-color: #eb5757;
+}
