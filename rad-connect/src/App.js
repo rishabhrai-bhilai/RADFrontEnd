@@ -9,9 +9,7 @@ import Reports from './pages/Patient/Reports';
 import DoctorDashboard from './pages/Doctor/DoctorDashboard';
 import PatientInformation from './pages/Doctor/PatientInformation';
 import ChatPopup from './components/ui/ChatPopup';
-
-
-
+import ChatPage from './components/ui/ChatPage';
 
 function App() {
   return (
@@ -24,6 +22,7 @@ function App() {
           <Route path="/patientdashboard" element={<PatientDashboard/>}/>
           <Route path="/patientreports" element={<Reports/>}/>
           <Route path="/labdashboard" element={<ReportUpload/>}/>
+          <Route path="/patientchat" element={<ChatPage/>}/>
           
           {/* <Route path="/labprofile" element={<LabProfile/>}/> */}
           {/* <Route path="/doctorprofile" element={<DoctorProfile/>}/> */}

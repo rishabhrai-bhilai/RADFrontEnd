@@ -10,6 +10,8 @@ import ReportPopup from "./ReportPopup";
 const ChatPage = () => {
   const [messages, setMessages] = useState([]);
 
+  const chats = [{id: 1, name: 'John', time: '10:20pm'},{id: 2, name: 'Richard', time: '10:30pm'}];
+
   const handleSendMessage = (text) => {
     const newMessage = {
       id: messages.length + 1,
@@ -49,7 +51,29 @@ const ChatPage = () => {
 
           <div className="leftside-chat-container">
             <ul role="list">
+            {chats.map((chat) => (
               <li>
+                <div className="person-message-container">
+                  <div className="person-msg-img-holder">
+                    <div className="person-msg-img-div">
+                      <img src={patientChatImg} alt="" />
+                    </div>
+                  </div>
+                  <div className="person-msg">
+                    <div className="person-msg-head">
+                      <div className="person-msg-name ">{chat.name}</div>
+                      <div className="person-msg-time">{chat.time}</div>
+                    </div>
+                    <div className="person-msg-highlight">
+                      Lorem ipsum dolor sit amet ccvvtetur, adipisicing elit.
+                      In, ipsam dolorum ad consectetur eveniet earum?
+                    </div>
+                  </div>
+                </div>
+              </li>
+            ))}
+
+              {/* <li>
                 <div className="person-message-container">
                   <div className="person-msg-img-holder">
                     <div className="person-msg-img-div">
@@ -207,27 +231,7 @@ const ChatPage = () => {
                     </div>
                   </div>
                 </div>
-              </li>
-
-              <li>
-                <div className="person-message-container">
-                  <div className="person-msg-img-holder">
-                    <div className="person-msg-img-div">
-                      <img src={patientChatImg} alt="" />
-                    </div>
-                  </div>
-                  <div className="person-msg">
-                    <div className="person-msg-head">
-                      <div className="person-msg-name ">Rishabh Rai</div>
-                      <div className="person-msg-time">10:30pm</div>
-                    </div>
-                    <div className="person-msg-highlight">
-                      Lorem ipsum dolor sit amet ccvvtetur, adipisicing elit.
-                      In, ipsam dolorum ad consectetur eveniet earum?
-                    </div>
-                  </div>
-                </div>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

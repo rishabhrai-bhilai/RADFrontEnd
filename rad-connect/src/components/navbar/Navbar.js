@@ -18,6 +18,10 @@ function Navbar() {
     navigate('/patientreports')
   }
 
+  const navigateToChat=()=>{
+    navigate('/patientchat')
+  }
+
   const handleSearchClick = () => {
     const body = document.querySelector("body"); // Define 'body'
     const searchBtn = body.querySelector(".search-box");
@@ -73,10 +77,10 @@ function Navbar() {
                 <span className="text nav-text" >Reports</span>
               </a>
             </li>
-            <li className="nav-link">
+            <li className="nav-link" onClick ={navigateToChat}>
               <a href="#">
                 <i className="bx bx-bell icon"></i>
-                <span className="text nav-text">Notification</span>
+                <span className="text nav-text">Chats</span>
               </a>
             </li>
             <li className="nav-link">
