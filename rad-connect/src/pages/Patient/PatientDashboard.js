@@ -3,6 +3,8 @@ import "../Patient/PatientDashboard.css";
 import patientImg from '../../assets/patientImg.png';
 import PatientInformationCard from "../../components/ui/PatientInformationCard";
 import Navbar from '../../components/navbar/Navbar';
+import { useUserIdContext } from '../Common/UserIdContext';
+import { usePatientIdContext } from './PatientIdContext';
 
 function PatientDashboard() {
 
@@ -14,6 +16,36 @@ function PatientDashboard() {
 
   const [loading, setLoading] = useState(true);
 
+  const { data } = useUserIdContext();
+
+  const {getPatientId}=usePatientIdContext();
+
+  useEffect(() => {
+    fetchPatient(data);
+  }, []);
+
+  const fetchPatient = async (data) => {
+    try {
+      const response = await fetch(
+        "http://localhost:8080/teleRadiology/getPatient",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: data }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch patient");
+      }
+      const patientData = await response.json();
+      setPatient(patientData);
+      getPatientId(patientData.id);
+    } catch (error) {
+      console.error("Error fetching patient:", error);
+    }
+  };
 
   return (
 

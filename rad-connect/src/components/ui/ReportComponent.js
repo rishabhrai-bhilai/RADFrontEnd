@@ -14,6 +14,7 @@ function ReportComponent() {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(true); // Loading 
   const [reportIdInModal,setReportIdInModal]=useState(null);
+  
 
   const openModal = (reportId) => {
     setShowModal(true);
@@ -75,7 +76,7 @@ function ReportComponent() {
     try {
       const fetchPromises = ids.map(async (id) => {
         const response = await fetch(
-          `http://192.168.0.105:8080/images/getReport/${id}`
+          `http://192.168.0.107:8080/images/getReport/${id}`
         );
         if (!response.ok) {
           throw new Error(`Failed to fetch image for report ID ${id}`);

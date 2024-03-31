@@ -7,6 +7,7 @@ const Toggle = ({ onToggle, initialState = false }) => {
   const handleToggle = () => {
     const newState = !isToggled;
     setIsToggled(newState);
+    
     onToggle(newState);
   };
 
