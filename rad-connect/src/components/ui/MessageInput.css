@@ -1,0 +1,50 @@
+/* MessageInput.css */
+
+.message-input-container {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid var(--grey-light);
+  /* margin: 1rem; */
+  /* border-radius: 5px; */
+  padding: 5px;
+  padding: 0.5rem 1.25rem;
+  /* padding-left: 2rem; */
+  /* margin-right: 2rem; */
+}
+
+.message-input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  /* border-radius: 5px; */
+  resize: none;
+  
+  outline: none;
+  border: none;
+  list-style: none;
+  
+  /* Prevent resizing of textarea */
+}
+
+
+.file-input-button,
+.emoji-button,
+.send-button {
+  padding: 10px 30px;
+  /* margin-left: 5px; */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.25rem;
+  transition: background-color 0.3s;
+  background-color: var(--blue-light);
+  color: var(--blue-dark);
+  margin-right: 5px;
+}
+
+.file-input-button:hover,
+.emoji-button:hover,
+.send-button:hover {
+  background-color: var(--blue-extradark);
+  color: #fff;
+}

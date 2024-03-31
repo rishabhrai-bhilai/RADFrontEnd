@@ -1,6 +1,6 @@
 /* styles.css */
 
-p {
+.login-container p {
     font-size: 16px; /* Adjust font size as needed */
     font-family: Arial, sans-serif; /* Specify font family */
     color: #333; /* Set text color */
@@ -40,7 +40,7 @@ p {
       align-items: center;
     } */
     
-    .login-form label:hover {
+    .login-container  .login-form label:hover {
       cursor: pointer;
       background-color: #f0f0f0;
       border-radius: 5px;
@@ -48,14 +48,14 @@ p {
   
     /* Login.css */
   
-    .role-link {
+    .login-container  .role-link {
       display: flex;
       justify-content: space-between;
     }
-    .role {
+    .login-container  .role {
       padding-left: 10px;
     }
-  .role-link {
+    .login-container  .role-link {
       text-decoration: none; 
       color: #036eff; 
       cursor: pointer;
@@ -79,16 +79,16 @@ p {
   
     body {
       /* background-image: linear-gradient(180deg, #f7f700, white); */
-      background-color: #e8f1ff;
+      /* background-color: #e8f1ff; */
     }
     
-    .role-link:hover {
+    .login-container  .role-link:hover {
       text-decoration: none; /* Remove underline on hover */
       border: 2px solid #036eff;
       background-color: #dbebff;
     }
   
-    .selected-role-container {
+    .login-container  .selected-role-container {
       display: flex;
       padding-right: 50px;
       justify-content: center;
@@ -96,7 +96,7 @@ p {
       height: 100vh;
     }
   
-    .left {
+    .login-container  .left {
       width: 15%;
       margin: 0;
       padding: 0;
@@ -105,13 +105,13 @@ p {
       flex-direction: column;
       justify-content: space-around;
     }
-    .extra {
+    .login-container  .extra {
       margin: 0;
       padding: 0;
       color: #036eff;
       /* border: 1px solid #000; */
     }
   
-    .heading {
+    .login-container .heading {
       padding: 20px;
     }
