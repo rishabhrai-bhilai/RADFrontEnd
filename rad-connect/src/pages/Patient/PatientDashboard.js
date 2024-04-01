@@ -18,6 +18,8 @@ function PatientDashboard() {
 
   const { data } = useUserIdContext();
 
+  console.log(data);
+
   const {getPatientId}=usePatientIdContext();
 
   useEffect(() => {
@@ -42,6 +44,7 @@ function PatientDashboard() {
       const patientData = await response.json();
       setPatient(patientData);
       getPatientId(patientData.id);
+      console.log(data);
     } catch (error) {
       console.error("Error fetching patient:", error);
     }
@@ -234,4 +237,4 @@ function PatientDashboard() {
   );
 }
 
-export default PatientDashboard;
+export default PatientDashboard; 
