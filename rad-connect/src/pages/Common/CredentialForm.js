@@ -1,66 +1,60 @@
 // CredentialForm.js
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import '../Common/CredentialForm.css';
-import { useLoginRoleContext } from './LoginRoleContext';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import { useUserIdContext } from './UserIdContext';
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import "../Common/CredentialForm.css";
+import { useLoginRoleContext } from "./LoginRoleContext";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useUserIdContext } from "./UserIdContext";
 
 const CredentialForm = ({ onSubmit }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [showError, setShowError] = useState(false);
-  const [errorData, setErrorData] = useState('');
+  const [errorData, setErrorData] = useState("");
   // const [userValue, setUserValue] = useState(0);
-  const {getUserId}=useUserIdContext();
+  const { getUserId } = useUserIdContext();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    try {
 
+    try {
       let role = 0;
 
-      if (data === 'Patient')
-      role = 'ROLE_PATIENT';
-      if (data === 'Doctor')
-      role = 'ROLE_DOCTOR';
-      if (data === 'Radiologist')
-      role = 'ROLE_RADIOLOGIST';
-      if (data === 'Lab')
-      role = 'ROLE_LAB';
+      if (data === "Patient") role = "ROLE_PATIENT";
+      if (data === "Doctor") role = "ROLE_DOCTOR";
+      if (data === "Radiologist") role = "ROLE_RADIOLOGIST";
+      if (data === "Lab") role = "ROLE_LAB";
 
       const requestBody = {
         email: username,
         password: password,
-        role: role
+        role: role,
       };
-      
-      const response = await fetch('http://localhost:8080/teleRadiology/loginCredentials', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestBody),
-      });
+
+      const response = await fetch(
+        "http://localhost:8081/teleRadiology/loginCredentials",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
 
       if (response.ok) {
         // If the response is successful, you might want to handle it accordingly.
-        const responseData = await response.json();    
+        const responseData = await response.json();
         const userId = responseData.user;
 
         console.log(userId); // Output: 1
         getUserId(userId);
 
-        if(data === 'Patient')
-        navigate('/patientdashboard')
-        if(data === 'Lab')
-        navigate('/labdashboard')
-        if(data === 'Doctor')
-        navigate('/doctorprofile')  
-
+        if (data === "Patient") navigate("/patientdashboard");
+        if (data === "Lab") navigate("/labdashboard");
+        if (data === "Doctor") navigate("/doctorprofile");
       } else {
         // Handle errors
         setShowError(true);
@@ -70,12 +64,12 @@ const CredentialForm = ({ onSubmit }) => {
         setErrorData(await response.text());
       }
     } catch (error) {
-      console.error('Error posting credentials:', error.message);
+      console.error("Error posting credentials:", error.message);
     }
   };
 
   const handleForgotPassword = () => {
-    alert('Forgot Password clicked!');
+    alert("Forgot Password clicked!");
   };
 
   const { data } = useLoginRoleContext();
@@ -105,19 +99,21 @@ const CredentialForm = ({ onSubmit }) => {
         />
         <p />
         <p>
-          <Link to="/forgot-password" className="link" onClick={handleForgotPassword}>
+          <Link
+            to="/forgot-password"
+            className="link"
+            onClick={handleForgotPassword}
+          >
             Forgot Password?
           </Link>
         </p>
-          {showError && (
-        <div style={{ color: 'red', margin: '10px 0' }}>
-          {errorData}
-        </div>
-      )}
+        {showError && (
+          <div style={{ color: "red", margin: "10px 0" }}>{errorData}</div>
+        )}
         <button type="submit" className="submit-btn">
           Login
         </button>
-        {data === 'Patient' && (
+        {data === "Patient" && (
           <div>
             <div className="or-Container">
               <hr className="horizontal-line" />

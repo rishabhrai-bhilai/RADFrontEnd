@@ -12,9 +12,8 @@ function ReportComponent() {
   const [patient, setPatient] = useState(-1);
   const [images, setImages] = useState([]);
   const [show, setShow] = useState(false);
-  const [loading, setLoading] = useState(true); // Loading 
-  const [reportIdInModal,setReportIdInModal]=useState(null);
-  
+  const [loading, setLoading] = useState(true); // Loading
+  const [reportIdInModal, setReportIdInModal] = useState(null);
 
   const openModal = (reportId) => {
     setShowModal(true);
@@ -28,7 +27,7 @@ function ReportComponent() {
   const fetchPatient = async (data) => {
     try {
       const response = await fetch(
-        "http://localhost:8080/teleRadiology/getPatient",
+        "http://localhost:8081/teleRadiology/getPatient",
         {
           method: "POST",
           headers: {
@@ -50,7 +49,7 @@ function ReportComponent() {
   const fetchReports = async (patientId) => {
     try {
       const response = await fetch(
-        "http://localhost:8080/teleRadiology/getPatientReports",
+        "http://localhost:8081/teleRadiology/getPatientReports",
         {
           method: "POST",
           headers: {
@@ -76,7 +75,7 @@ function ReportComponent() {
     try {
       const fetchPromises = ids.map(async (id) => {
         const response = await fetch(
-          `http://192.168.0.107:8080/images/getReport/${id}`
+          `http://localhost:8080/images/getReport/${id}`
         );
         if (!response.ok) {
           throw new Error(`Failed to fetch image for report ID ${id}`);
@@ -156,10 +155,16 @@ function ReportComponent() {
                             <i className="bx bxs-bell-ring"></i>
                           </div>
                           <div className="icon-box">
-                            <ButtonComponent openModal={() => openModal(reports[index].id)} />
-                            {showModal && reportIdInModal === reports[index].id && ( // Check if showModal is true and the report id matches
-              <Modal closeModal={closeModal} reportId={reportIdInModal} /> // Pass report id to Modal
-            )}
+                            <ButtonComponent
+                              openModal={() => openModal(reports[index].id)}
+                            />
+                            {showModal &&
+                              reportIdInModal === reports[index].id && ( // Check if showModal is true and the report id matches
+                                <Modal
+                                  closeModal={closeModal}
+                                  reportId={reportIdInModal}
+                                /> // Pass report id to Modal
+                              )}
                           </div>
                           <div className="icon-box">
                             <i className="bx bxs-download"></i>

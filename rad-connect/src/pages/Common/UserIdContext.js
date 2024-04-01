@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 const UserIdContext = createContext();
 
@@ -8,18 +8,17 @@ export const useUserIdContext = () => {
 export const UserIdContextProvider = ({ children }) => {
   const [data, setData] = useState(() => {
     // Initialize data from localStorage if available
-    const storedData = localStorage.getItem('userData');
+    const storedData = localStorage.getItem("userData");
     return storedData ? JSON.parse(storedData) : null;
   });
 
-  const getUserId =(id)=>{
+  const getUserId = (id) => {
     setData(id);
-    console.log(data);
-  }
+  };
 
   useEffect(() => {
     // Store data in localStorage whenever it changes
-    localStorage.setItem('userData', JSON.stringify(data));
+    localStorage.setItem("userData", JSON.stringify(data));
   }, [data]);
 
   return (
