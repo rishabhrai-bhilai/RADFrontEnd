@@ -6,8 +6,6 @@ function PersonalInformation() {
     <>
         <div className='formHeadings'>
             <div className='headings-true'>Personal Information</div>
-            {/* <div className='headings'>Medical</div>
-            <div className='headings'>Lifestyle</div> */}
         </div>
         <form className='personalInfoForm'>
             <div className='threePartRow'>

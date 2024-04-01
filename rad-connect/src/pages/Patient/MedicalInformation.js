@@ -5,9 +5,7 @@ function MedicalInformation() {
   return (
     <>
         <div className='formHeadings'>
-            {/* <div className='headings-true'>Personal Information</div> */}
             <div className='headings-true'>Medical</div>
-            {/* <div className='headings'>Lifestyle</div> */}
         </div>
         <form className='personalInfoForm'>
             <div className='onePartRow'>

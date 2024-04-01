@@ -124,7 +124,8 @@ const CredentialForm = ({ onSubmit }) => {
               <p className="or">&nbsp;&nbsp;Or&nbsp;&nbsp;</p>
               <hr className="horizontal-line" />
             </div>
-            <Link to="/patientregistration" className="signup-btn">
+            {/* <Link to="/patientregistration" className="signup-btn"> */}
+            <Link to="/newpatient" className="signup-btn">
               Sign Up
             </Link>
           </div>
