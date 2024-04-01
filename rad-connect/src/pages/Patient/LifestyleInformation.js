@@ -5,8 +5,6 @@ function LifestyleInformation() {
   return (
     <>
         <div className='formHeadings'>
-            {/* <div className='headings-true'>Personal Information</div>
-            <div className='headings-true'>Medical</div> */}
             <div className='headings-true'>Lifestyle</div>
         </div>
         <form className='personalInfoForm'>           
