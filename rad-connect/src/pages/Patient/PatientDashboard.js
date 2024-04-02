@@ -5,6 +5,7 @@ import PatientInformationCard from "../../components/ui/PatientInformationCard";
 import Navbar from "../../components/navbar/Navbar";
 import { useUserIdContext } from "../Common/UserIdContext";
 import { usePatientIdContext } from "./PatientIdContext";
+import ChatPopup from "../../components/ui/ChatPopup";
 
 function PatientDashboard() {
   const [patient, setPatient] = useState(() => {
@@ -248,6 +249,7 @@ function PatientDashboard() {
           </div>
         </div>
       </section>
+      <ChatPopup></ChatPopup>
     </>
   );
 }
