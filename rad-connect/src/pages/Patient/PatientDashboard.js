@@ -42,6 +42,7 @@ function PatientDashboard() {
       console.log(patientData);
       setPatient(patientData);
       getPatientId(patientData.id);
+      console.log(data);
     } catch (error) {
       console.error("Error fetching patient:", error);
     }

@@ -15,6 +15,8 @@ const Modal = ({ closeModal, reportId }) => {
   const [filteredDoctorsList, setFilteredDoctorsList] = useState([]);
   const [showOTPComponent, setShowOTPComponent] = useState(false);
   const [selectedDoctorId, setSelectedDoctorId] = useState(null);
+  const [reportViewers, setReportViewers] = useState(null);
+  const [show, setShow] = useState(false);
 
   const handleSearch = (searchTerm) => {
     const filteredNames = doctors.filter((doc) =>
@@ -25,17 +27,27 @@ const Modal = ({ closeModal, reportId }) => {
 
   const handleToggle = (isToggled, doctorId) => {
     console.log("Toggle state:", isToggled ? "On" : "Off");
-    if (isToggled) {
-      setSelectedDoctorId(doctorId);
-      setShowOTPComponent(true);
-    } else {
-      setShowOTPComponent(false);
-    }
+    // if(isToggled){
+    setSelectedDoctorId(doctorId);
+    setShowOTPComponent(true);
+    // }else{
+    //setShowOTPComponent(false);
+    //}
   };
 
   useEffect(() => {
     getAllDoctors();
   }, [data]);
+
+  useEffect(() => {
+    getReportViewers(reportId);
+  }, [reportId]);
+
+  useEffect(() => {
+    if (filteredDoctorsList.length > 0 && reportViewers !== null) {
+      updateFilteredDoctorsList();
+    }
+  }, [filteredDoctorsList, reportViewers]);
 
   const getAllDoctors = async () => {
     try {
@@ -52,12 +64,73 @@ const Modal = ({ closeModal, reportId }) => {
         throw new Error("Failed to fetch doctors list");
       }
       const responseData = await response.json();
-      console.log(responseData);
-      setDoctors(responseData || []);
-      setFilteredDoctorsList(responseData || []);
+
+      const updatedList = responseData.map((doctor) => {
+        return { ...doctor, consent: 0 };
+      });
+
+      //console.log(updatedList);
+      setDoctors(updatedList || []);
+      setFilteredDoctorsList(updatedList || []);
     } catch (error) {
       console.log("Error Fetching Doctors list:", error);
     }
+  };
+
+  const getReportViewers = async (reportId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8081/teleRadiology/getReportViewers/${reportId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch report Viewers");
+      }
+      const responseData = await response.json();
+      setReportViewers(responseData || []);
+    } catch (error) {
+      console.error("Error fetching Report Viewers:", error);
+    }
+  };
+
+  const binarySearch = (arr, target) => {
+    let low = 0;
+    let high = arr.length - 1;
+
+    while (low <= high) {
+      const mid = Math.floor((low + high) / 2);
+      const midVal = arr[mid].userId;
+
+      if (midVal === target) {
+        return mid; // Found the target
+      } else if (midVal < target) {
+        low = mid + 1; // Search the right half
+      } else {
+        high = mid - 1; // Search the left half
+      }
+    }
+
+    return -1;
+  };
+
+  const updateFilteredDoctorsList = () => {
+    for (let i = 0; i < reportViewers.length; i++) {
+      const viewerId = reportViewers[i].viewerId;
+      const index = binarySearch(filteredDoctorsList, viewerId);
+      if (index !== -1) {
+        filteredDoctorsList[index].consent = 1;
+      }
+    }
+
+    setShow(true);
+
+    console.log(filteredDoctorsList);
   };
 
   return (
@@ -97,6 +170,7 @@ const Modal = ({ closeModal, reportId }) => {
                             onToggle={(isToggled) =>
                               handleToggle(isToggled, doctor.id)
                             }
+                            isToggled={doctor.consent === 1}
                           />
                         </div>
                       </div>
