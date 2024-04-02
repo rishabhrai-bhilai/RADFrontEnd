@@ -1,17 +1,18 @@
 // ChatPage.js
 import React, { useEffect, useState } from "react";
+import patientChatImg from "../../assets/patientbox.png";
+import { useUserIdContext } from "../../pages/Common/UserIdContext";
 import "./ChatPage.css";
 import Message from "./Message";
 import MessageInput from "./MessageInput";
-import patientChatImg from "../../assets/patientbox.png";
-import { usePatientIdContext } from "../../pages/Patient/PatientIdContext";
-import { useUserIdContext } from "../../pages/Common/UserIdContext";
 
 import ReportPopup from "./ReportPopup";
 
 const ChatPage = () => {
   const [messages, setMessages] = useState([]);
+  const [userId, setUserId] = useState([]);
   const { data } = useUserIdContext();
+  const [messagesLoaded, setMessagesLoaded] = useState(false);
   // const { data } = usePatientIdContext();
   // const [chats1, setChats1] = useState(null);
   // const chats = [
@@ -24,12 +25,15 @@ const ChatPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:8081/getChats/${data}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await fetch(
+          `http://localhost:8081/teleRadiology/getChats/${data}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         if (!response.ok) {
           throw new Error("Failed to fetch chats");
@@ -91,8 +95,9 @@ const ChatPage = () => {
     setMessages([...messages, newMessage]);
   };
 
-  const handleClick = (chatReports) => {
+  const handleClick = (chatReports, id) => {
     setReports(chatReports);
+    setUserId(id);
     setLoading(false);
   };
   const handleSearchClick = () => {
@@ -102,13 +107,25 @@ const ChatPage = () => {
     // sidebar.classList.remove("close");
   };
 
+  useEffect(() => {
+    const displayMessages = () => {
+      setMessagesLoaded(true);
+      console.log(messages);
+    };
+    displayMessages();
+  }, [messages]);
+
   return (
     <div className="chat-container">
       <div className="chat-head">
         <div className="chat-heading-name">Chat</div>
         {loading === true ? null : ( // Use null instead of an empty object
           <div className="chat-report-container">
-            <ReportPopup chatReports={reports}></ReportPopup>
+            <ReportPopup
+              chatReports={reports}
+              messageSetter={setMessages}
+              userId={userId}
+            ></ReportPopup>
           </div>
         )}
       </div>
@@ -131,7 +148,7 @@ const ChatPage = () => {
                       <div
                         className="person-message-container"
                         onClick={() => {
-                          handleClick(chat.reports);
+                          handleClick(chat.reports, chat.id);
                         }}
                       >
                         <div className="person-msg-img-holder">
@@ -163,11 +180,13 @@ const ChatPage = () => {
               <div className="rightside-header-status">Active Now</div>
             </div>
           </div>
-          <div className="message-container">
-            {messages.map((message) => (
-              <Message key={message.id} message={message} />
-            ))}
-          </div>
+          {messagesLoaded && (
+            <div className="message-container">
+              {messages.map((message) => (
+                <Message key={message.id} message={message} />
+              ))}
+            </div>
+          )}
 
           <div className="msg-input-taker">
             <MessageInput onSendMessage={handleSendMessage} />
