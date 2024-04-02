@@ -16,6 +16,7 @@ const Modal = ({ closeModal, reportId }) => {
   const [showOTPComponent, setShowOTPComponent] = useState(false);
   const [selectedDoctorId, setSelectedDoctorId] = useState(null);
   const [reportViewers, setReportViewers] = useState(null);
+  const [toggleValue, setToggleValue] = useState();
   const [show, setShow] = useState(false);
 
   const handleSearch = (searchTerm) => {
@@ -28,6 +29,7 @@ const Modal = ({ closeModal, reportId }) => {
   const handleToggle = (isToggled, doctorId) => {
     console.log("Toggle state:", isToggled ? "On" : "Off");
     // if(isToggled){
+    isToggled?setToggleValue(1):setToggleValue(0);
     setSelectedDoctorId(doctorId);
     setShowOTPComponent(true);
     // }else{
@@ -181,7 +183,7 @@ const Modal = ({ closeModal, reportId }) => {
             )}
             <div>
               {showOTPComponent && (
-                <OTP reportId={reportId} doctorId={selectedDoctorId} />
+                <OTP reportId={reportId} doctorId={selectedDoctorId} toggleValue={toggleValue}/>
               )}
             </div>
           </div>

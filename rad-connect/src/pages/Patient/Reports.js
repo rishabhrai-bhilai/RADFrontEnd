@@ -18,7 +18,9 @@ function Reports() {
   
 
   return (
-    <section className="home">
+    <>
+    <Navbar></Navbar>
+     <section className="home">      
       <div className="patient-report-container">
         <div className="all-items">
           <div className="element-name-heading | text-blue-extradark">
@@ -39,11 +41,9 @@ function Reports() {
         </div>
       </div>
     </section>
+    </>
+   
   );
 }
 
 export default Reports;
-
-  
-
-  
