@@ -27,7 +27,7 @@ function ReportComponent() {
   const fetchPatient = async (data) => {
     try {
       const response = await fetch(
-        "http://localhost:8080/teleRadiology/getPatient",
+        "http://localhost:8081/teleRadiology/getPatient",
         {
           method: "POST",
           headers: {
@@ -49,7 +49,7 @@ function ReportComponent() {
   const fetchReports = async (patientId) => {
     try {
       const response = await fetch(
-        "http://localhost:8080/teleRadiology/getPatientReports",
+        "http://localhost:8081/teleRadiology/getPatientReports",
         {
           method: "POST",
           headers: {
@@ -75,7 +75,7 @@ function ReportComponent() {
     try {
       const fetchPromises = ids.map(async (id) => {
         const response = await fetch(
-          `http://192.168.0.105:8080/images/getReport/${id}`
+          `http://192.168.0.105:8081/images/getReport/${id}`
         );
         if (!response.ok) {
           throw new Error(`Failed to fetch image for report ID ${id}`);

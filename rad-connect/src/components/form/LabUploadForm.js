@@ -39,7 +39,7 @@ function LabUploadForm() {
       };
 
       try {        
-          const response = await fetch('http://localhost:8080/teleRadiology/uploadReport', {
+          const response = await fetch('http://localhost:8081/teleRadiology/uploadReport', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json'
@@ -74,7 +74,7 @@ function LabUploadForm() {
       console.log(val);
       try {
         const response = await fetch(
-          "http://192.168.0.102:8080/images/uploadReport",
+          "http://192.168.0.102:8081/images/uploadReport",
           {
             method: "POST",
             headers: {

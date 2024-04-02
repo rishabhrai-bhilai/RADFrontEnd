@@ -4,27 +4,10 @@ import PersonalInformation from "./PersonalInformation";
 import MedicalInformation from "./MedicalInformation";
 import LifestyleInformation from "./LifestyleInformation";
 
-const PatientRegistration = () => {
-//   const [firstName, setFirstName] = useState('');
-//   const [middleName, setMiddleName] = useState('');
-//   const [lastName, setLastName] = useState('');
-//   const [email, setEmail] = useState('');
-//   const [phone, setPhone] = useState('');
-//   const [dob, setDob] = useState('');
 
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     // Implement your form submission logic here
-//     console.log('Form submitted:', {
-//       firstName,
-//       middleName,
-//       lastName,
-//       email,
-//       phone,
-//       dob,
-//       // Add other form fields here
-//     });
-//   };
+const PatientRegistration = ({email,credId}) => {
+    console.log(email);
+    console.log(credId);
 
   return (
     <>
@@ -34,18 +17,18 @@ const PatientRegistration = () => {
             <div className='sideheadings'>Contact Us</div>
         </div>
         <div className="registrationContainer">
-            <PersonalInformation />
+            <PersonalInformation username={email} uid={credId}/>
         </div>
-        <div className="registrationContainer">
+        {/* <div className="registrationContainer">
             <MedicalInformation />
-        </div>
-        <div className="registrationContainer">
+        </div> */}
+        {/* <div className="registrationContainer">
             <LifestyleInformation />
-        </div>
-        <div className='footer'>
+        </div> */}
+        {/* <div className='footer'>
             <button className='footButtons' type="submit">Back To Login</button>
             <button className='footButtons' type="submit">Submit</button>
-        </div>
+        </div> */}
 
     
     </>

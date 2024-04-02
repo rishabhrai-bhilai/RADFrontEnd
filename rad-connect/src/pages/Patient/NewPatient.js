@@ -1,31 +1,57 @@
 import React, { useState } from 'react';
 import './NewPatient.css';
-import { Link } from 'react-router-dom';
-import PersonalInformation from "./PersonalInformation";
-import MedicalInformation from "./MedicalInformation";
-import LifestyleInformation from "./LifestyleInformation";
+import { Link,useNavigate } from 'react-router-dom';
 
-const NewPatient = () => {
-//   const [firstName, setFirstName] = useState('');
-//   const [middleName, setMiddleName] = useState('');
-//   const [lastName, setLastName] = useState('');
-//   const [email, setEmail] = useState('');
-//   const [phone, setPhone] = useState('');
-//   const [dob, setDob] = useState('');
+const NewPatient = ({ onSubmitEmail, onSubmitCred }) => {
+  const [userName, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+  const [password2, setPassword2] = useState('');
+  const navigate = useNavigate(); 
 
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     // Implement your form submission logic here
-//     console.log('Form submitted:', {
-//       firstName,
-//       middleName,
-//       lastName,
-//       email,
-//       phone,
-//       dob,
-//       // Add other form fields here
-//     });
-//   };
+  const handleSubmit = async (e) => {
+    onSubmitEmail(userName);
+
+    e.preventDefault();
+    console.log('Form submitted:', {
+        userName,
+        password,
+        password2
+    });
+
+    if (password !== password2) {
+        alert("Different Password");
+        return;
+    }
+
+    console.log("Same Password");
+    const formData = {
+        email: userName,
+        password: password,
+        role: "ROLE_PATIENT"
+    };
+
+    try {
+        const response = await fetch('http://localhost:8081/teleRadiology/createPatientCred', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+  
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const responseData = await response.json();
+        console.log('Data saved successfully');
+        onSubmitCred(responseData.user);
+        navigate('/patientregistration');
+        
+      } catch (error) {
+        console.error('There was a problem saving the data:', error);
+      }
+
+  };
 
   return (
     <>
@@ -38,42 +64,49 @@ const NewPatient = () => {
             <div className='formHeadings'>
                 <div className='headings-true'>Sign Up Details</div>
             </div>
-            <form className='signUpDetails'>
+            <form className='signUpDetails' onSubmit={handleSubmit}>
                 <div className='signUpInfo'>
                     <div className='infoRow'>
                         <label htmlFor="username">Username*</label>
-                        <input type="email" id="username" required />
+                        <input 
+                            type="email" 
+                            id="username" 
+                            value={userName} 
+                            onChange={(e) => setUserName(e.target.value)} 
+                            required />
                     </div>
                     <div className='infoRow'>
                         <label htmlFor="password">Password*</label>
-                        <input type="password" id="password" required />
+                        <input 
+                            type="password" 
+                            id="password" 
+                            value = {password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required />
                     </div>
                     <div className='infoRow'>
-                    <label htmlFor="password">Retype Password*</label>
-                        <input type="password" id="password" required />
-                    </div>
-
-
-                    {/* <div className='col1'>
-                        <label htmlFor="username">Username*</label>
-                        <label htmlFor="password">Password*</label>
                         <label htmlFor="password">Retype Password*</label>
+                        <input 
+                            type="password" 
+                            id="password2" 
+                            value={password2}
+                            onChange={(e) => setPassword2(e.target.value)}
+                            required />
                     </div>
-                    <div className='col2'>
-                        <input type="email" id="username" required />
-                        <input type="password" id="password" required />
-                        <input type="password" id="password" required />
-                    </div> */}
-                </div>                
-            </form>
-        </div>
+                </div>
+
         
         <div className='footer'>
             <button className='footButtons' type="submit">Back To Login</button>
-            <Link to="/patientregistration">
+            {/* <Link to="/patientregistration"> */}
                 <button className='footButtons' type="submit">Submit</button>
-            </Link>
+            {/* </Link> */}
         </div>
+
+
+            </form>
+        </div>
+        
 
     
     </>

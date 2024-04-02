@@ -39,7 +39,7 @@ const Modal = ({ closeModal,reportId }) => {
   const getAllDoctors=async()=>{
     try{
       const response = await fetch(
-        "http://localhost:8080/teleRadiology/getAllDoctors",
+        "http://localhost:8081/teleRadiology/getAllDoctors",
         {
           method: "GET",
           headers: {
