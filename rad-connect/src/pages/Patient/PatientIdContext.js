@@ -1,18 +1,18 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 
-const UserIdContext = createContext();
+const PatientIdContext = createContext();
 
-export const useUserIdContext = () => {
-  return useContext(UserIdContext);
+export const usePatientIdContext = () => {
+  return useContext(PatientIdContext);
 };
-export const UserIdContextProvider = ({ children }) => {
+export const PatientIdContextProvider = ({ children }) => {
   const [data, setData] = useState(() => {
     // Initialize data from localStorage if available
     const storedData = localStorage.getItem("userData");
     return storedData ? JSON.parse(storedData) : null;
   });
 
-  const getUserId = (id) => {
+  const getPatientId = (id) => {
     setData(id);
   };
 
@@ -22,8 +22,8 @@ export const UserIdContextProvider = ({ children }) => {
   }, [data]);
 
   return (
-    <UserIdContext.Provider value={{ data, getUserId }}>
+    <PatientIdContext.Provider value={{ data, getPatientId }}>
       {children}
-    </UserIdContext.Provider>
+    </PatientIdContext.Provider>
   );
 };
