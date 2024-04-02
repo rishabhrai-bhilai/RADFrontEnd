@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { usePatientIdContext } from "../../pages/Patient/PatientIdContext";
 
-const OTP = ({ reportId, doctorId }) => {
+const OTP = ({ reportId, doctorId, toggleValue }) => {
   const [otp, setOtp] = useState("");
   const { data } = usePatientIdContext();
 
   console.log(data);
   console.log(reportId);
   console.log(doctorId);
+  console.log(toggleValue);
 
   useEffect(() => {
     getOtp(data);
@@ -22,6 +23,8 @@ const OTP = ({ reportId, doctorId }) => {
 
     let intOtp = parseInt(otp);
 
+    if(toggleValue===1)
+    {
     try {
       const requestBody = {
         doctorId: doctorId,
@@ -46,11 +49,44 @@ const OTP = ({ reportId, doctorId }) => {
         const responseData = await response.json();
         console.log(responseData);
       } else {
-        // Handle errors
+        console.log("Unable to give Consent");
       }
     } catch (error) {
       console.error("OTP incorrect:", error.message);
     }
+  }
+  else{
+
+    try {
+      const requestBody = {
+        reportId: reportId,        
+        doctorId: doctorId,
+        patientId: data,        
+        otp: intOtp
+      };
+
+      const response = await fetch(
+        "http://localhost:8081/teleRadiology/removeConsent",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
+
+      if (response.ok) {
+        // If the response is successful, you might want to handle it accordingly.
+        const responseData = await response.json();
+        console.log(responseData);
+      } else {
+        console.log("Unable to remove Consent");
+      }
+    } catch (error) {
+      console.error("OTP incorrect:", error.message);
+    }
+  }
 
     setOtp("");
   };

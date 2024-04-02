@@ -64,7 +64,7 @@ function ReportComponent() {
       }
       const responseData = await response.json();
       setReports(responseData.reports || []);
-      console.log(responseData.reports);
+      //console.log(responseData.reports);
     } catch (error) {
       console.error("Error fetching reports:", error);
     }
@@ -75,17 +75,29 @@ function ReportComponent() {
     try {
       const fetchPromises = ids.map(async (id) => {
         const response = await fetch(
-
-          `http://192.168.0.105:8081/images/getReport/${id}`
+          `http://192.168.0.112:8080/images/getReport/${id}`
         );
         if (!response.ok) {
           throw new Error(`Failed to fetch image for report ID ${id}`);
         }
         const imageData = await response.json();
-        arr.push(imageData.report);
+        arr.push(imageData);
       });
       await Promise.all(fetchPromises); // Wait for all fetches to complete
       setImages(arr);
+      for(let i=0;i<arr.length;i++)
+      {
+        for(let j=0;j<reports.length;j++)
+        {
+          if(arr[i].reportId===reports[j].id)
+          {
+          reports[i].imageUrl=arr[i].report;
+          }
+        }
+      }
+
+       setReports(reports);
+
       setLoading(false); // Set loading to false after images are fetched
     } catch (error) {
       console.error("Error fetching report images:", error);
@@ -138,18 +150,18 @@ function ReportComponent() {
               (loading ? (
                 <div>Loading...</div> // Display loading indicator
               ) : (
-                images.map((image, index) => (
-                  <li key={reports[index].id}>
+                reports.map((report) => (
+                  <li key={report.id}>
                     <div className="report-list-box | report-data">
                       <div className="report-image">
                         <div className="image-box">
-                          <img src={image} alt="Report" />
+                          <img src={report.imageUrl} alt="Report" />
                         </div>
                       </div>
-                      <div className="">{reports[index].id}</div>
-                      <div className="">{reports[index].reportType}</div>
-                      <div className="">{reports[index].reportType}</div>
-                      <div className="">{reports[index].dateOfIssue}</div>
+                      <div className="">{report.id}</div>
+                      <div className="">{report.reportType}</div>
+                      <div className="">{report.reportType}</div>
+                      <div className="">{report.dateOfIssue}</div>
                       <div className="report-button-container">
                         <div className="icon-buttons">
                           <div className="icon-box">
@@ -157,10 +169,10 @@ function ReportComponent() {
                           </div>
                           <div className="icon-box">
                             <ButtonComponent
-                              openModal={() => openModal(reports[index].id)}
+                              openModal={() => openModal(report.id)}
                             />
                             {showModal &&
-                              reportIdInModal === reports[index].id && ( // Check if showModal is true and the report id matches
+                              reportIdInModal === report.id && ( // Check if showModal is true and the report id matches
                                 <Modal
                                   closeModal={closeModal}
                                   reportId={reportIdInModal}
