@@ -75,7 +75,8 @@ function ReportComponent() {
     try {
       const fetchPromises = ids.map(async (id) => {
         const response = await fetch(
-          `http://localhost:8080/images/getReport/${id}`
+
+          `http://192.168.0.105:8081/images/getReport/${id}`
         );
         if (!response.ok) {
           throw new Error(`Failed to fetch image for report ID ${id}`);

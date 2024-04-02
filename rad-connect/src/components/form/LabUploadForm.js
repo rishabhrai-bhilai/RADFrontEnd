@@ -17,6 +17,7 @@ function LabUploadForm() {
   let responseData;
 
   const handleFormSubmit = async (event) => {
+
     event.preventDefault();
 
     // Get today's date
@@ -55,6 +56,7 @@ function LabUploadForm() {
         setRid(responseData.rid);
       } else {
         console.error("Failed to submit form");
+
       }
     } catch (error) {
       console.error("Error occurred while submitting form:", error);
@@ -71,6 +73,7 @@ function LabUploadForm() {
     };
     reader.readAsDataURL(image);
   };
+
 
   const sendImageToBackend = async (imageUri, rand, val) => {
     console.log(val);
