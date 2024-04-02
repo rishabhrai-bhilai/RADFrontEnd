@@ -12,14 +12,41 @@ import DoctorDashboard from "./pages/Doctor/DoctorDashboard";
 import PatientInformation from "./pages/Doctor/PatientInformation";
 import ChatPopup from "./components/ui/ChatPopup";
 import ChatPage from "./components/ui/ChatPage";
+import React, { useState } from "react";
 
 function App() {
+  const [email, setEmail] = useState("");
+  const [credId, setCredId] = useState();
+
+  const handleSubmitEmail = (email) => {
+    // Handle email submission logic here
+    console.log("Email submitted:", email);
+    setEmail(email);
+  };
+
+  const handleCredId = (credId) => {
+    // Handle email submission logic here
+    console.log("Credential ID obtained:", credId);
+    setCredId(credId);
+  };
+
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/patientregistration" element={<PatientRegistration />} />
-        <Route path="/newpatient" element={<NewPatient />} />
+        <Route
+          path="/patientregistration"
+          element={<PatientRegistration email={email} credId={credId} />}
+        />
+        <Route
+          path="/newpatient"
+          element={
+            <NewPatient
+              onSubmitEmail={handleSubmitEmail}
+              onSubmitCred={handleCredId}
+            />
+          }
+        />
         <Route path="/patientdashboard" element={<PatientDashboard />} />
         <Route path="/patientreports" element={<Reports />} />
         <Route path="/labdashboard" element={<ReportUpload />} />

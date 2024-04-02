@@ -1,6 +1,7 @@
 .formHeadings {
     /* background-color: #007bff; */
     display: flex;
+    margin-top: 2%;
 }
 
 .headings {
@@ -45,7 +46,7 @@
     padding: 2%;
 }
 
-.threePartRow, .onePartRow, .fourPartRow{
+.threePartRow, .onePartRow, .fourPartRow, .twoPartRow{
     display: flex;
     justify-content: space-around;
     margin-top: 2%;
@@ -63,6 +64,10 @@
 
 .fourPartRow div {
     width: 22%;
+}
+
+.twoPartRow div {
+    width: 47%;
 }
 
 /* ------------------------------------------- */
