@@ -8,14 +8,14 @@ const Message = ({ message }) => {
   return (
     <>
       {data == message.sender ? (
-        <div className={`message ${message.sender}`}>
+        <div className="message user">
           <div className="message-content">
             <p>{message.message}</p>
             <span className="timestamp">{message.timeStamp}</span>
           </div>
         </div>
       ) : (
-        <div className={`message ${message.sender}`}>
+        <div className="message sender">
           <div className="message-content">
             <p>{message.message}</p>
             <span className="timestamp">{message.timeStamp}</span>
