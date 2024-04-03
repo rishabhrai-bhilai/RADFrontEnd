@@ -77,8 +77,7 @@ const ReportPopup = ({
       message: payloadData.message,
       sender: payloadData.sender,
     };
-    if (parseInt(payloadData.report, 10) == selectedId)
-      messageSetter((oldMessages) => [...oldMessages, newMessage]);
+    messageSetter((oldMessages) => [...oldMessages, newMessage]);
   };
 
   useEffect(() => {
