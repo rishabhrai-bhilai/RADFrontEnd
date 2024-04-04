@@ -7,7 +7,7 @@ import "./ReportComponent.css";
 
 function ReportComponent() {
   const [showModal, setShowModal] = useState(false);
-  const { data } = useUserIdContext();
+  const { data, token } = useUserIdContext();
   const [reports, setReports] = useState([]);
   const [patient, setPatient] = useState(-1);
   const [images, setImages] = useState([]);
@@ -32,6 +32,7 @@ function ReportComponent() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify({ id: data }),
         }
@@ -54,6 +55,7 @@ function ReportComponent() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            'Authorization': 'Bearer ' + token
           },
           body: JSON.stringify({ id: patientId }),
         }
@@ -73,18 +75,26 @@ function ReportComponent() {
   const getReportImages = async (ids) => {
     let arr = [];
     try {
-      const fetchPromises = ids.map(async (id) => {
         const response = await fetch(
-          `http://192.168.0.100:8080/images/getReport/${id}`
+          `http://192.168.108.211:8080/images/getAllReports`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({reportIds: ids})
+          }
         );
         if (!response.ok) {
-          throw new Error(`Failed to fetch image for report ID ${id}`);
+          throw new Error(`Failed to fetch image for reports`);
         }
         const imageData = await response.json();
-        arr.push(imageData);
-      });
-      await Promise.all(fetchPromises); // Wait for all fetches to complete
+        arr=imageData.reports;
+        //console.log(imageData.reports);
+      // await Promise.all(fetchPromises); // Wait for all fetches to complete
       setImages(arr);
+      //console.log(arr);
       for(let i=0;i<arr.length;i++)
       {
         for(let j=0;j<reports.length;j++)
@@ -97,6 +107,7 @@ function ReportComponent() {
       }
 
        setReports(reports);
+       console.log(reports);
 
       setLoading(false); // Set loading to false after images are fetched
     } catch (error) {

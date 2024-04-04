@@ -25,7 +25,7 @@ const ReportPopup = ({
   });
   const [expanded, setExpanded] = useState(false);
   const [reports, setReports] = useState([]);
-  const { data } = useUserIdContext();
+  const { data, token } = useUserIdContext();
   const [selectedId, setSelectedId] = useState();
 
   const toggleDiv = () => {
@@ -92,6 +92,7 @@ const ReportPopup = ({
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify({ reportIds: chatReports }),
           }
@@ -123,6 +124,7 @@ const ReportPopup = ({
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify({
             user1Id: data,

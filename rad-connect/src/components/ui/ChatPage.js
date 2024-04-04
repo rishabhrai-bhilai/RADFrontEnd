@@ -16,7 +16,7 @@ var stompClient = null;
 const ChatPage = () => {
   const [messages, setMessages] = useState([]);
   const [userId, setUserId] = useState([]);
-  const { data } = useUserIdContext();
+  const { data, token } = useUserIdContext();
   const [messagesLoaded, setMessagesLoaded] = useState(false);
   const [selectedId, setSelectedId] = useState();
   // const { data } = usePatientIdContext();
@@ -49,6 +49,7 @@ const ChatPage = () => {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
             },
           }
         );
@@ -75,6 +76,7 @@ const ChatPage = () => {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
             },
           }
         );
@@ -203,6 +205,7 @@ const ChatPage = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify({
             sender: data,

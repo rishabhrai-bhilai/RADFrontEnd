@@ -16,11 +16,12 @@ function PatientDashboard() {
 
   const [loading, setLoading] = useState(true);
 
-  const { data } = useUserIdContext();
+  const { data, token } = useUserIdContext();
 
   const { getPatientId } = usePatientIdContext();
 
   useEffect(() => {
+    console.log("JWT token: ", token);
     fetchPatient(data);
   }, []);
 
@@ -32,6 +33,7 @@ function PatientDashboard() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify({ id: parseInt(data) }),
         }

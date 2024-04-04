@@ -13,7 +13,7 @@ const CredentialForm = ({ onSubmit }) => {
   const [showError, setShowError] = useState(false);
   const [errorData, setErrorData] = useState("");
   // const [userValue, setUserValue] = useState(0);
-  const { getUserId } = useUserIdContext();
+  const { getUserId, getUserToken } = useUserIdContext();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -49,8 +49,10 @@ const CredentialForm = ({ onSubmit }) => {
         const responseData = await response.json();
         const userId = responseData.user;
 
-        console.log(userId); // Output: 1
+        console.log(userId); 
         getUserId(userId);
+        console.log(responseData.token); 
+        getUserToken(responseData.token);
 
         if (data === "Patient") navigate("/patientdashboard");
         if (data === "Lab") navigate("/labdashboard");

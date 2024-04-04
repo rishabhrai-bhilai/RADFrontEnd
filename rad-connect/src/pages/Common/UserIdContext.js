@@ -5,12 +5,24 @@ const UserIdContext = createContext();
 export const useUserIdContext = () => {
   return useContext(UserIdContext);
 };
+
 export const UserIdContextProvider = ({ children }) => {
   const [data, setData] = useState(() => {
     // Initialize data from localStorage if available
     const storedData = localStorage.getItem("userData");
     return storedData ? JSON.parse(storedData) : null;
   });
+
+  const [token, setToken] = useState(() => {
+    // Initialize token from localStorage if available
+    const storedToken = localStorage.getItem("userToken");
+    return storedToken ? storedToken : '';
+  });
+
+  const getUserToken = (token) => {
+    // console.log("JWT token: ", token);
+    setToken(token);
+  };
 
   const getUserId = (id) => {
     setData(id);
@@ -21,8 +33,13 @@ export const UserIdContextProvider = ({ children }) => {
     localStorage.setItem("userData", JSON.stringify(data));
   }, [data]);
 
+  useEffect(() => {
+    // Store token in localStorage whenever it changes
+    localStorage.setItem("userToken", token);
+  }, [token]);
+
   return (
-    <UserIdContext.Provider value={{ data, getUserId }}>
+    <UserIdContext.Provider value={{ data, getUserId, token, getUserToken }}>
       {children}
     </UserIdContext.Provider>
   );

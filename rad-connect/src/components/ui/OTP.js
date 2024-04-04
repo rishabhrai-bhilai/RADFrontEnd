@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { usePatientIdContext } from "../../pages/Patient/PatientIdContext";
+import { useUserIdContext } from "../../pages/Common/UserIdContext";
 
 const OTP = ({ reportId, doctorId, toggleValue }) => {
   const [otp, setOtp] = useState("");
   const { data } = usePatientIdContext();
+  const { token } = useUserIdContext();
 
   console.log(data);
   console.log(reportId);
@@ -39,6 +41,7 @@ const OTP = ({ reportId, doctorId, toggleValue }) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify(requestBody),
         }
@@ -71,6 +74,7 @@ const OTP = ({ reportId, doctorId, toggleValue }) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify(requestBody),
         }
@@ -99,6 +103,7 @@ const OTP = ({ reportId, doctorId, toggleValue }) => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
           },
         }
       );
