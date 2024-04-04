@@ -27,7 +27,7 @@ function PatientDashboard() {
   const fetchPatient = async (data) => {
     try {
       const response = await fetch(
-        "http://localhost:8081/teleRadiology/getPatient",
+        "http://192.168.0.112:8081/teleRadiology/getPatient",
         {
           method: "POST",
           headers: {

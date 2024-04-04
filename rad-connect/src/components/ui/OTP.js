@@ -34,7 +34,7 @@ const OTP = ({ reportId, doctorId, toggleValue }) => {
       };
 
       const response = await fetch(
-        "http://localhost:8081/teleRadiology/giveConsent",
+        "http://192.168.0.112:8081/teleRadiology/giveConsent",
         {
           method: "POST",
           headers: {
@@ -66,7 +66,7 @@ const OTP = ({ reportId, doctorId, toggleValue }) => {
       };
 
       const response = await fetch(
-        "http://localhost:8081/teleRadiology/removeConsent",
+        "http://192.168.0.112:8081/teleRadiology/removeConsent",
         {
           method: "POST",
           headers: {
@@ -94,7 +94,7 @@ const OTP = ({ reportId, doctorId, toggleValue }) => {
   const getOtp = async (data) => {
     try {
       const response = await fetch(
-        `http://localhost:8081/teleRadiology/otpVerification/${data}`,
+        `http://192.168.0.112:8081/teleRadiology/otpVerification/${data}`,
         {
           method: "GET",
           headers: {

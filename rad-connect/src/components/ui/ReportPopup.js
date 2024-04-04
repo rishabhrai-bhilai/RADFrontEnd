@@ -14,6 +14,7 @@ const ReportPopup = ({
   userId,
   setParticularId,
   oldMessages,
+  onRepClick
 }) => {
   const [userData, setUserData] = useState({
     username: "",
@@ -42,7 +43,7 @@ const ReportPopup = ({
   }, []);
 
   const connect = () => {
-    let Sock = new SockJS("http://localhost:8082/ws");
+    let Sock = new SockJS("http://192.168.0.112:8082/ws");
     stompClient = over(Sock);
     stompClient.connect({}, onConnected, onError);
   };
@@ -84,7 +85,7 @@ const ReportPopup = ({
     const fetchImageData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8080/images/getAllReports`,
+          `http://192.168.0.112:8080/images/getAllReports`,
           {
             method: "POST",
             headers: {
@@ -115,7 +116,7 @@ const ReportPopup = ({
 
     try {
       const response = await fetch(
-        `http://localhost:8081/teleRadiology/getMessages`,
+        `http://192.168.0.112:8081/teleRadiology/getMessages`,
         {
           method: "POST",
           headers: {
@@ -158,11 +159,12 @@ const ReportPopup = ({
   };
 
   const handleReportClick = (reportId) => {
+    onRepClick(reportId);
     setSelectedId(reportId);
     console.log("reportId");
     console.log(reportId);
     setParticularId(reportId);
-    fetchMessages(reportId);
+    fetchMessages(reportId);    
   };
   return (
     <div className="report-position">

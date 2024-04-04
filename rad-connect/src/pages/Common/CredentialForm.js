@@ -34,7 +34,7 @@ const CredentialForm = ({ onSubmit }) => {
       };
 
       const response = await fetch(
-        "http://localhost:8081/teleRadiology/loginCredentials",
+        "http://192.168.0.112:8081/teleRadiology/loginCredentials",
         {
           method: "POST",
           headers: {

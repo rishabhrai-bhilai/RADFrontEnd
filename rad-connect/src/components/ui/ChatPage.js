@@ -10,6 +10,7 @@ import { over } from "stompjs";
 import SockJS from "sockjs-client";
 
 import ReportPopup from "./ReportPopup";
+import ChatComponent from "./ChatComponent";
 
 var stompClient = null;
 const ChatPage = () => {
@@ -33,11 +34,17 @@ const ChatPage = () => {
   const [chats, setChats] = useState([]);
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [repId,setRepId]=useState(-1);
+
+  const handleReportClick = (repId) => {    
+        setRepId(repId);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8081/teleRadiology/getChats/${data}`,
+          `http://192.168.0.112:8081/teleRadiology/getChats/${data}`,
           {
             method: "GET",
             headers: {
@@ -63,7 +70,7 @@ const ChatPage = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8081/teleRadiology/getChats/${data}`,
+          `http://192.168.0.112:8081/teleRadiology/getChats/${data}`,
           {
             method: "GET",
             headers: {
@@ -97,7 +104,7 @@ const ChatPage = () => {
   }, []);
 
   const connect = () => {
-    let Sock = new SockJS("http://localhost:8082/ws");
+    let Sock = new SockJS("http://192.168.0.112:8082/ws");
     stompClient = over(Sock);
     stompClient.connect({}, onConnected, onError);
   };
@@ -191,7 +198,7 @@ const ChatPage = () => {
     // );
     try {
       const response = await fetch(
-        "http://localhost:8081/teleRadiology/addMessage",
+        "http://192.168.0.112:8081/teleRadiology/addMessage",
         {
           method: "POST",
           headers: {
@@ -265,6 +272,7 @@ const ChatPage = () => {
                 userId={userId}
                 setParticularId={setSelectedId}
                 oldMessages={messages}
+                onRepClick={handleReportClick}
               ></ReportPopup>
             </div>
           )}
@@ -309,32 +317,12 @@ const ChatPage = () => {
               </ul>
             </div>
           </div>
-
-          <div className="rightside-chat">
-            <div className="rightside-header">
-              <div className="right-side-image-div">
-                <div className="right-side-image">
-                  <img src={patientChatImg} alt="" />
-                </div>
-              </div>
-              <div className="rightside-header-data">
-                <div className="rightside-header-name">Rishabh Rai</div>
-                <div className="rightside-header-status">Active Now</div>
-              </div>
-            </div>
-            {messagesLoaded && (
-              <div className="message-container">
-                {messages.map((message) => (
-                  <Message key={message.id} message={message} />
-                ))}
-              </div>
-            )}
-
-            <div className="msg-input-taker">
-              <MessageInput onSendMessage={handleSendMessage} />
-            </div>
-          </div>
+          {repId!==-1 && (
+        <div>
+          <ChatComponent rId={repId}/>
         </div>
+      )}
+          </div>
       </div>
       //{" "}
       <div>
