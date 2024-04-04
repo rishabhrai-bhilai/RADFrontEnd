@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { usePatientIdContext } from "../../pages/Patient/PatientIdContext";
+import { useUserIdContext } from "../../pages/Common/UserIdContext";
 
 const OTP = ({ reportId, doctorId, toggleValue }) => {
   const [otp, setOtp] = useState("");
   const { data } = usePatientIdContext();
+  const { token } = useUserIdContext();
 
   console.log(data);
   console.log(reportId);
@@ -34,11 +36,12 @@ const OTP = ({ reportId, doctorId, toggleValue }) => {
       };
 
       const response = await fetch(
-        "http://localhost:8081/teleRadiology/giveConsent",
+        "http://192.168.108.211:8081/teleRadiology/giveConsent",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify(requestBody),
         }
@@ -66,11 +69,12 @@ const OTP = ({ reportId, doctorId, toggleValue }) => {
       };
 
       const response = await fetch(
-        "http://localhost:8081/teleRadiology/removeConsent",
+        "http://192.168.108.211:8081/teleRadiology/removeConsent",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify(requestBody),
         }
@@ -94,11 +98,12 @@ const OTP = ({ reportId, doctorId, toggleValue }) => {
   const getOtp = async (data) => {
     try {
       const response = await fetch(
-        `http://localhost:8081/teleRadiology/otpVerification/${data}`,
+        `http://192.168.108.211:8081/teleRadiology/otpVerification/${data}`,
         {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
           },
         }
       );

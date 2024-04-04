@@ -9,7 +9,7 @@ import OTP from "./OTP";
 const Modal = ({ closeModal, reportId }) => {
   console.log(reportId);
 
-  const { data } = useUserIdContext();
+  const { data, token } = useUserIdContext();
 
   const [doctors, setDoctors] = useState([]);
   const [filteredDoctorsList, setFilteredDoctorsList] = useState([]);
@@ -54,11 +54,12 @@ const Modal = ({ closeModal, reportId }) => {
   const getAllDoctors = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8081/teleRadiology/getAllDoctors",
+        "http://192.168.108.211:8081/teleRadiology/getAllDoctors",
         {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
           },
         }
       );
@@ -82,11 +83,12 @@ const Modal = ({ closeModal, reportId }) => {
   const getReportViewers = async (reportId) => {
     try {
       const response = await fetch(
-        `http://localhost:8081/teleRadiology/getReportViewers/${reportId}`,
+        `http://192.168.108.211:8081/teleRadiology/getReportViewers/${reportId}`,
         {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
           },
         }
       );

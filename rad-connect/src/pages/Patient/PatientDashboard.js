@@ -16,22 +16,24 @@ function PatientDashboard() {
 
   const [loading, setLoading] = useState(true);
 
-  const { data } = useUserIdContext();
+  const { data, token } = useUserIdContext();
 
   const { getPatientId } = usePatientIdContext();
 
   useEffect(() => {
+    console.log("JWT token: ", token);
     fetchPatient(data);
   }, []);
 
   const fetchPatient = async (data) => {
     try {
       const response = await fetch(
-        "http://localhost:8081/teleRadiology/getPatient",
+        "http://192.168.108.211:8081/teleRadiology/getPatient",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify({ id: parseInt(data) }),
         }

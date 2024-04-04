@@ -31,7 +31,7 @@ const NewPatient = ({ onSubmitEmail, onSubmitCred }) => {
     };
 
     try {
-        const response = await fetch('http://localhost:8081/teleRadiology/createPatientCred', {
+        const response = await fetch('http://192.168.108.211:8081/teleRadiology/createPatientCred', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

@@ -15,7 +15,7 @@ var stompClient = null;
 const ChatPage = () => {
   const [messages, setMessages] = useState([]);
   const [userId, setUserId] = useState([]);
-  const { data } = useUserIdContext();
+  const { data, token } = useUserIdContext();
   const [messagesLoaded, setMessagesLoaded] = useState(false);
   const [selectedId, setSelectedId] = useState();
   // const { data } = usePatientIdContext();
@@ -37,11 +37,12 @@ const ChatPage = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8081/teleRadiology/getChats/${data}`,
+          `http://192.168.108.211:8081/teleRadiology/getChats/${data}`,
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
             },
           }
         );
@@ -63,11 +64,12 @@ const ChatPage = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8081/teleRadiology/getChats/${data}`,
+          `http://192.168.108.211:8081/teleRadiology/getChats/${data}`,
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
             },
           }
         );
@@ -97,7 +99,7 @@ const ChatPage = () => {
   }, []);
 
   const connect = () => {
-    let Sock = new SockJS("http://localhost:8082/ws");
+    let Sock = new SockJS("http://192.168.108.211:8082/ws");
     stompClient = over(Sock);
     stompClient.connect({}, onConnected, onError);
   };
@@ -191,11 +193,12 @@ const ChatPage = () => {
     // );
     try {
       const response = await fetch(
-        "http://localhost:8081/teleRadiology/addMessage",
+        "http://192.168.108.211:8081/teleRadiology/addMessage",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify({
             sender: data,

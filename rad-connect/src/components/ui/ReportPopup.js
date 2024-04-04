@@ -23,7 +23,7 @@ const ReportPopup = ({
   });
   const [expanded, setExpanded] = useState(false);
   const [reports, setReports] = useState([]);
-  const { data } = useUserIdContext();
+  const { data, token } = useUserIdContext();
   const [selectedId, setSelectedId] = useState();
 
   const toggleDiv = () => {
@@ -42,7 +42,7 @@ const ReportPopup = ({
   }, []);
 
   const connect = () => {
-    let Sock = new SockJS("http://localhost:8082/ws");
+    let Sock = new SockJS("http://192.168.108.211:8082/ws");
     stompClient = over(Sock);
     stompClient.connect({}, onConnected, onError);
   };
@@ -84,11 +84,12 @@ const ReportPopup = ({
     const fetchImageData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8080/images/getAllReports`,
+          `http://192.168.108.211:8080/images/getAllReports`,
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify({ reportIds: chatReports }),
           }
@@ -115,11 +116,12 @@ const ReportPopup = ({
 
     try {
       const response = await fetch(
-        `http://localhost:8081/teleRadiology/getMessages`,
+        `http://192.168.108.211:8081/teleRadiology/getMessages`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify({
             user1Id: data,

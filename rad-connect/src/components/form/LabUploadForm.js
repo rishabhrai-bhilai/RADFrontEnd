@@ -10,9 +10,10 @@ function LabUploadForm() {
   const [type, setType] = useState("");
   const [image, setImage] = useState(null);
   const [rid, setRid] = useState();
-  const { data } = useUserIdContext();
+  const { data, token } = useUserIdContext();
 
-  // console.log(data);
+  console.log(data);
+  console.log(token);
 
   let responseData;
 
@@ -31,7 +32,7 @@ function LabUploadForm() {
     console.log(email);
 
     const formData = {
-      dateOfIssue: "2024-03-29",
+      dateOfIssue: "2024-04-04",
       initialRemarks: remarks,
       reportType: type,
       lid: data,
@@ -40,11 +41,12 @@ function LabUploadForm() {
 
     try {
       const response = await fetch(
-        "http://localhost:8081/teleRadiology/uploadReport",
+        "http://192.168.108.211:8081/teleRadiology/uploadReport",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            //"Authorization": `Bearer ${token}`
           },
           body: JSON.stringify(formData),
         }
@@ -79,11 +81,12 @@ function LabUploadForm() {
     console.log(val);
     try {
       const response = await fetch(
-        "http://192.168.0.102:8081/images/uploadReport",
+        "http://192.168.108.211:8080/images/uploadReport",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify({ report: imageUri, reportId: val }),
         }
