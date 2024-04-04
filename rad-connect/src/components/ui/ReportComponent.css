@@ -79,7 +79,13 @@
 }
 
 .report-data > div{
-    min-width: 10%;
+
+    /* error solved img  */
+    /* min-width: 10%;
+    max-width: 20%; */
+
+    
+    flex: 2;
     /* background-color: #f4aeae; */
     /* border: 2px solid red; */
     display: flex;

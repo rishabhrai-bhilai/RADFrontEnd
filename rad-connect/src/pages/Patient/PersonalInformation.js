@@ -80,7 +80,7 @@ function PersonalInformation({username,uid}) {
         };
     
         try {
-            const response = await fetch('http://192.168.0.112:8081/teleRadiology/addPatient', {
+            const response = await fetch('http://192.168.0.100:8081/teleRadiology/addPatient', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'

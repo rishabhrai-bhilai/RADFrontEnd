@@ -2,6 +2,7 @@ import {React,useState,useEffect} from 'react';
 import Message from './Message';
 import MessageInput from './MessageInput';
 import "./ChatPage.css";
+import patientChatImg from "../../assets/patientbox.png";
 
 const ChatComponent = ({rId}) => {
     console.log(rId);
@@ -10,8 +11,8 @@ const ChatComponent = ({rId}) => {
             <div className="rightside-header">
               <div className="right-side-image-div">
                 <div className="right-side-image">
-                    <p>Chat Component</p>
-                  {/* <img src={patientChatImg} alt="" /> */}
+                    {/* <p>Chat Component</p> */}
+                  <img src={patientChatImg} alt="" />
                 </div>
               </div>
               <div className="rightside-header-data">
@@ -25,11 +26,12 @@ const ChatComponent = ({rId}) => {
                   <Message key={message.id} message={message} />
                 ))}
               </div>
-            )}
+            )} */}
 
             <div className="msg-input-taker">
-              <MessageInput onSendMessage={handleSendMessage} />
-            </div> */}
+              <MessageInput/>
+              {/* <MessageInput onSendMessage={handleSendMessage} /> */}
+            </div>
           </div>
         
   )

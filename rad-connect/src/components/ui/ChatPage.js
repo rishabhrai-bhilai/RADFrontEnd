@@ -44,7 +44,7 @@ const ChatPage = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://192.168.0.112:8081/teleRadiology/getChats/${data}`,
+          `http://192.168.0.100:8081/teleRadiology/getChats/${data}`,
           {
             method: "GET",
             headers: {
@@ -70,7 +70,7 @@ const ChatPage = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://192.168.0.112:8081/teleRadiology/getChats/${data}`,
+          `http://192.168.0.100:8081/teleRadiology/getChats/${data}`,
           {
             method: "GET",
             headers: {
@@ -104,7 +104,7 @@ const ChatPage = () => {
   }, []);
 
   const connect = () => {
-    let Sock = new SockJS("http://192.168.0.112:8082/ws");
+    let Sock = new SockJS("http://192.168.0.100:8082/ws");
     stompClient = over(Sock);
     stompClient.connect({}, onConnected, onError);
   };
@@ -198,7 +198,7 @@ const ChatPage = () => {
     // );
     try {
       const response = await fetch(
-        "http://192.168.0.112:8081/teleRadiology/addMessage",
+        "http://192.168.0.100:8081/teleRadiology/addMessage",
         {
           method: "POST",
           headers: {
@@ -273,6 +273,7 @@ const ChatPage = () => {
                 setParticularId={setSelectedId}
                 oldMessages={messages}
                 onRepClick={handleReportClick}
+                removeChat={setRepId}
               ></ReportPopup>
             </div>
           )}
@@ -317,17 +318,16 @@ const ChatPage = () => {
               </ul>
             </div>
           </div>
-          {repId!==-1 && (
-        <div>
+          {repId==-1 ? (<div className="rightside-chat"></div>) :(
+        
           <ChatComponent rId={repId}/>
-        </div>
+        
       )}
           </div>
       </div>
-      //{" "}
+      
       <div>
-        // <h1>hello</h1>
-        //{" "}
+        
       </div>
     </>
   );

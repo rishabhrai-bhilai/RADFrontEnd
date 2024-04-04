@@ -27,7 +27,7 @@ function ReportComponent() {
   const fetchPatient = async (data) => {
     try {
       const response = await fetch(
-        "http://192.168.0.112:8081/teleRadiology/getPatient",
+        "http://192.168.0.100:8081/teleRadiology/getPatient",
         {
           method: "POST",
           headers: {
@@ -49,7 +49,7 @@ function ReportComponent() {
   const fetchReports = async (patientId) => {
     try {
       const response = await fetch(
-        "http://192.168.0.112:8081/teleRadiology/getPatientReports",
+        "http://192.168.0.100:8081/teleRadiology/getPatientReports",
         {
           method: "POST",
           headers: {
@@ -75,7 +75,7 @@ function ReportComponent() {
     try {
       const fetchPromises = ids.map(async (id) => {
         const response = await fetch(
-          `http://192.168.0.112:8080/images/getReport/${id}`
+          `http://192.168.0.100:8080/images/getReport/${id}`
         );
         if (!response.ok) {
           throw new Error(`Failed to fetch image for report ID ${id}`);
@@ -139,8 +139,8 @@ function ReportComponent() {
             <li>
               <div className="report-list-box | report-data">
                 <div>Image</div>
-                <div>Report Id</div>
-                <div>Name</div>
+                {/* <div>Report Id</div> */}
+                {/* <div>Name</div> */}
                 <div>Type</div>
                 <div>Upload Date</div>
                 <div>buttons</div>
@@ -158,8 +158,8 @@ function ReportComponent() {
                           <img src={report.imageUrl} alt="Report" />
                         </div>
                       </div>
-                      <div className="">{report.id}</div>
-                      <div className="">{report.reportType}</div>
+                      {/* <div className="">{report.id}</div> */}
+                      {/* <div className="">{report.reportType}</div> */}
                       <div className="">{report.reportType}</div>
                       <div className="">{report.dateOfIssue}</div>
                       <div className="report-button-container">

@@ -40,7 +40,7 @@ function LabUploadForm() {
 
     try {
       const response = await fetch(
-        "http://192.168.0.112:8081/teleRadiology/uploadReport",
+        "http://192.168.0.100:8081/teleRadiology/uploadReport",
         {
           method: "POST",
           headers: {

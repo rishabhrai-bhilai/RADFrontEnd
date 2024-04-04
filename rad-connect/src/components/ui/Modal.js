@@ -54,7 +54,7 @@ const Modal = ({ closeModal, reportId }) => {
   const getAllDoctors = async () => {
     try {
       const response = await fetch(
-        "http://192.168.0.112:8081/teleRadiology/getAllDoctors",
+        "http://192.168.0.100:8081/teleRadiology/getAllDoctors",
         {
           method: "GET",
           headers: {
@@ -82,7 +82,7 @@ const Modal = ({ closeModal, reportId }) => {
   const getReportViewers = async (reportId) => {
     try {
       const response = await fetch(
-        `http://192.168.0.112:8081/teleRadiology/getReportViewers/${reportId}`,
+        `http://192.168.0.100:8081/teleRadiology/getReportViewers/${reportId}`,
         {
           method: "GET",
           headers: {
