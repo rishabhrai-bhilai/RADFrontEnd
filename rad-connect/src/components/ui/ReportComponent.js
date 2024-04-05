@@ -12,7 +12,7 @@ function ReportComponent() {
   const [patient, setPatient] = useState(-1);
   const [images, setImages] = useState([]);
   const [show, setShow] = useState(false);
-  const [loading, setLoading] = useState(false); // Loading
+  const [loading, setLoading] = useState(true); // Loading
   const [reportIdInModal, setReportIdInModal] = useState(null);
 
   const openModal = (reportId) => {
