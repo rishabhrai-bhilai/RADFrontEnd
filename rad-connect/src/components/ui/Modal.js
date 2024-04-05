@@ -100,7 +100,8 @@ const Modal = ({ closeModal, reportId }) => {
           DATA_HOST +
           ":" +
           DATA_PORT +
-          "teleRadiology/getReportViewers/${reportId}",
+          "teleRadiology/getReportViewers/" +
+          reportId,
         {
           method: "GET",
           headers: {

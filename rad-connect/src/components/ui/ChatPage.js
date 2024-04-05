@@ -42,7 +42,8 @@ const ChatPage = () => {
             DATA_HOST +
             ":" +
             DATA_PORT +
-            "/teleRadiology/getChats/${data}",
+            "/teleRadiology/getChats/" +
+            data,
           {
             method: "GET",
             headers: {

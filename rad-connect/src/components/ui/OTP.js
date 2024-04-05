@@ -127,7 +127,8 @@ const OTP = ({
           DATA_HOST +
           ":" +
           DATA_PORT +
-          "/teleRadiology/otpVerification/${data}",
+          "/teleRadiology/otpVerification/" +
+          data,
         {
           method: "GET",
           headers: {
