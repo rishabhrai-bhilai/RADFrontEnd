@@ -18,6 +18,7 @@ const Modal = ({ closeModal, reportId }) => {
   const [reportViewers, setReportViewers] = useState(null);
   const [toggleValue, setToggleValue] = useState();
   const [show, setShow] = useState(false);
+  const [responseMessage,setResponseMessage]=useState('');
 
   const handleSearch = (searchTerm) => {
     const filteredNames = doctors.filter((doc) =>
@@ -54,7 +55,7 @@ const Modal = ({ closeModal, reportId }) => {
   const getAllDoctors = async () => {
     try {
       const response = await fetch(
-        "http://192.168.0.100:8081/teleRadiology/getAllDoctors",
+        "http://localhost:8081/teleRadiology/getAllDoctors",
         {
           method: "GET",
           headers: {
@@ -83,7 +84,7 @@ const Modal = ({ closeModal, reportId }) => {
   const getReportViewers = async (reportId) => {
     try {
       const response = await fetch(
-        `http://192.168.0.100:8081/teleRadiology/getReportViewers/${reportId}`,
+        `http://localhost:8081/teleRadiology/getReportViewers/${reportId}`,
         {
           method: "GET",
           headers: {
@@ -136,7 +137,17 @@ const Modal = ({ closeModal, reportId }) => {
 
     console.log(filteredDoctorsList);
   };
-
+   
+  useEffect(() => {
+    if (responseMessage.length > 0) {
+      const timer = setTimeout(() => {
+        setResponseMessage('');
+      }, 10000); // 10 seconds
+  
+      return () => clearTimeout(timer);
+    }
+  }, [responseMessage]);
+  
   return (
     <div className="modal">
       <div className="modal-content">
@@ -185,9 +196,10 @@ const Modal = ({ closeModal, reportId }) => {
             )}
             <div>
               {showOTPComponent && (
-                <OTP reportId={reportId} doctorId={selectedDoctorId} toggleValue={toggleValue}/>
-              )}
+                <OTP reportId={reportId} doctorId={selectedDoctorId} toggleValue={toggleValue} setShowOTPComponent={setShowOTPComponent} setResponseMessage={setResponseMessage}/>
+              )}         
             </div>
+            {responseMessage.length > 0 && (<div>{responseMessage}</div>)}
           </div>
         </div>
       </div>

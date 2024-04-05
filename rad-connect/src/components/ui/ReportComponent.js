@@ -12,7 +12,7 @@ function ReportComponent() {
   const [patient, setPatient] = useState(-1);
   const [images, setImages] = useState([]);
   const [show, setShow] = useState(false);
-  const [loading, setLoading] = useState(true); // Loading
+  const [loading, setLoading] = useState(false); // Loading
   const [reportIdInModal, setReportIdInModal] = useState(null);
 
   const openModal = (reportId) => {
@@ -27,7 +27,7 @@ function ReportComponent() {
   const fetchPatient = async (data) => {
     try {
       const response = await fetch(
-        "http://192.168.0.100:8081/teleRadiology/getPatient",
+        "http://localhost:8081/teleRadiology/getPatient",
         {
           method: "POST",
           headers: {
@@ -50,7 +50,7 @@ function ReportComponent() {
   const fetchReports = async (patientId) => {
     try {
       const response = await fetch(
-        "http://192.168.0.100:8081/teleRadiology/getPatientReports",
+        "http://localhost:8081/teleRadiology/getPatientReports",
         {
           method: "POST",
           headers: {

@@ -45,7 +45,7 @@ const ReportPopup = ({
   }, []);
 
   const connect = () => {
-    let Sock = new SockJS("http://192.168.0.100:8082/ws");
+    let Sock = new SockJS("http://localhost:8082/ws");
     stompClient = over(Sock);
     stompClient.connect({}, onConnected, onError);
   };
@@ -87,7 +87,7 @@ const ReportPopup = ({
     const fetchImageData = async () => {
       try {
         const response = await fetch(
-          `http://192.168.0.100:8080/images/getAllReports`,
+          `http://localhost:8080/images/getAllReports`,
           {
             method: "POST",
             headers: {
@@ -119,7 +119,7 @@ const ReportPopup = ({
 
     try {
       const response = await fetch(
-        `http://192.168.0.100:8081/teleRadiology/getMessages`,
+        `http://localhost:8081/teleRadiology/getMessages`,
         {
           method: "POST",
           headers: {

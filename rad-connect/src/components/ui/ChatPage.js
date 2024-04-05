@@ -44,7 +44,7 @@ const ChatPage = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://192.168.0.100:8081/teleRadiology/getChats/${data}`,
+          `http://localhost:8081/teleRadiology/getChats/${data}`,
           {
             method: "GET",
             headers: {
@@ -71,7 +71,7 @@ const ChatPage = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://192.168.0.100:8081/teleRadiology/getChats/${data}`,
+          `http://localhost:8081/teleRadiology/getChats/${data}`,
           {
             method: "GET",
             headers: {
@@ -106,7 +106,7 @@ const ChatPage = () => {
   }, []);
 
   const connect = () => {
-    let Sock = new SockJS("http://192.168.0.100:8082/ws");
+    let Sock = new SockJS("http://localhost:8082/ws");
     stompClient = over(Sock);
     stompClient.connect({}, onConnected, onError);
   };
@@ -200,7 +200,7 @@ const ChatPage = () => {
     // );
     try {
       const response = await fetch(
-        "http://192.168.0.100:8081/teleRadiology/addMessage",
+        "http://localhost:8081/teleRadiology/addMessage",
         {
           method: "POST",
           headers: {

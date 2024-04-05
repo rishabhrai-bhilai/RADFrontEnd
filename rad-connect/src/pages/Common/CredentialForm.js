@@ -34,7 +34,7 @@ const CredentialForm = ({ onSubmit }) => {
       };
 
       const response = await fetch(
-        "http://192.168.0.100:8081/teleRadiology/loginCredentials",
+        "http://localhost:8081/teleRadiology/loginCredentials",
         {
           method: "POST",
           headers: {
@@ -56,7 +56,7 @@ const CredentialForm = ({ onSubmit }) => {
 
         if (data === "Patient") navigate("/patientdashboard");
         if (data === "Lab") navigate("/labdashboard");
-        if (data === "Doctor") navigate("/doctorprofile");
+        if (data === "Doctor") navigate("/doctordashboard");
       } else {
         // Handle errors
         setShowError(true);

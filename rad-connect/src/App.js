@@ -51,12 +51,13 @@ function App() {
         <Route path="/patientreports" element={<Reports />} />
         <Route path="/labdashboard" element={<ReportUpload />} />
         <Route path="/patientchat" element={<ChatPage />} />
+        <Route path="/doctordashboard" element={<DoctorDashboard />} />
 
         {/* <Route path="/labprofile" element={<LabProfile/>}/> */}
         {/* <Route path="/doctorprofile" element={<DoctorProfile/>}/> */}
       </Routes>
       {/* <ChatPopup></ChatPopup>
-      <Navbar /> */}
+      <Navbar /> */}      
     </div>
   );
 }

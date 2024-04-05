@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { usePatientIdContext } from "../../pages/Patient/PatientIdContext";
 import { useUserIdContext } from "../../pages/Common/UserIdContext";
 
-const OTP = ({ reportId, doctorId, toggleValue }) => {
+const OTP = ({ reportId, doctorId, toggleValue, setShowOTPComponent, setResponseMessage }) => {
   const [otp, setOtp] = useState("");
   const { data } = usePatientIdContext();
   const { token } = useUserIdContext();
@@ -23,6 +23,8 @@ const OTP = ({ reportId, doctorId, toggleValue }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setShowOTPComponent(false);
+
     let intOtp = parseInt(otp);
 
     if(toggleValue===1)
@@ -36,7 +38,7 @@ const OTP = ({ reportId, doctorId, toggleValue }) => {
       };
 
       const response = await fetch(
-        "http://192.168.0.100:8081/teleRadiology/giveConsent",
+        "http://localhost:8081/teleRadiology/giveConsent",
         {
           method: "POST",
           headers: {
@@ -47,15 +49,17 @@ const OTP = ({ reportId, doctorId, toggleValue }) => {
         }
       );
 
-      if (response.ok) {
-        // If the response is successful, you might want to handle it accordingly.
-        const responseData = await response.json();
+      if (response.ok) {        
+        const responseData = await response.json();        
         console.log(responseData);
+        setResponseMessage("Consent Given");
       } else {
         console.log("Unable to give Consent");
+        setResponseMessage("Unable to give Consent");
       }
     } catch (error) {
       console.error("OTP incorrect:", error.message);
+      setResponseMessage("OTP incorrect");
     }
   }
   else{
@@ -69,7 +73,7 @@ const OTP = ({ reportId, doctorId, toggleValue }) => {
       };
 
       const response = await fetch(
-        "http://192.168.0.100:8081/teleRadiology/removeConsent",
+        "http://localhost:8081/teleRadiology/removeConsent",
         {
           method: "POST",
           headers: {
@@ -80,15 +84,17 @@ const OTP = ({ reportId, doctorId, toggleValue }) => {
         }
       );
 
-      if (response.ok) {
-        // If the response is successful, you might want to handle it accordingly.
+      if (response.ok) {        
         const responseData = await response.json();
         console.log(responseData);
+        setResponseMessage("Consent Removed");
       } else {
         console.log("Unable to remove Consent");
+        setResponseMessage("Unable to remove Consent");
       }
     } catch (error) {
       console.error("OTP incorrect:", error.message);
+      setResponseMessage("OTP incorrect");
     }
   }
 
@@ -98,7 +104,7 @@ const OTP = ({ reportId, doctorId, toggleValue }) => {
   const getOtp = async (data) => {
     try {
       const response = await fetch(
-        `http://192.168.0.100:8081/teleRadiology/otpVerification/${data}`,
+        `http://localhost:8081/teleRadiology/otpVerification/${data}`,
         {
           method: "GET",
           headers: {

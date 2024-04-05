@@ -1,7 +1,5 @@
-
 // import React from "react";
 // import "../Patient/Reports.css";
-
 
 import { useUserIdContext } from '../Common/UserIdContext';
 import "./Reports.css";
@@ -13,10 +11,6 @@ import Modal from "../../components/ui/Modal";
 import ReportComponent from "../../components/ui/ReportComponent";
 
 function Reports() {
-
-
-  
-
   return (
     <>
     <Navbar></Navbar>
@@ -32,17 +26,11 @@ function Reports() {
             <div className="nav-2">Accesses</div>
             <div className="nav-3">History</div>
           </div>
-
           <ReportComponent></ReportComponent>
-
-
-
-
         </div>
       </div>
     </section>
     </>
-   
   );
 }
 
