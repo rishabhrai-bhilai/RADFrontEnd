@@ -38,7 +38,11 @@ const ChatPage = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8081/teleRadiology/getChats/${data}`,
+          "http://" +
+            DATA_HOST +
+            ":" +
+            DATA_PORT +
+            "/teleRadiology/getChats/${data}",
           {
             method: "GET",
             headers: {

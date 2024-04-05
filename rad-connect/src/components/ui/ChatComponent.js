@@ -96,7 +96,7 @@ const ChatComponent = ({ rId, uId, myId }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:8081/teleRadiology/getMessages`,
+        "http://" + DATA_HOST + ":" + DATA_PORT + "/teleRadiology/getMessages",
         {
           method: "POST",
           headers: {
