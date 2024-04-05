@@ -6,6 +6,14 @@ import { useLoginRoleContext } from "./LoginRoleContext";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useUserIdContext } from "./UserIdContext";
+import {
+  DATA_HOST,
+  DATA_PORT,
+  IMAGES_HOST,
+  IMAGES_PORT,
+  CHAT_HOST,
+  CHAT_PORT,
+} from "../../constants";
 
 const CredentialForm = ({ onSubmit }) => {
   const [username, setUsername] = useState("");
@@ -34,7 +42,11 @@ const CredentialForm = ({ onSubmit }) => {
       };
 
       const response = await fetch(
-        "http://localhost:8081/teleRadiology/loginCredentials",
+        "http://" +
+          DATA_HOST +
+          ":" +
+          DATA_PORT +
+          "/teleRadiology/loginCredentials",
         {
           method: "POST",
           headers: {
@@ -49,9 +61,9 @@ const CredentialForm = ({ onSubmit }) => {
         const responseData = await response.json();
         const userId = responseData.user;
 
-        console.log(userId); 
+        console.log(userId);
         getUserId(userId);
-        console.log(responseData.token); 
+        console.log(responseData.token);
         getUserToken(responseData.token);
 
         if (data === "Patient") navigate("/patientdashboard");

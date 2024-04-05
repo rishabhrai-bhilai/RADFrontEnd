@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-
+import {
+  DATA_HOST,
+  DATA_PORT,
+  IMAGES_HOST,
+  IMAGES_PORT,
+  CHAT_HOST,
+  CHAT_PORT,
+} from "../../constants";
 import DragDropFiles from "./DragDropFiles";
 import { useUserIdContext } from "../../pages/Common/UserIdContext";
 import "./LabUploadForm.css";
@@ -18,7 +25,6 @@ function LabUploadForm() {
   let responseData;
 
   const handleFormSubmit = async (event) => {
-
     event.preventDefault();
 
     // Get today's date
@@ -41,7 +47,7 @@ function LabUploadForm() {
 
     try {
       const response = await fetch(
-        "http://localhost:8081/teleRadiology/uploadReport",
+        "http://" + DATA_HOST + ":" + DATA_PORT + "/teleRadiology/uploadReport",
         {
           method: "POST",
           headers: {
@@ -58,7 +64,6 @@ function LabUploadForm() {
         setRid(responseData.rid);
       } else {
         console.error("Failed to submit form");
-
       }
     } catch (error) {
       console.error("Error occurred while submitting form:", error);
@@ -76,17 +81,16 @@ function LabUploadForm() {
     reader.readAsDataURL(image);
   };
 
-
   const sendImageToBackend = async (imageUri, rand, val) => {
     console.log(val);
     try {
       const response = await fetch(
-        "http://192.168.108.211:8080/images/uploadReport",
+        "http://" + IMAGES_HOST + ":" + IMAGES_PORT + "/images/uploadReport",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({ report: imageUri, reportId: val }),
         }

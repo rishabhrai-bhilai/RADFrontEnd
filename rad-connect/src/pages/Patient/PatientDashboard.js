@@ -6,6 +6,14 @@ import Navbar from "../../components/navbar/Navbar";
 import { useUserIdContext } from "../Common/UserIdContext";
 import { usePatientIdContext } from "./PatientIdContext";
 import ChatPopup from "../../components/ui/ChatPopup";
+import {
+  DATA_HOST,
+  DATA_PORT,
+  IMAGES_HOST,
+  IMAGES_PORT,
+  CHAT_HOST,
+  CHAT_PORT,
+} from "../../constants";
 
 function PatientDashboard() {
   const [patient, setPatient] = useState(() => {
@@ -28,12 +36,12 @@ function PatientDashboard() {
   const fetchPatient = async (data) => {
     try {
       const response = await fetch(
-        "http://localhost:8081/teleRadiology/getPatient",
+        "http://" + DATA_HOST + ":" + DATA_PORT + "/teleRadiology/getPatient",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({ id: parseInt(data) }),
         }

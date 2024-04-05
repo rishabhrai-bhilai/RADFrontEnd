@@ -4,6 +4,14 @@ import { useUserIdContext } from "../../pages/Common/UserIdContext";
 import imgg from "../../assets/mri_img.png";
 import ButtonComponent from "./ButtonComponent";
 import "./ReportComponent.css";
+import {
+  DATA_HOST,
+  DATA_PORT,
+  IMAGES_HOST,
+  IMAGES_PORT,
+  CHAT_HOST,
+  CHAT_PORT,
+} from "../../constants";
 
 function ReportComponent() {
   const [showModal, setShowModal] = useState(false);
@@ -27,12 +35,12 @@ function ReportComponent() {
   const fetchPatient = async (data) => {
     try {
       const response = await fetch(
-        "http://localhost:8081/teleRadiology/getPatient",
+        "http://" + DATA_HOST + ":" + DATA_PORT + "/teleRadiology/getPatient",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({ id: data }),
         }
@@ -50,12 +58,16 @@ function ReportComponent() {
   const fetchReports = async (patientId) => {
     try {
       const response = await fetch(
-        "http://localhost:8081/teleRadiology/getPatientReports",
+        "http://" +
+          DATA_HOST +
+          ":" +
+          DATA_PORT +
+          "/teleRadiology/getPatientReports",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            'Authorization': 'Bearer ' + token
+            Authorization: "Bearer " + token,
           },
           body: JSON.stringify({ id: patientId }),
         }
@@ -75,39 +87,36 @@ function ReportComponent() {
   const getReportImages = async (ids) => {
     let arr = [];
     try {
-        const response = await fetch(
-          `http://192.168.108.211:8080/images/getAllReports`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${token}`
-            },
-            body: JSON.stringify({reportIds: ids})
-          }
-        );
-        if (!response.ok) {
-          throw new Error(`Failed to fetch image for reports`);
+      const response = await fetch(
+        "http://" + IMAGES_HOST + ":" + IMAGES_PORT + "/images/getAllReports",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ reportIds: ids }),
         }
-        const imageData = await response.json();
-        arr=imageData.reports;
-        //console.log(imageData.reports);
+      );
+      if (!response.ok) {
+        throw new Error(`Failed to fetch image for reports`);
+      }
+      const imageData = await response.json();
+      arr = imageData.reports;
+      //console.log(imageData.reports);
       // await Promise.all(fetchPromises); // Wait for all fetches to complete
       setImages(arr);
       //console.log(arr);
-      for(let i=0;i<arr.length;i++)
-      {
-        for(let j=0;j<reports.length;j++)
-        {
-          if(arr[i].reportId===reports[j].id)
-          {
-          reports[i].imageUrl=arr[i].report;
+      for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < reports.length; j++) {
+          if (arr[i].reportId === reports[j].id) {
+            reports[i].imageUrl = arr[i].report;
           }
         }
       }
 
-       setReports(reports);
-       console.log(reports);
+      setReports(reports);
+      console.log(reports);
 
       setLoading(false); // Set loading to false after images are fetched
     } catch (error) {
