@@ -71,7 +71,7 @@ function PatientDashboard() {
 
             <div className="Patient-dashboard-container">
               <div className="box">
-                <PatientInformationCard></PatientInformationCard>
+                <PatientInformationCard patient={patient} />
 
                 {/* {loading ? (
             <div>Loading...</div>
@@ -110,6 +110,7 @@ function PatientDashboard() {
                             <span className=" subheading  text-grey-dark">
                               Butterflyaphobia, Raindropitis, Cotton Candy
                               Intolerance
+                              {/* {patient.allergies} */}
                             </span>
                           </div>
                         </div>
@@ -122,7 +123,7 @@ function PatientDashboard() {
                           </div>
                           <div className="medical-data |text-blue-extradark">
                             <p className="heading  text-blue-extradark fw-bold">
-                              Allergies
+                              Current Medication
                             </p>
                             <span className=" subheading  text-grey-dark">
                               Butterflyaphobia, Raindropitis, Cotton Candy
@@ -139,7 +140,7 @@ function PatientDashboard() {
                           </div>
                           <div className="medical-data |text-blue-extradark">
                             <p className="heading text-blue-extradark fw-bold">
-                              Allergies
+                              Past Medication
                             </p>
                             <span className=" subheading text-grey-dark">
                               Butterflyaphobia, Raindropitis, Cotton Candy
@@ -156,7 +157,7 @@ function PatientDashboard() {
                           </div>
                           <div className="medical-data |text-blue-extradark">
                             <p className="heading text-blue-extradark fw-bold">
-                              Allergies
+                              Chronic Diseases
                             </p>
                             <span className=" subheading text-grey-dark">
                               Butterflyaphobia, Raindropitis, Cotton Candy
@@ -181,46 +182,19 @@ function PatientDashboard() {
                             <span>Never</span>
                           </div>
                           <div className="value fw-bold">
-                            <span>Never</span>
+                            <span>1-2/day</span>
                           </div>
                           <div className="value fw-bold">
-                            <span>Never</span>
+                            <span>3-5/day</span>
                           </div>
                           <div className="value fw-bold">
-                            <span>Never</span>
+                            <span>Sometimes</span>
                           </div>
                           <div className="value fw-bold">
-                            <span>Never</span>{" "}
+                            <span>More Than 5</span>{" "}
                           </div>
                           <div className="value fw-bold">
-                            <span>Never</span>{" "}
-                          </div>
-                        </div>
-                      </li>
-
-                      <li className="lifestyle-list-item">
-                        <div className="topic">
-                          <i className="bx bx-home-alt"></i>{" "}
-                          <span className="fw-bold">Smoking Habits</span>{" "}
-                        </div>
-                        <div className="values">
-                          <div className="value fw-bold">
-                            <span>Never</span>
-                          </div>
-                          <div className="value fw-bold">
-                            <span>Never</span>
-                          </div>
-                          <div className="value fw-bold">
-                            <span>Never</span>
-                          </div>
-                          <div className="value fw-bold">
-                            <span>Never</span>
-                          </div>
-                          <div className="value fw-bold">
-                            <span>Never</span>{" "}
-                          </div>
-                          <div className="value fw-bold">
-                            <span>Never</span>{" "}
+                            <span>I've Quit</span>{" "}
                           </div>
                         </div>
                       </li>
@@ -228,26 +202,47 @@ function PatientDashboard() {
                       <li className="lifestyle-list-item">
                         <div className="topic">
                           <i className="bx bx-home-alt"></i>{" "}
-                          <span className="fw-bold">Smoking Habits</span>{" "}
+                          <span className="fw-bold">Drinking Habits</span>{" "}
                         </div>
                         <div className="values">
                           <div className="value fw-bold">
                             <span>Never</span>
                           </div>
                           <div className="value fw-bold">
-                            <span>Never</span>
+                            <span>Social</span>
                           </div>
                           <div className="value fw-bold">
-                            <span>Never</span>
+                            <span>Regular</span>
                           </div>
                           <div className="value fw-bold">
-                            <span>Never</span>
+                            <span>Sometimes</span>
                           </div>
                           <div className="value fw-bold">
-                            <span>Never</span>{" "}
+                            <span>Heavy</span>{" "}
                           </div>
                           <div className="value fw-bold">
-                            <span>Never</span>{" "}
+                            <span>I've Quit</span>{" "}
+                          </div>
+                        </div>
+                      </li>
+
+                      <li className="lifestyle-list-item">
+                        <div className="topic">
+                          <i className="bx bx-home-alt"></i>{" "}
+                          <span className="fw-bold">Food Preferences</span>{" "}
+                        </div>
+                        <div className="values">
+                          <div className="value fw-bold">
+                            <span>Vegan</span>
+                          </div>
+                          <div className="value fw-bold">
+                            <span>Vegetarian</span>
+                          </div>
+                          <div className="value fw-bold">
+                            <span>Eggetarian</span>
+                          </div>
+                          <div className="value fw-bold">
+                            <span>Non-Veg</span>
                           </div>
                         </div>
                       </li>

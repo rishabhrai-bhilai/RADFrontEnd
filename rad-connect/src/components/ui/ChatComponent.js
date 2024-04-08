@@ -15,7 +15,7 @@ import {
 } from "../../constants";
 
 var stompClient = null;
-const ChatComponent = ({ rId, uId, myId }) => {
+const ChatComponent = ({ rId, uId, myId, chatName }) => {
   let subs = null;
   const [messages, setMessages] = useState([]);
   const [userData, setUserData] = useState({
@@ -210,8 +210,8 @@ const ChatComponent = ({ rId, uId, myId }) => {
           </div>
         </div>
         <div className="rightside-header-data">
-          <div className="rightside-header-name">Rishabh Rai</div>
-          <div className="rightside-header-status">Active Now</div>
+          <div className="rightside-header-name">{chatName}</div>
+          {/* <div className="rightside-header-status">Active Now</div> */}
         </div>
       </div>
       {messagesLoaded && (
