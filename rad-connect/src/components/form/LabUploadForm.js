@@ -101,6 +101,7 @@ function LabUploadForm() {
         alert("Unable to Load Details");
       }
       setResponseMessage("Report Uploaded");
+      setResponseMessage("Report Uploaded");
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -179,6 +180,7 @@ function LabUploadForm() {
               Submit
             </button>
           </div>
+          {responseMessage.length > 0 && <div>{responseMessage}</div>}
           {responseMessage.length > 0 && <div>{responseMessage}</div>}
         </div>
       </div>
