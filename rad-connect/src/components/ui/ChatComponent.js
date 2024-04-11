@@ -211,6 +211,7 @@ const ChatComponent = ({ rId, uId, myId, chatName }) => {
         </div>
         <div className="rightside-header-data">
           <div className="rightside-header-name">{chatName}</div>
+          {/* <div className="rightside-header-status">Active Now</div> */}
         </div>
       </div>
       {messagesLoaded && (
