@@ -4,6 +4,7 @@ import { useUserIdContext } from "../../pages/Common/UserIdContext";
 import imgg from "../../assets/mri_img.png";
 // import ButtonComponent from "./ButtonComponent";
 import "./DocReportComponent.css";
+
 import {
   DATA_HOST,
   DATA_PORT,
@@ -13,7 +14,41 @@ import {
   CHAT_PORT,
 } from "../../constants";
 
-function DocReportComponent() {
+function DocReportComponent({patientId}) {
+
+    const { data, token } = useUserIdContext();
+    const[report, setReport] = useState([]);
+    console.log("pat id :  ", patientId);
+    console.log("doc id :  ", data);
+
+    useEffect(() => {
+        getConsentedReports(patientId, data);
+      }, []);
+
+      const getConsentedReports = async (patientId, data) => {
+        try {
+          const response = await fetch(
+            "http://" + DATA_HOST + ":" + DATA_PORT + "/teleRadiology/getConsentReports",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({ patientID: patientId, doctorID: data }),
+            }
+          );
+          if (!response.ok) {
+            throw new Error("Failed to fetch patient");
+          }
+          const responseData = await response.json();
+          console.log(responseData);
+          setReport(responseData);
+        } catch (error) {
+          console.error("Error fetching Reports:", error);
+        }
+      };
+
   
   return (
     <div>
@@ -37,39 +72,18 @@ function DocReportComponent() {
                 <div>buttons</div>
               </div>
             </li>
-            {/* {show &&
-              (loading ? (
-                <div>Loading...</div> // Display loading indicator
-              ) : (
-                reports.map((report) => ( */}
-                  <li>
-                    <div className="report-list-box | report-data">
-                      <div className="report-image">
-                        <div className="image-box">
-                          <img src="" alt="Report" />
-                        </div>
-                      </div>
-                      {/* <div className="">{report.id}</div> */}
-                      {/* <div className="">{report.reportType}</div> */}
-                      <div className="">ECG</div>
-                      <div className="">23/04/24</div>
-                      <div className="report-button-container">
-                        <div className="icon-buttons">
-                            {/* <div className="icon-box">
-                            <i className="bx bxs-bell-ring"></i>
-                            </div> */}
-                            <div className="icon-box">
-                            {/* <ButtonComponent
-                                openModal={() => openModal(report.id)}
-                            />
-                            {showModal &&
-                                reportIdInModal === report.id && ( 
-                                <Modal
-                                    closeModal={closeModal}
-                                    reportId={reportIdInModal}
-                                /> // Pass report id to Modal
-                                )} */}
+                {report.map((reportItem, index) => (
+                    <li key={index}>
+                        <div className="report-list-box | report-data">
+                        <div className="report-image">
+                            <div className="image-box">
+                            <img src={reportItem.imageUrl} alt="Report" />
                             </div>
+                        </div>
+                        <div className="">{reportItem.reportType}</div>
+                        <div className="">{reportItem.dateOfIssue}</div>
+                        <div className="report-button-container">
+                            <div className="icon-buttons">
                             <button>
                                 Chat with Patient
                             </button>
@@ -80,8 +94,8 @@ function DocReportComponent() {
                       </div>
                     </div>
                   </li>
-                {/* ))
-              ))} */}
+                //  ))
+              ))} 
           </ul>
         </div>
       </div>

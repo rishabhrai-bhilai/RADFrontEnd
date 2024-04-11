@@ -85,14 +85,14 @@ function PatientDetails({ patient }) {
 
                 <div className="button-container">
                     <div onClick={() => handleShowReport(patient)}>
-                    <i class="bx bx-folder"></i>
-                    <span>Reports</span>
+                        <i class="bx bx-folder"></i>
+                        <span>Reports</span>
+                        </div>
+                        {/* <div>
+                        <i class="bx bx-chat"></i>
+                        <span>Chat</span>
+                        </div> */}
                     </div>
-                    {/* <div>
-                    <i class="bx bx-chat"></i>
-                    <span>Chat</span>
-                    </div> */}
-                </div>
                 </div>
         </div>
     </>

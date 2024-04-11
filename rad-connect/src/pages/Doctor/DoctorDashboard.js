@@ -14,7 +14,7 @@ import {
   CHAT_PORT,
 } from "../../constants";
 
-function DoctorDashboard() {
+function DoctorDashboard({onClickPat}) {
   const[show, setShow] = useState(false);
   const { data, token } = useUserIdContext();
   const[patients,setPatients]=useState([]);  
@@ -50,6 +50,7 @@ function DoctorDashboard() {
   const handleArrowClick = (patient) => {
     console.log("Clicked arrow for patient:", patient);
     setPatient(patient);
+    onClickPat(patient.id);
     setShow(true);
   };
 
