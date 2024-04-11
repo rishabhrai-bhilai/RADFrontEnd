@@ -18,7 +18,7 @@ function LabUploadForm() {
   const [image, setImage] = useState(null);
   const [rid, setRid] = useState();
   const { data, token } = useUserIdContext();
-  const [responseMessage, setResponseMessage] = useState("");
+  const [responseMessage,setResponseMessage]=useState('');
 
   console.log(data);
   console.log(token);
@@ -63,6 +63,7 @@ function LabUploadForm() {
         responseData = await response.json();
         console.log("API Response:", responseData);
         setRid(responseData.rid);
+        setResponseMessage("Report Uploaded");
       } else {
         console.error("Failed to submit form");
       }
@@ -99,6 +100,7 @@ function LabUploadForm() {
       if (!response.ok) {
         alert("Unable to Load Details");
       }
+      setResponseMessage("Report Uploaded");
       setResponseMessage("Report Uploaded");
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -179,8 +181,10 @@ function LabUploadForm() {
             </button>
           </div>
           {responseMessage.length > 0 && <div>{responseMessage}</div>}
+          {responseMessage.length > 0 && <div>{responseMessage}</div>}
         </div>
       </div>
+      {responseMessage.length>0&&(<div>{responseMessage}</div>)}
     </form>
   );
 }

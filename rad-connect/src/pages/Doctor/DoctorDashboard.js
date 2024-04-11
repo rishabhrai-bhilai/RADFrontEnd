@@ -1,12 +1,57 @@
-import React from "react";
+import React, { useEffect,useState } from "react";
 import "../Doctor/DoctorDashboard.css";
 import patientImg from "../../assets/patientImg.png";
 import ChatPopup from "../../components/ui/ChatPopup";
-import PatientDetails from "./PatientDetails";
+import { useUserIdContext } from "../../pages/Common/UserIdContext";
+
+import {
+  DATA_HOST,
+  DATA_PORT,
+  IMAGES_HOST,
+  IMAGES_PORT,
+  CHAT_HOST,
+  CHAT_PORT,
+} from "../../constants";
 
 function DoctorDashboard() {
+
+  const { data, token } = useUserIdContext();
+  const[patients,setPatients]=useState([]);  
+
+  console.log(data);
+
+  useEffect(() => {
+    fetchConsentPatients(data);
+  }, []);
+
+  const fetchConsentPatients = async (data) => {
+    try {
+      const response = await fetch(
+        "http://" + DATA_HOST + ":" + DATA_PORT + "/teleRadiology/getConsentPatients/"+data,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",            
+          },          
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch patient");
+      }
+      const responseData = await response.json();
+      setPatients(responseData);
+    } catch (error) {
+      console.error("Error fetching patient:", error);
+    }
+  };
+
+  const handleArrowClick = (patient) => {
+    console.log("Clicked arrow for patient:", patient);
+    // Add your logic here to handle the click event
+  };
+
   return (
-    <>
+    <> 
       <section className="home">
         <div className="parent-container">
           <div className="all-items">
@@ -66,7 +111,8 @@ function DoctorDashboard() {
                     role="list"
                     className="doctor-dashboard-ongoing-diagnosis"
                   >
-                    <li>
+                    {patients.map((patient, index) => (                 
+                    <li key={index}>
                       <div className="list-item">
                         <div className="ongoing-diagnosis-image">
                           <div className="ongoing-diagnosis-img-holder">
@@ -76,162 +122,24 @@ function DoctorDashboard() {
                         <div className="ongoing-diagnosis-details">
                           <div className="ongoing-diagnosis-details-data">
                             <div>
-                              <span>Patient 1</span>
+                              <span>{patient.firstName}{" "}
+                        {patient.middleName !== null ? patient.middleName : ""}{" "}
+                        {patient.lastName}</span>
                             </div>
-                            <div>
-                              <p>High Fever</p>
-                              <p>
-                                29 Feb <span>10:00pm</span>
-                              </p>
+                            <div>                              
                             </div>
                           </div>
-                          <div className="ongoing-diagnosis-details-arrow">
-                            {" "}
-                            <i class="bx bxs-chevron-right | ongoing-diagnosis-left-icon"></i>{" "}
+                          <div className="ongoing-diagnosis-details-arrow" onClick={() => handleArrowClick(patient)}>
+                            <i className="bx bxs-chevron-right | ongoing-diagnosis-left-icon"></i>  
                           </div>
                         </div>
                       </div>
                     </li>
-
-                    <li>
-                      <div className="list-item">
-                        <div className="ongoing-diagnosis-image">
-                          <div className="ongoing-diagnosis-img-holder">
-                            <img src={patientImg} alt="" srcset="" />
-                          </div>
-                        </div>
-                        <div className="ongoing-diagnosis-details">
-                          <div className="ongoing-diagnosis-details-data">
-                            <div>
-                              <span>Patient 2</span>
-                            </div>
-                            <div>
-                              <p>High Fever</p>
-                              <p>
-                                29 Feb <span>10:00pm</span>
-                              </p>
-                            </div>
-                          </div>
-                          <div className="ongoing-diagnosis-details-arrow">
-                            {" "}
-                            <i class="bx bxs-chevron-right | ongoing-diagnosis-left-icon"></i>{" "}
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-
-                    <li>
-                      <div className="list-item">
-                        <div className="ongoing-diagnosis-image">
-                          <div className="ongoing-diagnosis-img-holder">
-                            <img src={patientImg} alt="" srcset="" />
-                          </div>
-                        </div>
-                        <div className="ongoing-diagnosis-details">
-                          <div className="ongoing-diagnosis-details-data">
-                            <div>
-                              <span>Patient 3</span>
-                            </div>
-                            <div>
-                              <p>High Fever</p>
-                              <p>
-                                29 Feb <span>10:00pm</span>
-                              </p>
-                            </div>
-                          </div>
-                          <div className="ongoing-diagnosis-details-arrow">
-                            {" "}
-                            <i class="bx bxs-chevron-right | ongoing-diagnosis-left-icon"></i>{" "}
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-
-                    <li>
-                      <div className="list-item">
-                        <div className="ongoing-diagnosis-image">
-                          <div className="ongoing-diagnosis-img-holder">
-                            <img src={patientImg} alt="" srcset="" />
-                          </div>
-                        </div>
-                        <div className="ongoing-diagnosis-details">
-                          <div className="ongoing-diagnosis-details-data">
-                            <div>
-                              <span>Patient 4</span>
-                            </div>
-                            <div>
-                              <p>High Fever</p>
-                              <p>
-                                29 Feb <span>10:00pm</span>
-                              </p>
-                            </div>
-                          </div>
-                          <div className="ongoing-diagnosis-details-arrow">
-                            {" "}
-                            <i class="bx bxs-chevron-right | ongoing-diagnosis-left-icon"></i>{" "}
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-
-                    <li>
-                      <div className="list-item">
-                        <div className="ongoing-diagnosis-image">
-                          <div className="ongoing-diagnosis-img-holder">
-                            <img src={patientImg} alt="" srcset="" />
-                          </div>
-                        </div>
-                        <div className="ongoing-diagnosis-details">
-                          <div className="ongoing-diagnosis-details-data">
-                            <div>
-                              <span>Patient 5</span>
-                            </div>
-                            <div>
-                              <p>High Fever</p>
-                              <p>
-                                29 Feb <span>10:00pm</span>
-                              </p>
-                            </div>
-                          </div>
-                          <div className="ongoing-diagnosis-details-arrow">
-                            {" "}
-                            <i class="bx bxs-chevron-right | ongoing-diagnosis-left-icon"></i>{" "}
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-
-                    <li>
-                      <div className="list-item">
-                        <div className="ongoing-diagnosis-image">
-                          <div className="ongoing-diagnosis-img-holder">
-                            <img src={patientImg} alt="" srcset="" />
-                          </div>
-                        </div>
-                        <div className="ongoing-diagnosis-details">
-                          <div className="ongoing-diagnosis-details-data">
-                            <div>
-                              <span>Patient 6</span>
-                            </div>
-                            <div>
-                              <p>High Fever</p>
-                              <p>
-                                29 Feb <span>10:00pm</span>
-                              </p>
-                            </div>
-                          </div>
-                          <div className="ongoing-diagnosis-details-arrow">
-                            {" "}
-                            <i class="bx bxs-chevron-right | ongoing-diagnosis-left-icon"></i>{" "}
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
+                    ))}
+                    </ul>
                 </div>
               </div>
 
-              <PatientDetails patient={patient}/>
               {/* <div className="doctor-dashboard-right">
                 <div className="doctor-dashboard-right-heading">
                   <p>Patient Details</p>
@@ -257,6 +165,13 @@ function DoctorDashboard() {
                     </div>
                   </div>
 
+                  <div className="doctor-dashboard-right-details">
+                    <div className="doctor-dashboard-right-details-data1">
+                      <p>D.O.B</p>
+                      <p>
+                        <span>29 February ,1999</span>
+                      </p>
+                    </div>
                   <div className="doctor-dashboard-right-details">
                     <div className="doctor-dashboard-right-details-data1">
                       <p>D.O.B</p>
@@ -295,8 +210,39 @@ function DoctorDashboard() {
                         <span>23 Feb 1999</span>
                       </p>
                     </div>
+                    <div className="doctor-dashboard-right-details-data1">
+                      <p>Sex</p>
+                      <p>
+                        <span>Male</span>
+                      </p>
+                    </div>
+                    <div className="doctor-dashboard-right-details-data1">
+                      <p>Height</p>
+                      <p>
+                        <span>151cm</span>
+                      </p>
+                    </div>
+                    <div className="doctor-dashboard-right-details-data1">
+                      <p>Last Appointment</p>
+                      <p>
+                        <span>23 Jan 2023</span>
+                      </p>
+                    </div>
+                    <div className="doctor-dashboard-right-details-data1">
+                      <p>Weight</p>
+                      <p>
+                        <span>19 Kg</span>
+                      </p>
+                    </div>
+                    <div className="doctor-dashboard-right-details-data1">
+                      <p>Register Date</p>
+                      <p>
+                        <span>23 Feb 1999</span>
+                      </p>
+                    </div>
                   </div>
 
+                  <div className="doctor-dashboard-right-others">
                   <div className="doctor-dashboard-right-others">
                     <div className="tags-container">
                       <div>Ashtama</div>
