@@ -69,7 +69,7 @@ function DoctorDashboard() {
                       <div className="ongoing-diagnosis-details">
                         <div className="ongoing-diagnosis-details-data">
                           <div>
-                            <span>Dr Albert Einstein</span>
+                            <span>Patient 1</span>
                           </div>
                           <div>
                             <p>High Fever</p>
@@ -96,7 +96,7 @@ function DoctorDashboard() {
                       <div className="ongoing-diagnosis-details">
                         <div className="ongoing-diagnosis-details-data">
                           <div>
-                            <span>Dr Albert Einstein</span>
+                            <span>Patient 2</span>
                           </div>
                           <div>
                             <p>High Fever</p>
@@ -123,7 +123,7 @@ function DoctorDashboard() {
                       <div className="ongoing-diagnosis-details">
                         <div className="ongoing-diagnosis-details-data">
                           <div>
-                            <span>Dr Albert Einstein</span>
+                            <span>Patient 3</span>
                           </div>
                           <div>
                             <p>High Fever</p>
@@ -150,7 +150,7 @@ function DoctorDashboard() {
                       <div className="ongoing-diagnosis-details">
                         <div className="ongoing-diagnosis-details-data">
                           <div>
-                            <span>Dr Albert Einstein</span>
+                            <span>Patient 4</span>
                           </div>
                           <div>
                             <p>High Fever</p>
@@ -177,7 +177,7 @@ function DoctorDashboard() {
                       <div className="ongoing-diagnosis-details">
                         <div className="ongoing-diagnosis-details-data">
                           <div>
-                            <span>Dr Albert Einstein</span>
+                            <span>Patient 5</span>
                           </div>
                           <div>
                             <p>High Fever</p>
@@ -204,7 +204,7 @@ function DoctorDashboard() {
                       <div className="ongoing-diagnosis-details">
                         <div className="ongoing-diagnosis-details-data">
                           <div>
-                            <span>Dr Albert Einstein</span>
+                            <span>Patient 6</span>
                           </div>
                           <div>
                             <p>High Fever</p>
@@ -243,7 +243,7 @@ function DoctorDashboard() {
                     <div className="ongoing-patient-details">
                       <div className="ongoing-patient-details-data">
                         <div>
-                          <span className="fw-bold">Dr Albert Einstein</span>
+                          <span className="fw-bold">Patient 1</span>
                         </div>
                         <div>
                           <p>30/9 Radhika Nagar ,Bhilai</p>
