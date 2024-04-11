@@ -13,6 +13,7 @@ import PatientInformation from "./pages/Doctor/PatientInformation";
 import ChatPopup from "./components/ui/ChatPopup";
 import ChatPage from "./components/ui/ChatPage";
 import React, { useState } from "react";
+import DocReportComponent from "./pages/Doctor/DocReportComponent";
 
 function App() {
   const [email, setEmail] = useState("");
@@ -52,6 +53,7 @@ function App() {
         <Route path="/labdashboard" element={<ReportUpload />} />
         <Route path="/patientchat" element={<ChatPage />} />
         <Route path="/doctordashboard" element={<DoctorDashboard />} />
+        <Route path="/patient/reports" element={<DocReportComponent />} />
 
         {/* <Route path="/labprofile" element={<LabProfile/>}/> */}
         {/* <Route path="/doctorprofile" element={<DoctorProfile/>}/> */}

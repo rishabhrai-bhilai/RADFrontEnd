@@ -1,10 +1,16 @@
 import React from 'react'
 import patientImg from "../../assets/patientImg.png";
+import { useNavigate } from "react-router-dom";
 
 function PatientDetails({ patient }) {
+    const navigate = useNavigate();
+    
+    const handleShowReport = (patient) => {
+        console.log("Clicked Reports for patient:", patient);
+        navigate("/patient/reports");
+    };
   return (
     <>
-        <div className="doctor-dashboard-right">
             <div className="doctor-dashboard-right-heading">
                 <p>Patient Details</p>
             </div>
@@ -19,7 +25,9 @@ function PatientDetails({ patient }) {
                     <div className="ongoing-patient-details">
                     <div className="ongoing-patient-details-data">
                         <div>
-                        <span className="fw-bold">{patient.firstName} {patient.middleName} {patient.lastName}</span>
+                        <span className="fw-bold">{patient.firstName}{" "}
+                        {patient.middleName !== null ? patient.middleName : ""}{" "}
+                        {patient.lastName}</span>
                         </div>
                         <div>
                         <p>{patient.address}, {patient.city}, {patient.state}</p>
@@ -76,17 +84,16 @@ function PatientDetails({ patient }) {
                 </div> */}
 
                 <div className="button-container">
-                    <div>
+                    <div onClick={() => handleShowReport(patient)}>
                     <i class="bx bx-folder"></i>
-                    <span>Documents</span>
+                    <span>Reports</span>
                     </div>
-                    <div>
+                    {/* <div>
                     <i class="bx bx-chat"></i>
                     <span>Chat</span>
-                    </div>
+                    </div> */}
                 </div>
                 </div>
-            </div>
         </div>
     </>
   )

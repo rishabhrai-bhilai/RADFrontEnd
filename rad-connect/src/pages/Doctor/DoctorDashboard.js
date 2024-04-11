@@ -3,6 +3,7 @@ import "../Doctor/DoctorDashboard.css";
 import patientImg from "../../assets/patientImg.png";
 import ChatPopup from "../../components/ui/ChatPopup";
 import { useUserIdContext } from "../../pages/Common/UserIdContext";
+import PatientDetails from "./PatientDetails";
 
 import {
   DATA_HOST,
@@ -14,10 +15,11 @@ import {
 } from "../../constants";
 
 function DoctorDashboard() {
-
+  const[show, setShow] = useState(false);
   const { data, token } = useUserIdContext();
   const[patients,setPatients]=useState([]);  
-
+  const[patient, setPatient] = useState(null);
+  
   console.log(data);
 
   useEffect(() => {
@@ -47,7 +49,8 @@ function DoctorDashboard() {
 
   const handleArrowClick = (patient) => {
     console.log("Clicked arrow for patient:", patient);
-    // Add your logic here to handle the click event
+    setPatient(patient);
+    setShow(true);
   };
 
   return (
@@ -140,128 +143,9 @@ function DoctorDashboard() {
                 </div>
               </div>
 
-              {/* <div className="doctor-dashboard-right">
-                <div className="doctor-dashboard-right-heading">
-                  <p>Patient Details</p>
-                </div>
-                <div className="doctor-dashboard-right-item-box">
-                  <div className="doctor-dashboard-right-Common-info">
-                    <div className="patient-list-item">
-                      <div className="ongoing-patient-image">
-                        <div className="ongoing-patient-img-holder">
-                          <img src={patientImg} alt="" srcset="" />
-                        </div>
-                      </div>
-                      <div className="ongoing-patient-details">
-                        <div className="ongoing-patient-details-data">
-                          <div>
-                            <span className="fw-bold">Patient 1</span>
-                          </div>
-                          <div>
-                            <p>30/9 Radhika Nagar ,Bhilai</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="doctor-dashboard-right-details">
-                    <div className="doctor-dashboard-right-details-data1">
-                      <p>D.O.B</p>
-                      <p>
-                        <span>29 February ,1999</span>
-                      </p>
-                    </div>
-                  <div className="doctor-dashboard-right-details">
-                    <div className="doctor-dashboard-right-details-data1">
-                      <p>D.O.B</p>
-                      <p>
-                        <span>29 February ,1999</span>
-                      </p>
-                    </div>
-
-                    <div className="doctor-dashboard-right-details-data1">
-                      <p>Sex</p>
-                      <p>
-                        <span>Male</span>
-                      </p>
-                    </div>
-                    <div className="doctor-dashboard-right-details-data1">
-                      <p>Height</p>
-                      <p>
-                        <span>151cm</span>
-                      </p>
-                    </div>
-                    <div className="doctor-dashboard-right-details-data1">
-                      <p>Last Appointment</p>
-                      <p>
-                        <span>23 Jan 2023</span>
-                      </p>
-                    </div>
-                    <div className="doctor-dashboard-right-details-data1">
-                      <p>Weight</p>
-                      <p>
-                        <span>19 Kg</span>
-                      </p>
-                    </div>
-                    <div className="doctor-dashboard-right-details-data1">
-                      <p>Register Date</p>
-                      <p>
-                        <span>23 Feb 1999</span>
-                      </p>
-                    </div>
-                    <div className="doctor-dashboard-right-details-data1">
-                      <p>Sex</p>
-                      <p>
-                        <span>Male</span>
-                      </p>
-                    </div>
-                    <div className="doctor-dashboard-right-details-data1">
-                      <p>Height</p>
-                      <p>
-                        <span>151cm</span>
-                      </p>
-                    </div>
-                    <div className="doctor-dashboard-right-details-data1">
-                      <p>Last Appointment</p>
-                      <p>
-                        <span>23 Jan 2023</span>
-                      </p>
-                    </div>
-                    <div className="doctor-dashboard-right-details-data1">
-                      <p>Weight</p>
-                      <p>
-                        <span>19 Kg</span>
-                      </p>
-                    </div>
-                    <div className="doctor-dashboard-right-details-data1">
-                      <p>Register Date</p>
-                      <p>
-                        <span>23 Feb 1999</span>
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="doctor-dashboard-right-others">
-                  <div className="doctor-dashboard-right-others">
-                    <div className="tags-container">
-                      <div>Ashtama</div>
-                      <div>Hypertension</div>
-                    </div>
-
-                    <div className="button-container">
-                      <div>
-                        <i class="bx bx-folder"></i>
-                        <span>Documents</span>
-                      </div>
-                      <div>
-                        <i class="bx bx-chat"></i>
-                        <span>Chat</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
+              <div className="doctor-dashboard-right">
+                {show && <PatientDetails patient={patient} />}
+              </div>
             </div>
           </div>
         </div>
