@@ -29,6 +29,7 @@ const ChatPage = () => {
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
   const [repId, setRepId] = useState(-1);
+  const [chatName, setChatName] = useState("");
 
   const handleReportClick = (repId) => {
     setRepId(repId);
@@ -38,7 +39,12 @@ const ChatPage = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8081/teleRadiology/getChats/${data}`,
+          "http://" +
+            DATA_HOST +
+            ":" +
+            DATA_PORT +
+            "/teleRadiology/getChats/" +
+            data,
           {
             method: "GET",
             headers: {
@@ -99,12 +105,13 @@ const ChatPage = () => {
     setChats(newChats);
   };
 
-  const handleClick = (chatReports, id) => {
+  const handleClick = (chatReports, id, chatName) => {
     setLoading(true);
     setReports(chatReports);
     // console.log(chatReports);
     setUserId(id);
     setLoading(false);
+    setChatName(chatName);
   };
   const handleSearchClick = () => {
     // const body = document.querySelector("body"); // Define 'body'
@@ -150,7 +157,7 @@ const ChatPage = () => {
                         <div
                           className="person-message-container"
                           onClick={() => {
-                            handleClick(chat.reports, chat.id);
+                            handleClick(chat.reports, chat.id, chat.name);
                           }}
                         >
                           <div className="person-msg-img-holder">
@@ -174,7 +181,12 @@ const ChatPage = () => {
           {repId == -1 ? (
             <div className="rightside-chat"></div>
           ) : (
-            <ChatComponent rId={repId} uId={userId} myId={data} />
+            <ChatComponent
+              rId={repId}
+              uId={userId}
+              myId={data}
+              chatName={chatName}
+            />
           )}
         </div>
       </div>

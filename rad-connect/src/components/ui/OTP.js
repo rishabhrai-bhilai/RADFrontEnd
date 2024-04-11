@@ -123,7 +123,12 @@ const OTP = ({
   const getOtp = async (data) => {
     try {
       const response = await fetch(
-        `http://localhost:8081/teleRadiology/otpVerification/${data}`,
+        "http://" +
+          DATA_HOST +
+          ":" +
+          DATA_PORT +
+          "/teleRadiology/otpVerification/" +
+          data,
         {
           method: "GET",
           headers: {

@@ -96,7 +96,12 @@ const Modal = ({ closeModal, reportId }) => {
   const getReportViewers = async (reportId) => {
     try {
       const response = await fetch(
-        `http://localhost:8081/teleRadiology/getReportViewers/${reportId}`,
+        "http://" +
+          DATA_HOST +
+          ":" +
+          DATA_PORT +
+          "/teleRadiology/getReportViewers/" +
+          reportId,
         {
           method: "GET",
           headers: {

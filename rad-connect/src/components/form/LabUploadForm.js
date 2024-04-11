@@ -39,7 +39,7 @@ function LabUploadForm() {
     console.log(email);
 
     const formData = {
-      dateOfIssue: "2024-04-04",
+      dateOfIssue: "2024-04-05",
       initialRemarks: remarks,
       reportType: type,
       lid: data,
@@ -100,6 +100,7 @@ function LabUploadForm() {
       if (!response.ok) {
         alert("Unable to Load Details");
       }
+      setResponseMessage("Report Uploaded");
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -178,6 +179,7 @@ function LabUploadForm() {
               Submit
             </button>
           </div>
+          {responseMessage.length > 0 && <div>{responseMessage}</div>}
         </div>
       </div>
       {responseMessage.length>0&&(<div>{responseMessage}</div>)}
