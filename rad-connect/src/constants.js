@@ -1,4 +1,4 @@
-export const DATA_HOST = "192.168.0.100";
+export const DATA_HOST = "192.168.0.105";
 export const IMAGES_HOST = "192.168.0.100";
 export const CHAT_HOST = "192.168.0.100";
 export const DATA_PORT = "8081";

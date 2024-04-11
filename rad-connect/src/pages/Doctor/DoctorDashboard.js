@@ -2,6 +2,7 @@ import React from "react";
 import "../Doctor/DoctorDashboard.css";
 import patientImg from "../../assets/patientImg.png";
 import ChatPopup from "../../components/ui/ChatPopup";
+import PatientDetails from "./PatientDetails";
 
 function DoctorDashboard() {
   return (
@@ -230,7 +231,8 @@ function DoctorDashboard() {
                 </div>
               </div>
 
-              <div className="doctor-dashboard-right">
+              <PatientDetails patient={patient}/>
+              {/* <div className="doctor-dashboard-right">
                 <div className="doctor-dashboard-right-heading">
                   <p>Patient Details</p>
                 </div>
@@ -313,7 +315,7 @@ function DoctorDashboard() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

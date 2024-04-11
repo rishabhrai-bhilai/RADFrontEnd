@@ -31,7 +31,7 @@ const CredentialForm = ({ onSubmit }) => {
       let role = 0;
 
       if (data === "Patient") role = "ROLE_PATIENT";
-      if (data === "Doctor") role = "ROLE_DOC";
+      if (data === "Doctor") role = "ROLE_DOCTOR";
       if (data === "Radiologist") role = "ROLE_RADIOLOGIST";
       if (data === "Lab") role = "ROLE_LAB";
 
