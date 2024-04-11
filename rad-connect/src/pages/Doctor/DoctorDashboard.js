@@ -51,7 +51,7 @@ function DoctorDashboard() {
   };
 
   return (
-    <>
+    <> 
       <section className="home">
         <div className="parent-container">
           <div className="all-items">
@@ -172,7 +172,44 @@ function DoctorDashboard() {
                         <span>29 February ,1999</span>
                       </p>
                     </div>
+                  <div className="doctor-dashboard-right-details">
+                    <div className="doctor-dashboard-right-details-data1">
+                      <p>D.O.B</p>
+                      <p>
+                        <span>29 February ,1999</span>
+                      </p>
+                    </div>
 
+                    <div className="doctor-dashboard-right-details-data1">
+                      <p>Sex</p>
+                      <p>
+                        <span>Male</span>
+                      </p>
+                    </div>
+                    <div className="doctor-dashboard-right-details-data1">
+                      <p>Height</p>
+                      <p>
+                        <span>151cm</span>
+                      </p>
+                    </div>
+                    <div className="doctor-dashboard-right-details-data1">
+                      <p>Last Appointment</p>
+                      <p>
+                        <span>23 Jan 2023</span>
+                      </p>
+                    </div>
+                    <div className="doctor-dashboard-right-details-data1">
+                      <p>Weight</p>
+                      <p>
+                        <span>19 Kg</span>
+                      </p>
+                    </div>
+                    <div className="doctor-dashboard-right-details-data1">
+                      <p>Register Date</p>
+                      <p>
+                        <span>23 Feb 1999</span>
+                      </p>
+                    </div>
                     <div className="doctor-dashboard-right-details-data1">
                       <p>Sex</p>
                       <p>
@@ -205,6 +242,7 @@ function DoctorDashboard() {
                     </div>
                   </div>
 
+                  <div className="doctor-dashboard-right-others">
                   <div className="doctor-dashboard-right-others">
                     <div className="tags-container">
                       <div>Ashtama</div>

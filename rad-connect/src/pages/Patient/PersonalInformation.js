@@ -104,7 +104,6 @@ function PersonalInformation({ username, uid }) {
       }
       console.log("Data saved successfully");
       setResponseMessage("Patient Registered");
-      setResponseMessage("Patient Registered");
     } catch (error) {
       console.error("There was a problem saving the data:", error);
     }
