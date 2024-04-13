@@ -6,6 +6,14 @@ import Navbar from "../../components/navbar/Navbar";
 import { useUserIdContext } from "../Common/UserIdContext";
 import { usePatientIdContext } from "./PatientIdContext";
 import ChatPopup from "../../components/ui/ChatPopup";
+import {
+  DATA_HOST,
+  DATA_PORT,
+  IMAGES_HOST,
+  IMAGES_PORT,
+  CHAT_HOST,
+  CHAT_PORT,
+} from "../../constants";
 
 function PatientDashboard() {
   const [patient, setPatient] = useState(() => {
@@ -16,22 +24,24 @@ function PatientDashboard() {
 
   const [loading, setLoading] = useState(true);
 
-  const { data } = useUserIdContext();
+  const { data, token } = useUserIdContext();
 
   const { getPatientId } = usePatientIdContext();
 
   useEffect(() => {
+    console.log("JWT token: ", token);
     fetchPatient(data);
   }, []);
 
   const fetchPatient = async (data) => {
     try {
       const response = await fetch(
-        "http://localhost:8081/teleRadiology/getPatient",
+        "http://" + DATA_HOST + ":" + DATA_PORT + "/teleRadiology/getPatient",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({ id: parseInt(data) }),
         }
@@ -61,7 +71,7 @@ function PatientDashboard() {
 
             <div className="Patient-dashboard-container">
               <div className="box">
-                <PatientInformationCard></PatientInformationCard>
+                <PatientInformationCard patient={patient} />
 
                 {/* {loading ? (
             <div>Loading...</div>
@@ -100,6 +110,8 @@ function PatientDashboard() {
                             <span className=" subheading  text-grey-dark">
                               Butterflyaphobia, Raindropitis, Cotton Candy
                               Intolerance
+                              {/* {patient.allergies} */}
+                              {/* {patient.allergies} */}
                             </span>
                           </div>
                         </div>
@@ -112,7 +124,7 @@ function PatientDashboard() {
                           </div>
                           <div className="medical-data |text-blue-extradark">
                             <p className="heading  text-blue-extradark fw-bold">
-                              Allergies
+                              Current Medication Current Medication
                             </p>
                             <span className=" subheading  text-grey-dark">
                               Butterflyaphobia, Raindropitis, Cotton Candy
@@ -129,7 +141,7 @@ function PatientDashboard() {
                           </div>
                           <div className="medical-data |text-blue-extradark">
                             <p className="heading text-blue-extradark fw-bold">
-                              Allergies
+                              Past Medication Past Medication
                             </p>
                             <span className=" subheading text-grey-dark">
                               Butterflyaphobia, Raindropitis, Cotton Candy
@@ -146,7 +158,7 @@ function PatientDashboard() {
                           </div>
                           <div className="medical-data |text-blue-extradark">
                             <p className="heading text-blue-extradark fw-bold">
-                              Allergies
+                              Chronic Diseases Chronic Diseases
                             </p>
                             <span className=" subheading text-grey-dark">
                               Butterflyaphobia, Raindropitis, Cotton Candy
@@ -171,46 +183,22 @@ function PatientDashboard() {
                             <span>Never</span>
                           </div>
                           <div className="value fw-bold">
-                            <span>Never</span>
+                            <span>1-2/day</span>
+                            <span>1-2/day</span>
                           </div>
                           <div className="value fw-bold">
-                            <span>Never</span>
+                            <span>3-5/day</span>
+                            <span>3-5/day</span>
                           </div>
                           <div className="value fw-bold">
-                            <span>Never</span>
+                            <span>Sometimes</span>
+                            <span>Sometimes</span>
                           </div>
                           <div className="value fw-bold">
-                            <span>Never</span>{" "}
+                            <span>More Than 5</span> <span>More Than 5</span>{" "}
                           </div>
                           <div className="value fw-bold">
-                            <span>Never</span>{" "}
-                          </div>
-                        </div>
-                      </li>
-
-                      <li className="lifestyle-list-item">
-                        <div className="topic">
-                          <i className="bx bx-home-alt"></i>{" "}
-                          <span className="fw-bold">Smoking Habits</span>{" "}
-                        </div>
-                        <div className="values">
-                          <div className="value fw-bold">
-                            <span>Never</span>
-                          </div>
-                          <div className="value fw-bold">
-                            <span>Never</span>
-                          </div>
-                          <div className="value fw-bold">
-                            <span>Never</span>
-                          </div>
-                          <div className="value fw-bold">
-                            <span>Never</span>
-                          </div>
-                          <div className="value fw-bold">
-                            <span>Never</span>{" "}
-                          </div>
-                          <div className="value fw-bold">
-                            <span>Never</span>{" "}
+                            <span>I've Quit</span> <span>I've Quit</span>{" "}
                           </div>
                         </div>
                       </li>
@@ -218,26 +206,56 @@ function PatientDashboard() {
                       <li className="lifestyle-list-item">
                         <div className="topic">
                           <i className="bx bx-home-alt"></i>{" "}
-                          <span className="fw-bold">Smoking Habits</span>{" "}
+                          <span className="fw-bold">Drinking Habits</span>{" "}
+                          <span className="fw-bold">Drinking Habits</span>{" "}
                         </div>
                         <div className="values">
                           <div className="value fw-bold">
                             <span>Never</span>
                           </div>
                           <div className="value fw-bold">
-                            <span>Never</span>
+                            <span>Social</span>
+                            <span>Social</span>
                           </div>
                           <div className="value fw-bold">
-                            <span>Never</span>
+                            <span>Regular</span>
+                            <span>Regular</span>
                           </div>
                           <div className="value fw-bold">
-                            <span>Never</span>
+                            <span>Sometimes</span>
+                            <span>Sometimes</span>
                           </div>
                           <div className="value fw-bold">
-                            <span>Never</span>{" "}
+                            <span>Heavy</span> <span>Heavy</span>{" "}
                           </div>
                           <div className="value fw-bold">
-                            <span>Never</span>{" "}
+                            <span>I've Quit</span> <span>I've Quit</span>{" "}
+                          </div>
+                        </div>
+                      </li>
+
+                      <li className="lifestyle-list-item">
+                        <div className="topic">
+                          <i className="bx bx-home-alt"></i>{" "}
+                          <span className="fw-bold">Food Preferences</span>{" "}
+                          <span className="fw-bold">Food Preferences</span>{" "}
+                        </div>
+                        <div className="values">
+                          <div className="value fw-bold">
+                            <span>Vegan</span>
+                            <span>Vegan</span>
+                          </div>
+                          <div className="value fw-bold">
+                            <span>Vegetarian</span>
+                            <span>Vegetarian</span>
+                          </div>
+                          <div className="value fw-bold">
+                            <span>Eggetarian</span>
+                            <span>Eggetarian</span>
+                          </div>
+                          <div className="value fw-bold">
+                            <span>Non-Veg</span>
+                            <span>Non-Veg</span>
                           </div>
                         </div>
                       </li>

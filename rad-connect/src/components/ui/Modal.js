@@ -5,11 +5,19 @@ import { useUserIdContext } from "../../pages/Common/UserIdContext";
 import Toggle from "./Toggle";
 import patientImage from "../../assets/patientbox.png";
 import OTP from "./OTP";
+import {
+  DATA_HOST,
+  DATA_PORT,
+  IMAGES_HOST,
+  IMAGES_PORT,
+  CHAT_HOST,
+  CHAT_PORT,
+} from "../../constants";
 
 const Modal = ({ closeModal, reportId }) => {
   console.log(reportId);
 
-  const { data } = useUserIdContext();
+  const { data, token } = useUserIdContext();
 
   const [doctors, setDoctors] = useState([]);
   const [filteredDoctorsList, setFilteredDoctorsList] = useState([]);
@@ -18,6 +26,7 @@ const Modal = ({ closeModal, reportId }) => {
   const [reportViewers, setReportViewers] = useState(null);
   const [toggleValue, setToggleValue] = useState();
   const [show, setShow] = useState(false);
+  const [responseMessage, setResponseMessage] = useState("");
 
   const handleSearch = (searchTerm) => {
     const filteredNames = doctors.filter((doc) =>
@@ -29,7 +38,7 @@ const Modal = ({ closeModal, reportId }) => {
   const handleToggle = (isToggled, doctorId) => {
     console.log("Toggle state:", isToggled ? "On" : "Off");
     // if(isToggled){
-    isToggled?setToggleValue(1):setToggleValue(0);
+    isToggled ? setToggleValue(1) : setToggleValue(0);
     setSelectedDoctorId(doctorId);
     setShowOTPComponent(true);
     // }else{
@@ -54,11 +63,16 @@ const Modal = ({ closeModal, reportId }) => {
   const getAllDoctors = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8081/teleRadiology/getAllDoctors",
+        "http://" +
+          DATA_HOST +
+          ":" +
+          DATA_PORT +
+          "/teleRadiology/getAllDoctors",
         {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -82,11 +96,17 @@ const Modal = ({ closeModal, reportId }) => {
   const getReportViewers = async (reportId) => {
     try {
       const response = await fetch(
-        `http://localhost:8081/teleRadiology/getReportViewers/${reportId}`,
+        "http://" +
+          DATA_HOST +
+          ":" +
+          DATA_PORT +
+          "/teleRadiology/getReportViewers/" +
+          reportId,
         {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -134,6 +154,16 @@ const Modal = ({ closeModal, reportId }) => {
 
     console.log(filteredDoctorsList);
   };
+
+  useEffect(() => {
+    if (responseMessage.length > 0) {
+      const timer = setTimeout(() => {
+        setResponseMessage("");
+      }, 10000); // 10 seconds
+
+      return () => clearTimeout(timer);
+    }
+  }, [responseMessage]);
 
   return (
     <div className="modal">
@@ -183,9 +213,16 @@ const Modal = ({ closeModal, reportId }) => {
             )}
             <div>
               {showOTPComponent && (
-                <OTP reportId={reportId} doctorId={selectedDoctorId} toggleValue={toggleValue}/>
+                <OTP
+                  reportId={reportId}
+                  doctorId={selectedDoctorId}
+                  toggleValue={toggleValue}
+                  setShowOTPComponent={setShowOTPComponent}
+                  setResponseMessage={setResponseMessage}
+                />
               )}
             </div>
+            {responseMessage.length > 0 && <div>{responseMessage}</div>}
           </div>
         </div>
       </div>

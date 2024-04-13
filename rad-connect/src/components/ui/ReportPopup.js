@@ -6,6 +6,14 @@ import mriImg from "../../assets/mri_img.png";
 import { useUserIdContext } from "../../pages/Common/UserIdContext";
 import { over } from "stompjs";
 import SockJS from "sockjs-client";
+import {
+  DATA_HOST,
+  DATA_PORT,
+  IMAGES_HOST,
+  IMAGES_PORT,
+  CHAT_HOST,
+  CHAT_PORT,
+} from "../../constants";
 
 var stompClient = null;
 const ReportPopup = ({
@@ -14,7 +22,10 @@ const ReportPopup = ({
   userId,
   setParticularId,
   oldMessages,
+  onRepClick,
+  removeChat,
 }) => {
+  // console.log(chatReports);
   const [userData, setUserData] = useState({
     username: "",
     receivername: "",
@@ -23,68 +34,22 @@ const ReportPopup = ({
   });
   const [expanded, setExpanded] = useState(false);
   const [reports, setReports] = useState([]);
-  const { data } = useUserIdContext();
+  const { data, token } = useUserIdContext();
   const [selectedId, setSelectedId] = useState();
+  const [reportLoading, setReportLoading] = useState(true);
 
   const toggleDiv = () => {
     setExpanded(!expanded);
+    if (expanded) removeChat(-1);
     // console.log(expanded);
   };
 
   useEffect(() => {
-    const connectToSocket = async () => {
-      let id = data;
-      setUserData({ ...userData, username: id.toString() });
-      connect();
-    };
-
-    connectToSocket();
-  }, []);
-
-  const connect = () => {
-    let Sock = new SockJS("http://localhost:8082/ws");
-    stompClient = over(Sock);
-    stompClient.connect({}, onConnected, onError);
-  };
-
-  const onConnected = () => {
-    // setUserData({ ...userData, connected: true });
-    // stompClient.subscribe("/chatroom/public", onMessageReceived);
-    stompClient.subscribe("/user/" + data + "/private", onPrivateMessage);
-    // console.log("connected to server!");
-    // console.log(data);
-    userJoin();
-  };
-  const userJoin = () => {
-    var chatMessage = {
-      senderName: userData.username,
-      status: "JOIN",
-    };
-    stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
-  };
-
-  const onError = (err) => {
-    console.log(err);
-  };
-
-  const onPrivateMessage = (payload) => {
-    console.log("reciever");
-    // console.log( + "pay?");
-    var payloadData = JSON.parse(payload.body);
-    console.log(parseInt(payloadData.report, 10) == selectedId);
-    // fetchMessages(parseInt(payloadData.message, 10));
-    let newMessage = {
-      message: payloadData.message,
-      sender: payloadData.sender,
-    };
-    messageSetter((oldMessages) => [...oldMessages, newMessage]);
-  };
-
-  useEffect(() => {
     const fetchImageData = async () => {
+      setReportLoading(false);
       try {
         const response = await fetch(
-          `http://localhost:8080/images/getAllReports`,
+          "http://" + IMAGES_HOST + ":" + IMAGES_PORT + "/images/getAllReports",
           {
             method: "POST",
             headers: {
@@ -101,68 +66,25 @@ const ReportPopup = ({
         setReports(responseData.reports);
         // setChats1(responseData);
         // settingChats(responseData);
-        // console.log(responseData);
       } catch (error) {
         console.error("Error fetching reports:", error);
       }
     };
 
     fetchImageData();
-  }, []);
+  }, [chatReports]);
 
-  const fetchMessages = async (reportId) => {
-    console.log("req body");
-
-    try {
-      const response = await fetch(
-        `http://localhost:8081/teleRadiology/getMessages`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            user1Id: data,
-            user2Id: userId,
-            reportId: reportId,
-          }),
-        }
-      );
-
-      console.log(
-        JSON.stringify({
-          user1Id: data,
-          user2Id: userId,
-          reportId: reportId,
-        })
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch chats");
-      }
-      const responseData = await response.json();
-      // console.log(responseData);
-      // console.log(
-      //   JSON.stringify({
-      //     user1Id: data,
-      //     user2Id: userId,
-      //     reportId: reportId,
-      //   })
-      // // );
-      // console.log("fetchedMessages");
-      console.log(responseData.messages);
-      messageSetter(responseData.messages);
-    } catch (error) {
-      console.error("Error fetching reports:", error);
-    }
-  };
+  useEffect(() => {
+    console.log(reports);
+    setReportLoading(true);
+  }, [reports]);
 
   const handleReportClick = (reportId) => {
+    onRepClick(reportId);
     setSelectedId(reportId);
     console.log("reportId");
     console.log(reportId);
     setParticularId(reportId);
-    fetchMessages(reportId);
   };
   return (
     <div className="report-position">
@@ -177,28 +99,30 @@ const ReportPopup = ({
           </button>
         )}
       </div>
-      <div
-        id="expandingDiv"
-        className={expanded ? "report-expanded" : "reportdiv"}
-      >
-        <div className="report-images-container">
-          {reports.map((report) => (
-            <div
-              className="report-img-box"
-              onClick={() => {
-                handleReportClick(report.reportId);
-              }}
-            >
-              <div className="report-img-holder">
-                <img src={mriImg} alt="" />
+      {reportLoading && (
+        <div
+          id="expandingDiv"
+          className={expanded ? "report-expanded" : "reportdiv"}
+        >
+          <div className="report-images-container">
+            {reports.map((report) => (
+              <div
+                className="report-img-box"
+                onClick={() => {
+                  handleReportClick(report.reportId);
+                }}
+              >
+                <div className="report-img-holder">
+                  <img src={mriImg} alt="" />
+                </div>
+                <div className="report-img-name">
+                  <p>Report {report.reportId}</p>
+                </div>
               </div>
-              <div className="report-img-name">
-                <p>Report {report.reportId}</p>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

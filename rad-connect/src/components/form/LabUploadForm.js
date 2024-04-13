@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-
+import {
+  DATA_HOST,
+  DATA_PORT,
+  IMAGES_HOST,
+  IMAGES_PORT,
+  CHAT_HOST,
+  CHAT_PORT,
+} from "../../constants";
 import DragDropFiles from "./DragDropFiles";
 import { useUserIdContext } from "../../pages/Common/UserIdContext";
 import "./LabUploadForm.css";
@@ -10,14 +17,15 @@ function LabUploadForm() {
   const [type, setType] = useState("");
   const [image, setImage] = useState(null);
   const [rid, setRid] = useState();
-  const { data } = useUserIdContext();
+  const { data, token } = useUserIdContext();
+  const [responseMessage,setResponseMessage]=useState('');
 
-  // console.log(data);
+  console.log(data);
+  console.log(token);
 
   let responseData;
 
   const handleFormSubmit = async (event) => {
-
     event.preventDefault();
 
     // Get today's date
@@ -31,7 +39,7 @@ function LabUploadForm() {
     console.log(email);
 
     const formData = {
-      dateOfIssue: "2024-03-29",
+      dateOfIssue: "2024-04-05",
       initialRemarks: remarks,
       reportType: type,
       lid: data,
@@ -40,11 +48,12 @@ function LabUploadForm() {
 
     try {
       const response = await fetch(
-        "http://localhost:8081/teleRadiology/uploadReport",
+        "http://" + DATA_HOST + ":" + DATA_PORT + "/teleRadiology/uploadReport",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            //"Authorization": `Bearer ${token}`
           },
           body: JSON.stringify(formData),
         }
@@ -54,9 +63,9 @@ function LabUploadForm() {
         responseData = await response.json();
         console.log("API Response:", responseData);
         setRid(responseData.rid);
+        setResponseMessage("Report Uploaded");
       } else {
         console.error("Failed to submit form");
-
       }
     } catch (error) {
       console.error("Error occurred while submitting form:", error);
@@ -74,16 +83,16 @@ function LabUploadForm() {
     reader.readAsDataURL(image);
   };
 
-
   const sendImageToBackend = async (imageUri, rand, val) => {
     console.log(val);
     try {
       const response = await fetch(
-        "http://192.168.0.102:8081/images/uploadReport",
+        "http://" + IMAGES_HOST + ":" + IMAGES_PORT + "/images/uploadReport",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({ report: imageUri, reportId: val }),
         }
@@ -91,6 +100,8 @@ function LabUploadForm() {
       if (!response.ok) {
         alert("Unable to Load Details");
       }
+      setResponseMessage("Report Uploaded");
+      setResponseMessage("Report Uploaded");
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -169,8 +180,11 @@ function LabUploadForm() {
               Submit
             </button>
           </div>
+          {responseMessage.length > 0 && <div>{responseMessage}</div>}
+          {responseMessage.length > 0 && <div>{responseMessage}</div>}
         </div>
       </div>
+      {responseMessage.length>0&&(<div>{responseMessage}</div>)}
     </form>
   );
 }
