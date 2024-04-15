@@ -5,6 +5,8 @@ import ChatPopup from "../../components/ui/ChatPopup";
 import { useUserIdContext } from "../../pages/Common/UserIdContext";
 import PatientDetails from "./PatientDetails";
 
+// import Navbar from "../../components/navbar/Navbar";
+
 import {
   DATA_HOST,
   DATA_PORT,
@@ -13,6 +15,7 @@ import {
   CHAT_HOST,
   CHAT_PORT,
 } from "../../constants";
+import Navbar from "../../components/navbar/Navbar";
 
 function DoctorDashboard({onClickPat}) {
   const[show, setShow] = useState(false);
@@ -56,6 +59,7 @@ function DoctorDashboard({onClickPat}) {
 
   return (
     <> 
+    <Navbar></Navbar>
       <section className="home">
         <div className="parent-container">
           <div className="all-items">

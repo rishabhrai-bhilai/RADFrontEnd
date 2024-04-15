@@ -15,6 +15,8 @@ import ChatPage from "./components/ui/ChatPage";
 import React, { useState } from "react";
 import DocReportComponent from "./pages/Doctor/DocReportComponent";
 
+import SearchDoctor from "./pages/Patient/SearchDoctor";
+
 function App() {
   const [email, setEmail] = useState("");
   const [credId, setCredId] = useState();

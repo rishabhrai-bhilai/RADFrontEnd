@@ -122,7 +122,7 @@ const ChatPage = () => {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="chat-container">
         <div className="chat-head">
           <div className="chat-heading-name">Chat</div>
