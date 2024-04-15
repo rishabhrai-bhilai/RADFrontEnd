@@ -30,7 +30,7 @@
     /* padding: 10px 24px; */
     /* height: 100%; */
     font-size: 1.25rem;
-    background-color: #007bff;
+    background-color: var(--blue-dark);
     color: #fff;
     border: none;
     border-top-right-radius: 6px;
@@ -38,13 +38,13 @@
     /* margin-left: 8px; */
     cursor: pointer;
     height: 100%;
-    width: 10%;
+    width: 20%;
     outline: none;
     border: none;
   }
   
   .search-bar button:hover {
-    background-color: #0056b3;
+    background-color: var(--blue-dark);
   }
 
   

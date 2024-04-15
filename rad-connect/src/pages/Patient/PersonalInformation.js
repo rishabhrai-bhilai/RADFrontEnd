@@ -34,7 +34,7 @@ function PersonalInformation({ username, uid }) {
   const [drinkingHabit, setDrinkingHabit] = useState("");
   const [food, setFood] = useState("");
   const [emergencyContact, setEmergencyContact] = useState("");
-  const [responseMessage, setResponseMessage] = useState("");
+  const [responseMessage,setResponseMessage]=useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -103,6 +103,7 @@ function PersonalInformation({ username, uid }) {
         throw new Error("Network response was not ok");
       }
       console.log("Data saved successfully");
+      setResponseMessage("Patient Registered");
       setResponseMessage("Patient Registered");
     } catch (error) {
       console.error("There was a problem saving the data:", error);
@@ -508,6 +509,7 @@ function PersonalInformation({ username, uid }) {
             Submit
           </button>
         </div>
+        {responseMessage.length > 0 && <div>{responseMessage}</div>}
         {responseMessage.length > 0 && <div>{responseMessage}</div>}
       </form>
     </>

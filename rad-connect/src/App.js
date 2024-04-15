@@ -13,10 +13,14 @@ import PatientInformation from "./pages/Doctor/PatientInformation";
 import ChatPopup from "./components/ui/ChatPopup";
 import ChatPage from "./components/ui/ChatPage";
 import React, { useState } from "react";
+import DocReportComponent from "./pages/Doctor/DocReportComponent";
+
+import SearchDoctor from "./pages/Patient/SearchDoctor";
 
 function App() {
   const [email, setEmail] = useState("");
   const [credId, setCredId] = useState();
+  const [patId, setPatId] = useState();
 
   const handleSubmitEmail = (email) => {
     // Handle email submission logic here
@@ -29,6 +33,10 @@ function App() {
     console.log("Credential ID obtained:", credId);
     setCredId(credId);
   };
+
+  const handlePatId = (patId) => {
+    setPatId(patId);
+  }
 
   return (
     <div className="App">
@@ -51,7 +59,8 @@ function App() {
         <Route path="/patientreports" element={<Reports />} />
         <Route path="/labdashboard" element={<ReportUpload />} />
         <Route path="/patientchat" element={<ChatPage />} />
-        <Route path="/doctordashboard" element={<DoctorDashboard />} />
+        <Route path="/doctordashboard" element={<DoctorDashboard onClickPat={handlePatId}/>} />
+        <Route path="/patient/reports" element={<DocReportComponent patientId={patId} />} />
 
         {/* <Route path="/labprofile" element={<LabProfile/>}/> */}
         {/* <Route path="/doctorprofile" element={<DoctorProfile/>}/> */}
