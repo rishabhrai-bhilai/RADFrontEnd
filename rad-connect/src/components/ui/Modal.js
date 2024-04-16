@@ -46,8 +46,8 @@ const Modal = ({ closeModal, reportId }) => {
     //}
   };
 
-  useEffect(() => {
-    getAllDoctors();
+  useEffect(() => {    
+    getAllDoctors();    
   }, [data]);
 
   useEffect(() => {
@@ -69,7 +69,7 @@ const Modal = ({ closeModal, reportId }) => {
           DATA_PORT +
           "/teleRadiology/getAllDoctors",
         {
-          method: "GET",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -103,7 +103,7 @@ const Modal = ({ closeModal, reportId }) => {
           "/teleRadiology/getReportViewers/" +
           reportId,
         {
-          method: "GET",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,

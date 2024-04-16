@@ -6,6 +6,7 @@ import Navbar from "../../components/navbar/Navbar";
 import { useUserIdContext } from "../Common/UserIdContext";
 import { usePatientIdContext } from "./PatientIdContext";
 import ChatPopup from "../../components/ui/ChatPopup";
+import axios from 'axios'
 import {
   DATA_HOST,
   DATA_PORT,
@@ -46,6 +47,10 @@ function PatientDashboard() {
           body: JSON.stringify({ id: parseInt(data) }),
         }
       );
+      // const response = await axios.post(`http://` + DATA_HOST + `:` + DATA_PORT + `/teleRadiology/getPatient`, { id: parseInt(data) },
+      // {headers:{
+      //   Authorization: `Bearer ${token}`
+      // }});
       if (!response.ok) {
         throw new Error("Failed to fetch patient");
       }

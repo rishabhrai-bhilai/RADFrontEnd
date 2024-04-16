@@ -103,7 +103,7 @@ function ReportComponent() {
       }
       const imageData = await response.json();
       arr = imageData.reports;
-      //console.log(imageData.reports);
+      console.log(imageData.reports);
       // await Promise.all(fetchPromises); // Wait for all fetches to complete
       setImages(arr);
       //console.log(arr);

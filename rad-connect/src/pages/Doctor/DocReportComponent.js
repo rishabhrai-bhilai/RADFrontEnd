@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-// import Modal from "./Modal";
 import { useUserIdContext } from "../../pages/Common/UserIdContext";
 import imgg from "../../assets/mri_img.png";
-// import ButtonComponent from "./ButtonComponent";
+import DoctorModal from "./DoctorModal";
+import ButtonComponent from "../../components/ui/ButtonComponent";
 import "./DocReportComponent.css";
 
 import {
@@ -18,8 +18,17 @@ function DocReportComponent({patientId}) {
 
     const { data, token } = useUserIdContext();
     const[report, setReport] = useState([]);
-    console.log("pat id :  ", patientId);
-    console.log("doc id :  ", data);
+    const [showModal, setShowModal] = useState(false);
+    const [reportIdInModal, setReportIdInModal] = useState(null);
+    
+    const openModal = (reportId) => {
+      setShowModal(true);
+      setReportIdInModal(reportId);
+    };
+
+    const closeModal = () => {
+      setShowModal(false);
+    };
 
     useEffect(() => {
         getConsentedReports(patientId, data);
@@ -84,9 +93,18 @@ function DocReportComponent({patientId}) {
                         <div className="">{reportItem.dateOfIssue}</div>
                         <div className="report-button-container">
                             <div className="icon-buttons">
-                            <button>
-                                Chat with Patient
-                            </button>
+                            <div className="icon-box">
+                            <ButtonComponent
+                              openModal={() => openModal(1)}
+                            />
+                            {showModal &&
+                              reportIdInModal === 1 && ( // Check if showModal is true and the report id matches
+                                <DoctorModal
+                                  closeModal={closeModal}
+                                  reportId={1}
+                                /> // Pass report id to Modal
+                              )}
+                          </div>                            
                             <button>
                                 Chat with Radiologist
                             </button>

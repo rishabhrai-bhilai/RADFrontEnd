@@ -7,8 +7,7 @@ export const useUserIdContext = () => {
 };
 
 export const UserIdContextProvider = ({ children }) => {
-  const [data, setData] = useState(() => {
-    // Initialize data from localStorage if available
+  const [data, setData] = useState(()=> {    
     const storedData = localStorage.getItem("userData");
     return storedData ? JSON.parse(storedData) : null;
   });
