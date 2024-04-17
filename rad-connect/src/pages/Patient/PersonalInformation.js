@@ -10,9 +10,6 @@ import {
 } from "../../constants";
 
 function PersonalInformation({ username, uid }) {
-  console.log(username);
-  console.log(uid);
-
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -34,32 +31,10 @@ function PersonalInformation({ username, uid }) {
   const [drinkingHabit, setDrinkingHabit] = useState("");
   const [food, setFood] = useState("");
   const [emergencyContact, setEmergencyContact] = useState("");
-  const [responseMessage,setResponseMessage]=useState('');
+  const [responseMessage, setResponseMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", {
-      firstName,
-      middleName,
-      lastName,
-      phone,
-      dob,
-      address,
-      city,
-      state,
-      pincode,
-      height,
-      weight,
-      bloodGroup,
-      gender,
-      allergies,
-      currMed,
-      pastMed,
-      chronicDiseases,
-      smokingHabit,
-      drinkingHabit,
-      food,
-    });
 
     const formData = {
       firstName: firstName,
@@ -102,7 +77,6 @@ function PersonalInformation({ username, uid }) {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      console.log("Data saved successfully");
       setResponseMessage("Patient Registered");
       setResponseMessage("Patient Registered");
     } catch (error) {

@@ -14,42 +14,41 @@ import {
   CHAT_PORT,
 } from "../../constants";
 
-function DocReportComponent({patientId}) {
+function DocReportComponent({ patientId }) {
+  const { data, token } = useUserIdContext();
+  const [report, setReport] = useState([]);
 
-    const { data, token } = useUserIdContext();
-    const[report, setReport] = useState([]);
-    console.log("pat id :  ", patientId);
-    console.log("doc id :  ", data);
+  useEffect(() => {
+    getConsentedReports(patientId, data);
+  }, []);
 
-    useEffect(() => {
-        getConsentedReports(patientId, data);
-      }, []);
-
-      const getConsentedReports = async (patientId, data) => {
-        try {
-          const response = await fetch(
-            "http://" + DATA_HOST + ":" + DATA_PORT + "/teleRadiology/getConsentReports",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-              body: JSON.stringify({ patientID: patientId, doctorID: data }),
-            }
-          );
-          if (!response.ok) {
-            throw new Error("Failed to fetch patient");
-          }
-          const responseData = await response.json();
-          console.log(responseData);
-          setReport(responseData);
-        } catch (error) {
-          console.error("Error fetching Reports:", error);
+  const getConsentedReports = async (patientId, data) => {
+    try {
+      const response = await fetch(
+        "http://" +
+          DATA_HOST +
+          ":" +
+          DATA_PORT +
+          "/teleRadiology/getConsentReports",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ patientID: patientId, doctorID: data }),
         }
-      };
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch patient");
+      }
+      const responseData = await response.json();
+      setReport(responseData);
+    } catch (error) {
+      console.error("Error fetching Reports:", error);
+    }
+  };
 
-  
   return (
     <div>
       <div className="element-name-filter">
@@ -72,30 +71,26 @@ function DocReportComponent({patientId}) {
                 <div>buttons</div>
               </div>
             </li>
-                {report.map((reportItem, index) => (
-                    <li key={index}>
-                        <div className="report-list-box | report-data">
-                        <div className="report-image">
-                            <div className="image-box">
-                            <img src={reportItem.imageUrl} alt="Report" />
-                            </div>
-                        </div>
-                        <div className="">{reportItem.reportType}</div>
-                        <div className="">{reportItem.dateOfIssue}</div>
-                        <div className="report-button-container">
-                            <div className="icon-buttons">
-                            <button>
-                                Chat with Patient
-                            </button>
-                            <button>
-                                Chat with Radiologist
-                            </button>
-                        </div>
-                      </div>
+            {report.map((reportItem, index) => (
+              <li key={index}>
+                <div className="report-list-box | report-data">
+                  <div className="report-image">
+                    <div className="image-box">
+                      <img src={reportItem.imageUrl} alt="Report" />
                     </div>
-                  </li>
-                //  ))
-              ))} 
+                  </div>
+                  <div className="">{reportItem.reportType}</div>
+                  <div className="">{reportItem.dateOfIssue}</div>
+                  <div className="report-button-container">
+                    <div className="icon-buttons">
+                      <button>Chat with Patient</button>
+                      <button>Chat with Radiologist</button>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              //  ))
+            ))}
           </ul>
         </div>
       </div>

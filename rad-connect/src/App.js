@@ -23,20 +23,16 @@ function App() {
   const [patId, setPatId] = useState();
 
   const handleSubmitEmail = (email) => {
-    // Handle email submission logic here
-    console.log("Email submitted:", email);
     setEmail(email);
   };
 
   const handleCredId = (credId) => {
-    // Handle email submission logic here
-    console.log("Credential ID obtained:", credId);
     setCredId(credId);
   };
 
   const handlePatId = (patId) => {
     setPatId(patId);
-  }
+  };
 
   return (
     <div className="App">
@@ -59,14 +55,20 @@ function App() {
         <Route path="/patientreports" element={<Reports />} />
         <Route path="/labdashboard" element={<ReportUpload />} />
         <Route path="/patientchat" element={<ChatPage />} />
-        <Route path="/doctordashboard" element={<DoctorDashboard onClickPat={handlePatId}/>} />
-        <Route path="/patient/reports" element={<DocReportComponent patientId={patId} />} />
+        <Route
+          path="/doctordashboard"
+          element={<DoctorDashboard onClickPat={handlePatId} />}
+        />
+        <Route
+          path="/patient/reports"
+          element={<DocReportComponent patientId={patId} />}
+        />
 
         {/* <Route path="/labprofile" element={<LabProfile/>}/> */}
         {/* <Route path="/doctorprofile" element={<DoctorProfile/>}/> */}
       </Routes>
       {/* <ChatPopup></ChatPopup>
-      <Navbar /> */}      
+      <Navbar /> */}
     </div>
   );
 }

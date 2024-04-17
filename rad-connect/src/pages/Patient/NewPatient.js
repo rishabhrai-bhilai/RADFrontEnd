@@ -20,18 +20,12 @@ const NewPatient = ({ onSubmitEmail, onSubmitCred }) => {
     onSubmitEmail(userName);
 
     e.preventDefault();
-    console.log("Form submitted:", {
-      userName,
-      password,
-      password2,
-    });
 
     if (password !== password2) {
       alert("Different Password");
       return;
     }
 
-    console.log("Same Password");
     const formData = {
       email: userName,
       password: password,
@@ -58,7 +52,6 @@ const NewPatient = ({ onSubmitEmail, onSubmitCred }) => {
         throw new Error("Network response was not ok");
       }
       const responseData = await response.json();
-      console.log("Data saved successfully");
       onSubmitCred(responseData.user);
       navigate("/patientregistration");
     } catch (error) {

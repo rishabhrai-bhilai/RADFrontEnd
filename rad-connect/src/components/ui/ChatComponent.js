@@ -69,7 +69,7 @@ const ChatComponent = ({ rId, uId, myId, chatName }) => {
   };
 
   const onError = (err) => {
-    console.log(err);
+    console.error(err);
   };
 
   const handleSendMessage = (text) => {
@@ -92,8 +92,6 @@ const ChatComponent = ({ rId, uId, myId, chatName }) => {
   };
 
   const fetchMessages = async () => {
-    console.log("req body");
-
     try {
       const response = await fetch(
         "http://" + DATA_HOST + ":" + DATA_PORT + "/teleRadiology/getMessages",
@@ -110,28 +108,10 @@ const ChatComponent = ({ rId, uId, myId, chatName }) => {
         }
       );
 
-      console.log(
-        JSON.stringify({
-          user1Id: myId,
-          user2Id: uId,
-          reportId: rId,
-        })
-      );
-
       if (!response.ok) {
         throw new Error("Failed to fetch chats");
       }
       const responseData = await response.json();
-      // console.log(responseData);
-      // console.log(
-      //   JSON.stringify({
-      //     user1Id: data,
-      //     user2Id: userId,
-      //     reportId: reportId,
-      //   })
-      // // );
-      // console.log("fetchedMessages");
-      console.log(responseData.messages);
       setMessages(responseData.messages);
     } catch (error) {
       console.error("Error fetching reports:", error);
@@ -139,7 +119,6 @@ const ChatComponent = ({ rId, uId, myId, chatName }) => {
   };
 
   const onPrivateMessage = (payload) => {
-    console.log("reciever");
     var payloadData = JSON.parse(payload.body);
     // fetchMessages(parseInt(payloadData.message, 10));
     let newMessage = {
@@ -148,8 +127,6 @@ const ChatComponent = ({ rId, uId, myId, chatName }) => {
     };
     var parts = payloadData.receiverName.split("@");
     var repRec = parseInt(parts[2]);
-    console.log(repRec);
-    console.log(rId);
     if (repRec == rId) setMessages((messages) => [...messages, newMessage]);
   };
 
@@ -193,8 +170,6 @@ const ChatComponent = ({ rId, uId, myId, chatName }) => {
         message: text,
         status: "MESSAGE",
       };
-      console.log("sender");
-      console.log(chatMessage);
       stompClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
       setUserData({ ...userData, message: "" });
     }

@@ -21,11 +21,6 @@ const OTP = ({
   const { data } = usePatientIdContext();
   const { token } = useUserIdContext();
 
-  console.log(data);
-  console.log(reportId);
-  console.log(doctorId);
-  console.log(toggleValue);
-
   useEffect(() => {
     getOtp(data);
   }, []);
@@ -68,10 +63,8 @@ const OTP = ({
 
         if (response.ok) {
           const responseData = await response.json();
-          console.log(responseData);
           setResponseMessage("Consent Given");
         } else {
-          console.log("Unable to give Consent");
           setResponseMessage("Unable to give Consent");
         }
       } catch (error) {
@@ -105,10 +98,8 @@ const OTP = ({
 
         if (response.ok) {
           const responseData = await response.json();
-          console.log(responseData);
           setResponseMessage("Consent Removed");
         } else {
-          console.log("Unable to remove Consent");
           setResponseMessage("Unable to remove Consent");
         }
       } catch (error) {
@@ -130,7 +121,7 @@ const OTP = ({
           "/teleRadiology/otpVerification/" +
           data,
         {
-          method: "GET",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -140,10 +131,8 @@ const OTP = ({
       if (!response.ok) {
         throw new Error("Failed to get OTP");
       }
-
-      console.log(response);
     } catch (error) {
-      console.log("Error getting OTP:", error);
+      console.error("Error getting OTP:", error);
     }
   };
 

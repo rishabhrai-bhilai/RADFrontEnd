@@ -25,7 +25,6 @@ const ReportPopup = ({
   onRepClick,
   removeChat,
 }) => {
-  // console.log(chatReports);
   const [userData, setUserData] = useState({
     username: "",
     receivername: "",
@@ -41,7 +40,6 @@ const ReportPopup = ({
   const toggleDiv = () => {
     setExpanded(!expanded);
     if (expanded) removeChat(-1);
-    // console.log(expanded);
   };
 
   useEffect(() => {
@@ -75,15 +73,12 @@ const ReportPopup = ({
   }, [chatReports]);
 
   useEffect(() => {
-    console.log(reports);
     setReportLoading(true);
   }, [reports]);
 
   const handleReportClick = (reportId) => {
     onRepClick(reportId);
     setSelectedId(reportId);
-    console.log("reportId");
-    console.log(reportId);
     setParticularId(reportId);
   };
   return (

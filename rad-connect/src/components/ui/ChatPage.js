@@ -59,7 +59,6 @@ const ChatPage = () => {
         const responseData = await response.json();
         // setChats1(responseData);
         settingChats(responseData);
-        // console.log(responseData.docs);
       } catch (error) {
         console.error("Error fetching reports:", error);
       }
@@ -69,7 +68,6 @@ const ChatPage = () => {
 
   const settingChats = (chats1) => {
     let newChats = [];
-    // console.log(chats1);
     if (chats1.pats != null) {
       chats1.pats.forEach((element) => {
         let json = {
@@ -101,14 +99,13 @@ const ChatPage = () => {
         newChats.push(json);
       });
     }
-    // console.log(newChats);
+
     setChats(newChats);
   };
 
   const handleClick = (chatReports, id, chatName) => {
     setLoading(true);
     setReports(chatReports);
-    // console.log(chatReports);
     setUserId(id);
     setLoading(false);
     setChatName(chatName);

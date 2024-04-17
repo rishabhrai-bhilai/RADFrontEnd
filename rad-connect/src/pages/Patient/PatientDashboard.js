@@ -29,7 +29,6 @@ function PatientDashboard() {
   const { getPatientId } = usePatientIdContext();
 
   useEffect(() => {
-    console.log("JWT token: ", token);
     fetchPatient(data);
   }, []);
 
@@ -50,10 +49,8 @@ function PatientDashboard() {
         throw new Error("Failed to fetch patient");
       }
       const patientData = await response.json();
-      console.log(patientData);
       setPatient(patientData);
       getPatientId(patientData.id);
-      console.log(data);
     } catch (error) {
       console.error("Error fetching patient:", error);
     }

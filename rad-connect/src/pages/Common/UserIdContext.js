@@ -16,11 +16,10 @@ export const UserIdContextProvider = ({ children }) => {
   const [token, setToken] = useState(() => {
     // Initialize token from localStorage if available
     const storedToken = localStorage.getItem("userToken");
-    return storedToken ? storedToken : '';
+    return storedToken ? storedToken : "";
   });
 
   const getUserToken = (token) => {
-    // console.log("JWT token: ", token);
     setToken(token);
   };
 

@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../Doctor/DoctorDashboard.css";
 import patientImg from "../../assets/patientImg.png";
 import ChatPopup from "../../components/ui/ChatPopup";
@@ -17,13 +17,11 @@ import {
 } from "../../constants";
 import Navbar from "../../components/navbar/Navbar";
 
-function DoctorDashboard({onClickPat}) {
-  const[show, setShow] = useState(false);
+function DoctorDashboard({ onClickPat }) {
+  const [show, setShow] = useState(false);
   const { data, token } = useUserIdContext();
-  const[patients,setPatients]=useState([]);  
-  const[patient, setPatient] = useState(null);
-  
-  console.log(data);
+  const [patients, setPatients] = useState([]);
+  const [patient, setPatient] = useState(null);
 
   useEffect(() => {
     fetchConsentPatients(data);
@@ -32,12 +30,17 @@ function DoctorDashboard({onClickPat}) {
   const fetchConsentPatients = async (data) => {
     try {
       const response = await fetch(
-        "http://" + DATA_HOST + ":" + DATA_PORT + "/teleRadiology/getConsentPatients/"+data,
+        "http://" +
+          DATA_HOST +
+          ":" +
+          DATA_PORT +
+          "/teleRadiology/getConsentPatients/" +
+          data,
         {
           method: "GET",
           headers: {
-            "Content-Type": "application/json",            
-          },          
+            "Content-Type": "application/json",
+          },
         }
       );
       if (!response.ok) {
@@ -51,15 +54,14 @@ function DoctorDashboard({onClickPat}) {
   };
 
   const handleArrowClick = (patient) => {
-    console.log("Clicked arrow for patient:", patient);
     setPatient(patient);
     onClickPat(patient.id);
     setShow(true);
   };
 
   return (
-    <> 
-    <Navbar></Navbar>
+    <>
+      <Navbar></Navbar>
       <section className="home">
         <div className="parent-container">
           <div className="all-items">
@@ -119,32 +121,38 @@ function DoctorDashboard({onClickPat}) {
                     role="list"
                     className="doctor-dashboard-ongoing-diagnosis"
                   >
-                    {patients.map((patient, index) => (                 
-                    <li key={index}>
-                      <div className="list-item">
-                        <div className="ongoing-diagnosis-image">
-                          <div className="ongoing-diagnosis-img-holder">
-                            <img src={patientImg} alt="" srcset="" />
-                          </div>
-                        </div>
-                        <div className="ongoing-diagnosis-details">
-                          <div className="ongoing-diagnosis-details-data">
-                            <div>
-                              <span>{patient.firstName}{" "}
-                        {patient.middleName !== null ? patient.middleName : ""}{" "}
-                        {patient.lastName}</span>
-                            </div>
-                            <div>                              
+                    {patients.map((patient, index) => (
+                      <li key={index}>
+                        <div className="list-item">
+                          <div className="ongoing-diagnosis-image">
+                            <div className="ongoing-diagnosis-img-holder">
+                              <img src={patientImg} alt="" srcset="" />
                             </div>
                           </div>
-                          <div className="ongoing-diagnosis-details-arrow" onClick={() => handleArrowClick(patient)}>
-                            <i className="bx bxs-chevron-right | ongoing-diagnosis-left-icon"></i>  
+                          <div className="ongoing-diagnosis-details">
+                            <div className="ongoing-diagnosis-details-data">
+                              <div>
+                                <span>
+                                  {patient.firstName}{" "}
+                                  {patient.middleName !== null
+                                    ? patient.middleName
+                                    : ""}{" "}
+                                  {patient.lastName}
+                                </span>
+                              </div>
+                              <div></div>
+                            </div>
+                            <div
+                              className="ongoing-diagnosis-details-arrow"
+                              onClick={() => handleArrowClick(patient)}
+                            >
+                              <i className="bx bxs-chevron-right | ongoing-diagnosis-left-icon"></i>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </li>
+                      </li>
                     ))}
-                    </ul>
+                  </ul>
                 </div>
               </div>
 

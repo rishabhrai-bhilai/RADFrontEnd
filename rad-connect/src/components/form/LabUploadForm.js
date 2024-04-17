@@ -18,10 +18,7 @@ function LabUploadForm() {
   const [image, setImage] = useState(null);
   const [rid, setRid] = useState();
   const { data, token } = useUserIdContext();
-  const [responseMessage,setResponseMessage]=useState('');
-
-  console.log(data);
-  console.log(token);
+  const [responseMessage, setResponseMessage] = useState("");
 
   let responseData;
 
@@ -31,12 +28,6 @@ function LabUploadForm() {
     // Get today's date
     const today = new Date();
     const formattedDate = today.toLocaleDateString();
-
-    console.log(formattedDate);
-    console.log(remarks);
-    console.log(type);
-    console.log(data);
-    console.log(email);
 
     const formData = {
       dateOfIssue: "2024-04-05",
@@ -61,7 +52,6 @@ function LabUploadForm() {
 
       if (response.ok) {
         responseData = await response.json();
-        console.log("API Response:", responseData);
         setRid(responseData.rid);
         setResponseMessage("Report Uploaded");
       } else {
@@ -78,13 +68,11 @@ function LabUploadForm() {
       // Now you can send the imageUri to your backend
       const rand = Math.random();
       sendImageToBackend(imageUri, rand, responseData.rid);
-      console.log(rand);
     };
     reader.readAsDataURL(image);
   };
 
   const sendImageToBackend = async (imageUri, rand, val) => {
-    console.log(val);
     try {
       const response = await fetch(
         "http://" + IMAGES_HOST + ":" + IMAGES_PORT + "/images/uploadReport",
@@ -184,7 +172,7 @@ function LabUploadForm() {
           {responseMessage.length > 0 && <div>{responseMessage}</div>}
         </div>
       </div>
-      {responseMessage.length>0&&(<div>{responseMessage}</div>)}
+      {responseMessage.length > 0 && <div>{responseMessage}</div>}
     </form>
   );
 }

@@ -78,7 +78,6 @@ function ReportComponent() {
       }
       const responseData = await response.json();
       setReports(responseData.reports || []);
-      //console.log(responseData.reports);
     } catch (error) {
       console.error("Error fetching reports:", error);
     }
@@ -103,10 +102,7 @@ function ReportComponent() {
       }
       const imageData = await response.json();
       arr = imageData.reports;
-      //console.log(imageData.reports);
-      // await Promise.all(fetchPromises); // Wait for all fetches to complete
       setImages(arr);
-      //console.log(arr);
       for (let i = 0; i < arr.length; i++) {
         for (let j = 0; j < reports.length; j++) {
           if (arr[i].reportId === reports[j].id) {
@@ -116,7 +112,6 @@ function ReportComponent() {
       }
 
       setReports(reports);
-      console.log(reports);
 
       setLoading(false); // Set loading to false after images are fetched
     } catch (error) {

@@ -12,11 +12,10 @@ import {
   IMAGES_PORT,
   CHAT_HOST,
   CHAT_PORT,
+  httpGet,
 } from "../../constants";
 
 const Modal = ({ closeModal, reportId }) => {
-  console.log(reportId);
-
   const { data, token } = useUserIdContext();
 
   const [doctors, setDoctors] = useState([]);
@@ -36,7 +35,6 @@ const Modal = ({ closeModal, reportId }) => {
   };
 
   const handleToggle = (isToggled, doctorId) => {
-    console.log("Toggle state:", isToggled ? "On" : "Off");
     // if(isToggled){
     isToggled ? setToggleValue(1) : setToggleValue(0);
     setSelectedDoctorId(doctorId);
@@ -69,7 +67,7 @@ const Modal = ({ closeModal, reportId }) => {
           DATA_PORT +
           "/teleRadiology/getAllDoctors",
         {
-          method: "GET",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -85,40 +83,17 @@ const Modal = ({ closeModal, reportId }) => {
         return { ...doctor, consent: 0 };
       });
 
-      //console.log(updatedList);
       setDoctors(updatedList || []);
       setFilteredDoctorsList(updatedList || []);
     } catch (error) {
-      console.log("Error Fetching Doctors list:", error);
+      console.error("Error Fetching Doctors list:", error);
     }
   };
 
   const getReportViewers = async (reportId) => {
-    try {
-      const response = await fetch(
-        "http://" +
-          DATA_HOST +
-          ":" +
-          DATA_PORT +
-          "/teleRadiology/getReportViewers/" +
-          reportId,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch report Viewers");
-      }
-      const responseData = await response.json();
-      setReportViewers(responseData || []);
-    } catch (error) {
-      console.error("Error fetching Report Viewers:", error);
-    }
+    setReportViewers(
+      (await httpGet(0, "/getReportViewers/" + reportId, token)) || []
+    );
   };
 
   const binarySearch = (arr, target) => {
@@ -151,8 +126,6 @@ const Modal = ({ closeModal, reportId }) => {
     }
 
     setShow(true);
-
-    console.log(filteredDoctorsList);
   };
 
   useEffect(() => {

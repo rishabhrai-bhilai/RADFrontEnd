@@ -61,9 +61,7 @@ const CredentialForm = ({ onSubmit }) => {
         const responseData = await response.json();
         const userId = responseData.user;
 
-        console.log(userId);
         getUserId(userId);
-        console.log(responseData.token);
         getUserToken(responseData.token);
 
         if (data === "Patient") navigate("/patientdashboard");
@@ -87,7 +85,6 @@ const CredentialForm = ({ onSubmit }) => {
   };
 
   const { data } = useLoginRoleContext();
-  console.log(data);
 
   return (
     <div className="form-container">
