@@ -1,4 +1,5 @@
-export const DATA_HOST = "192.168.0.122";
+import { Axios } from "axios";
+export const DATA_HOST = "localhost";
 export const IMAGES_HOST = "192.168.0.122";
 export const CHAT_HOST = "192.168.0.122";
 export const DATA_PORT = "8081";

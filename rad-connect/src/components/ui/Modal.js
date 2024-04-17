@@ -68,6 +68,7 @@ const Modal = ({ closeModal, reportId }) => {
           "/teleRadiology/getAllDoctors",
         {
           method: "POST",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
