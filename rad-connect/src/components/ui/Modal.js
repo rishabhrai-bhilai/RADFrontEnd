@@ -13,6 +13,7 @@ import {
   CHAT_HOST,
   CHAT_PORT,
   httpGet,
+  httpPost,
 } from "../../constants";
 
 const Modal = ({ closeModal, reportId }) => {
@@ -35,13 +36,9 @@ const Modal = ({ closeModal, reportId }) => {
   };
 
   const handleToggle = (isToggled, doctorId) => {
-    // if(isToggled){
     isToggled ? setToggleValue(1) : setToggleValue(0);
     setSelectedDoctorId(doctorId);
     setShowOTPComponent(true);
-    // }else{
-    //setShowOTPComponent(false);
-    //}
   };
 
   useEffect(() => {
@@ -59,36 +56,17 @@ const Modal = ({ closeModal, reportId }) => {
   }, [filteredDoctorsList, reportViewers]);
 
   const getAllDoctors = async () => {
-    try {
-      const response = await fetch(
-        "http://" +
-          DATA_HOST +
-          ":" +
-          DATA_PORT +
-          "/teleRadiology/getAllDoctors",
-        {
-          method: "POST",
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch doctors list");
-      }
-      const responseData = await response.json();
-
-      const updatedList = responseData.map((doctor) => {
-        return { ...doctor, consent: 0 };
-      });
-
-      setDoctors(updatedList || []);
-      setFilteredDoctorsList(updatedList || []);
-    } catch (error) {
-      console.error("Error Fetching Doctors list:", error);
+    const responseData = await httpGet(0, "/getAllDoctors", token);
+    if (responseData == null) {
+      throw new Error("Failed to fetch doctors list");
     }
+
+    const updatedList = responseData.map((doctor) => {
+      return { ...doctor, consent: 0 };
+    });
+
+    setDoctors(updatedList || []);
+    setFilteredDoctorsList(updatedList || []);
   };
 
   const getReportViewers = async (reportId) => {

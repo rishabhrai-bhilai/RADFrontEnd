@@ -6,6 +6,7 @@ import {
   IMAGES_PORT,
   CHAT_HOST,
   CHAT_PORT,
+  httpPost,
 } from "../../constants";
 import DragDropFiles from "./DragDropFiles";
 import { useUserIdContext } from "../../pages/Common/UserIdContext";
@@ -37,35 +38,13 @@ function LabUploadForm() {
       patEmail: email,
     };
 
-    try {
-      const response = await fetch(
-        "http://" + DATA_HOST + ":" + DATA_PORT + "/teleRadiology/uploadReport",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            //"Authorization": `Bearer ${token}`
-          },
-          body: JSON.stringify(formData),
-        }
-      );
-
-      if (response.ok) {
-        responseData = await response.json();
-        setRid(responseData.rid);
-        setResponseMessage("Report Uploaded");
-      } else {
-        console.error("Failed to submit form");
-      }
-    } catch (error) {
-      console.error("Error occurred while submitting form:", error);
-      // Handle errors appropriately
-    }
+    responseData = await httpPost(0, "/uploadReport", token, formData);
+    setRid(responseData.rid);
+    setResponseMessage("Report Uploaded");
 
     const reader = new FileReader();
     reader.onloadend = () => {
       const imageUri = reader.result;
-      // Now you can send the imageUri to your backend
       const rand = Math.random();
       sendImageToBackend(imageUri, rand, responseData.rid);
     };
@@ -73,26 +52,15 @@ function LabUploadForm() {
   };
 
   const sendImageToBackend = async (imageUri, rand, val) => {
-    try {
-      const response = await fetch(
-        "http://" + IMAGES_HOST + ":" + IMAGES_PORT + "/images/uploadReport",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ report: imageUri, reportId: val }),
-        }
-      );
-      if (!response.ok) {
-        alert("Unable to Load Details");
-      }
-      setResponseMessage("Report Uploaded");
-      setResponseMessage("Report Uploaded");
-    } catch (error) {
-      console.error("Error fetching data:", error);
+    const responseData = await httpPost(1, "/uploadReport", token, {
+      report: imageUri,
+      reportId: val,
+    });
+    if (responseData == null) {
+      alert("Unable to Load Details");
     }
+    setResponseMessage("Report Uploaded");
+    setResponseMessage("Report Uploaded");
   };
 
   return (

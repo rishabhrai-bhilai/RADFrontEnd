@@ -11,6 +11,7 @@ import {
   IMAGES_PORT,
   CHAT_HOST,
   CHAT_PORT,
+  httpPost,
 } from "../../constants";
 
 function ReportComponent() {
@@ -33,90 +34,41 @@ function ReportComponent() {
   };
 
   const fetchPatient = async (data) => {
-    try {
-      const response = await fetch(
-        "http://" + DATA_HOST + ":" + DATA_PORT + "/teleRadiology/getPatient",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ id: data }),
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch patient");
-      }
-      const patientData = await response.json();
-      setPatient(patientData);
-    } catch (error) {
-      console.error("Error fetching patient:", error);
+    const patientData = await httpPost(0, "/getPatient", token, { id: data });
+    if (patientData == null) {
+      throw new Error("Failed to fetch patient");
     }
+    setPatient(patientData);
   };
 
   const fetchReports = async (patientId) => {
-    try {
-      const response = await fetch(
-        "http://" +
-          DATA_HOST +
-          ":" +
-          DATA_PORT +
-          "/teleRadiology/getPatientReports",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ id: patientId }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch reports");
-      }
-      const responseData = await response.json();
-      setReports(responseData.reports || []);
-    } catch (error) {
-      console.error("Error fetching reports:", error);
+    const responseData = await httpPost(0, "/getPatientReports", token, {
+      id: patientId,
+    });
+    if (responseData == null) {
+      throw new Error("Failed to fetch reports");
     }
+    setReports(responseData.reports || []);
   };
 
   const getReportImages = async (ids) => {
     let arr = [];
-    try {
-      const response = await fetch(
-        "http://" + IMAGES_HOST + ":" + IMAGES_PORT + "/images/getAllReports",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ reportIds: ids }),
-        }
-      );
-      if (!response.ok) {
-        throw new Error(`Failed to fetch image for reports`);
-      }
-      const imageData = await response.json();
-      arr = imageData.reports;
-      setImages(arr);
-      for (let i = 0; i < arr.length; i++) {
-        for (let j = 0; j < reports.length; j++) {
-          if (arr[i].reportId === reports[j].id) {
-            reports[i].imageUrl = arr[i].report;
-          }
+    const imageData = await httpPost(1, "/getAllReports", token, {
+      reportIds: ids,
+    });
+    arr = imageData.reports;
+    setImages(arr);
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = 0; j < reports.length; j++) {
+        if (arr[i].reportId === reports[j].id) {
+          reports[i].imageUrl = arr[i].report;
         }
       }
-
-      setReports(reports);
-
-      setLoading(false); // Set loading to false after images are fetched
-    } catch (error) {
-      console.error("Error fetching report images:", error);
     }
+
+    setReports(reports);
+
+    setLoading(false); // Set loading to false after images are fetched
   };
 
   useEffect(() => {

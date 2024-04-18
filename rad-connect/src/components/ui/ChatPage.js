@@ -14,6 +14,8 @@ import {
   IMAGES_PORT,
   CHAT_HOST,
   CHAT_PORT,
+  httpPost,
+  httpGet,
 } from "../../constants";
 
 import ReportPopup from "./ReportPopup";
@@ -37,31 +39,11 @@ const ChatPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "http://" +
-            DATA_HOST +
-            ":" +
-            DATA_PORT +
-            "/teleRadiology/getChats/" +
-            data,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch chats");
-        }
-        const responseData = await response.json();
-        // setChats1(responseData);
-        settingChats(responseData);
-      } catch (error) {
-        console.error("Error fetching reports:", error);
+      const responseData = await httpGet(0, "/getChats/" + data, token);
+      if (responseData == null) {
+        throw new Error("Failed to fetch chats");
       }
+      settingChats(responseData);
     };
     fetchData();
   }, []);

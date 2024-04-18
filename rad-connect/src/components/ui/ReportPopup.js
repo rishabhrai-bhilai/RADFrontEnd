@@ -13,6 +13,7 @@ import {
   IMAGES_PORT,
   CHAT_HOST,
   CHAT_PORT,
+  httpPost,
 } from "../../constants";
 
 var stompClient = null;
@@ -45,30 +46,11 @@ const ReportPopup = ({
   useEffect(() => {
     const fetchImageData = async () => {
       setReportLoading(false);
-      try {
-        const response = await fetch(
-          "http://" + IMAGES_HOST + ":" + IMAGES_PORT + "/images/getAllReports",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ reportIds: chatReports }),
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch chats");
-        }
-        const responseData = await response.json();
-        setReports(responseData.reports);
-        // setChats1(responseData);
-        // settingChats(responseData);
-      } catch (error) {
-        console.error("Error fetching reports:", error);
-      }
+      const responseData = await httpPost(1, "/getAllReports", token, {
+        reportIds: chatReports,
+      });
+      setReports(responseData.reports);
     };
-
     fetchImageData();
   }, [chatReports]);
 

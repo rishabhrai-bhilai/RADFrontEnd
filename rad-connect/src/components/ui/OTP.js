@@ -8,6 +8,8 @@ import {
   IMAGES_PORT,
   CHAT_HOST,
   CHAT_PORT,
+  httpPost,
+  httpGet,
 } from "../../constants";
 
 const OTP = ({
@@ -37,74 +39,41 @@ const OTP = ({
     let intOtp = parseInt(otp);
 
     if (toggleValue === 1) {
-      try {
-        const requestBody = {
-          doctorId: doctorId,
-          patientId: data,
-          reportId: reportId,
-          otp: intOtp,
-        };
+      const requestBody = {
+        doctorId: doctorId,
+        patientId: data,
+        reportId: reportId,
+        otp: intOtp,
+      };
 
-        const response = await fetch(
-          "http://" +
-            DATA_HOST +
-            ":" +
-            DATA_PORT +
-            "/teleRadiology/giveConsent",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(requestBody),
-          }
-        );
-
-        if (response.ok) {
-          const responseData = await response.json();
-          setResponseMessage("Consent Given");
-        } else {
-          setResponseMessage("Unable to give Consent");
-        }
-      } catch (error) {
-        console.error("OTP incorrect:", error.message);
-        setResponseMessage("OTP incorrect");
+      const responseData = await httpPost(
+        0,
+        "/giveConsent",
+        token,
+        requestBody
+      );
+      if (responseData != null) {
+        setResponseMessage("Consent Given");
+      } else {
+        setResponseMessage("Unable to give Consent");
       }
     } else {
-      try {
-        const requestBody = {
-          reportId: reportId,
-          doctorId: doctorId,
-          patientId: data,
-          otp: intOtp,
-        };
-
-        const response = await fetch(
-          "http://" +
-            DATA_HOST +
-            ":" +
-            DATA_PORT +
-            "/teleRadiology/removeConsent",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(requestBody),
-          }
-        );
-
-        if (response.ok) {
-          const responseData = await response.json();
-          setResponseMessage("Consent Removed");
-        } else {
-          setResponseMessage("Unable to remove Consent");
-        }
-      } catch (error) {
-        console.error("OTP incorrect:", error.message);
-        setResponseMessage("OTP incorrect");
+      const requestBody = {
+        reportId: reportId,
+        doctorId: doctorId,
+        patientId: data,
+        otp: intOtp,
+      };
+      const responseData = await httpPost(
+        0,
+        "/removeConsent",
+        token,
+        requestBody
+      );
+      if (responseData != null) {
+        setResponseMessage("Consent Removed");
+      } else {
+        setResponseMessage("Unable to remove Consent");
       }
     }
 
@@ -112,27 +81,9 @@ const OTP = ({
   };
 
   const getOtp = async (data) => {
-    try {
-      const response = await fetch(
-        "http://" +
-          DATA_HOST +
-          ":" +
-          DATA_PORT +
-          "/teleRadiology/otpVerification/" +
-          data,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Failed to get OTP");
-      }
-    } catch (error) {
-      console.error("Error getting OTP:", error);
+    const responseData = await httpGet(0, "/otpVerification/" + data, token);
+    if (responseData == null) {
+      throw new Error("Failed to get OTP");
     }
   };
 

@@ -5,6 +5,7 @@ import "./ChatPage.css";
 import patientChatImg from "../../assets/patientbox.png";
 import { over } from "stompjs";
 import SockJS from "sockjs-client";
+import { useUserIdContext } from "../../pages/Common/UserIdContext";
 import {
   DATA_HOST,
   DATA_PORT,
@@ -12,6 +13,7 @@ import {
   IMAGES_PORT,
   CHAT_HOST,
   CHAT_PORT,
+  httpPost,
 } from "../../constants";
 
 var stompClient = null;
@@ -25,6 +27,7 @@ const ChatComponent = ({ rId, uId, myId, chatName }) => {
     message: "",
   });
   const [messagesLoaded, setMessagesLoaded] = useState(false);
+  const { data, token } = useUserIdContext();
   useEffect(() => {
     setMessages([]);
     fetchMessages();
@@ -53,7 +56,6 @@ const ChatComponent = ({ rId, uId, myId, chatName }) => {
 
   const onConnected = () => {
     setUserData({ ...userData, connected: true });
-    // stompClient.subscribe("/chatroom/public", onMessageReceived);
     subs = stompClient.subscribe(
       "/user/" + myId + "@" + uId + "@" + rId + "/private",
       onPrivateMessage
@@ -73,13 +75,6 @@ const ChatComponent = ({ rId, uId, myId, chatName }) => {
   };
 
   const handleSendMessage = (text) => {
-    // const newMessage = {
-    //   chatId: messages.length + 1,
-    //   text: text,
-    //   sender: "user", // You can set the sender dynamically based on user authentication
-    //   timestamp: new Date().toLocaleTimeString(),
-    // };
-    // setMessages([...messages, newMessage]);
     const newMessage = {
       sender: myId,
       receiver: uId,
@@ -92,35 +87,19 @@ const ChatComponent = ({ rId, uId, myId, chatName }) => {
   };
 
   const fetchMessages = async () => {
-    try {
-      const response = await fetch(
-        "http://" + DATA_HOST + ":" + DATA_PORT + "/teleRadiology/getMessages",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            user1Id: myId,
-            user2Id: uId,
-            reportId: rId,
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch chats");
-      }
-      const responseData = await response.json();
-      setMessages(responseData.messages);
-    } catch (error) {
-      console.error("Error fetching reports:", error);
+    const responseData = await httpPost(0, "/getMessages", token, {
+      user1Id: myId,
+      user2Id: uId,
+      reportId: rId,
+    });
+    if (responseData == null) {
+      throw new Error("Failed to fetch chats");
     }
+    setMessages(responseData.messages);
   };
 
   const onPrivateMessage = (payload) => {
     var payloadData = JSON.parse(payload.body);
-    // fetchMessages(parseInt(payloadData.message, 10));
     let newMessage = {
       message: payloadData.message,
       sender: payloadData.sender,
@@ -137,27 +116,14 @@ const ChatComponent = ({ rId, uId, myId, chatName }) => {
     displayMessages();
   }, [messages]);
   const sendMessage = async (text) => {
-    try {
-      const response = await fetch(
-        "http://" + DATA_HOST + ":" + DATA_PORT + "/teleRadiology/addMessage",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            sender: myId,
-            reciever: uId,
-            message: text,
-            report: rId,
-          }),
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch patient");
-      }
-    } catch (error) {
-      console.error("Error fetching patient:", error);
+    const responseData = await httpPost(0, "/addMessage", token, {
+      sender: myId,
+      reciever: uId,
+      message: text,
+      report: rId,
+    });
+    if (responseData == null) {
+      throw new Error("Failed to add message");
     }
   };
 

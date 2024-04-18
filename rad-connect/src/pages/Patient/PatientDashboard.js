@@ -6,7 +6,7 @@ import Navbar from "../../components/navbar/Navbar";
 import { useUserIdContext } from "../Common/UserIdContext";
 import { usePatientIdContext } from "./PatientIdContext";
 import ChatPopup from "../../components/ui/ChatPopup";
-import axios from 'axios'
+import axios from "axios";
 import {
   DATA_HOST,
   DATA_PORT,
@@ -34,15 +34,17 @@ function PatientDashboard() {
   }, []);
 
   const fetchPatient = async (data) => {
+    const headers1 = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    console.log(headers1);
     try {
       const response = await fetch(
         "http://" + DATA_HOST + ":" + DATA_PORT + "/teleRadiology/getPatient",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
+          headers: headers1,
           body: JSON.stringify({ id: parseInt(data) }),
         }
       );

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import "D:/Rishabh HAD/RADFrontEnd/rad-connect/src/components/ui/Modal.css";
-import SearchBar from "D:/Rishabh HAD/RADFrontEnd/rad-connect/src/components/ui/SearchBar.js";
+import "../../components/ui/Modal.css";
+import SearchBar from "../../components/ui/SearchBar.js";
 import { useUserIdContext } from "../../pages/Common/UserIdContext";
 import patientImage from "../../assets/patientbox.png";
 import Toggle from "../../components/ui/Toggle";
@@ -14,8 +14,7 @@ import {
   CHAT_PORT,
 } from "../../constants";
 
-const DoctorModal = ({ closeModal, reportId }) => { 
-  
+const DoctorModal = ({ closeModal, reportId }) => {
   const [radiologists, setRadiologists] = useState([]);
   const [filteredRadiologistsList, setFilteredRadiologistsList] = useState([]);
 
@@ -28,17 +27,16 @@ const DoctorModal = ({ closeModal, reportId }) => {
     setFilteredRadiologistsList(filteredNames);
   };
 
-
   const handleToggle = (isToggled, radId) => {
     console.log("Toggle state:", isToggled ? "On" : "Off");
-    // if(isToggled){    
+    // if(isToggled){
     // }else{
     //setShowOTPComponent(false);
-    //}    
+    //}
   };
 
-  useEffect(() => {    
-    getAllRadiologists();    
+  useEffect(() => {
+    getAllRadiologists();
   }, [data]);
 
   const getAllRadiologists = async () => {
@@ -76,14 +74,14 @@ const DoctorModal = ({ closeModal, reportId }) => {
 
   return (
     <div className="modal">
-      <div className="modal-content">        
+      <div className="modal-content">
         <div className="close-icon-container">
           <i className="bx bx-x close" onClick={closeModal}></i>
         </div>
 
         <div className="modal-container">
           <div>
-            <SearchBar onSearch={handleSearch}/>
+            <SearchBar onSearch={handleSearch} />
           </div>
           <div className="modal-doctor-container">
             {filteredRadiologistsList.length === 0 ? (
@@ -100,12 +98,14 @@ const DoctorModal = ({ closeModal, reportId }) => {
                       </div>
                       <div className="list-name">
                         {radiologist.firstName}{" "}
-                        {radiologist.middleName !== null ? radiologist.middleName : ""}{" "}
+                        {radiologist.middleName !== null
+                          ? radiologist.middleName
+                          : ""}{" "}
                         {radiologist.lastName}
-                      </div>                      
+                      </div>
                       <div className="list-toggle-btn">
                         <div>
-                        <Toggle
+                          <Toggle
                             onToggle={(isToggled) =>
                               handleToggle(isToggled, radiologist.id)
                             }
@@ -114,10 +114,10 @@ const DoctorModal = ({ closeModal, reportId }) => {
                         </div>
                       </div>
                     </div>
-                  </li>  
-                  ))}              
+                  </li>
+                ))}
               </ul>
-              )}                                
+            )}
           </div>
         </div>
       </div>

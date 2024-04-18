@@ -32,3 +32,28 @@ export const httpGet = async (dest, path, token) => {
     return null;
   }
 };
+
+export const httpPost = async (dest, path, token, reqBody) => {
+  try {
+    const response = await fetch(
+      "http://" + hosts[dest] + ":" + ports[dest] + hostNames[dest] + path,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(reqBody),
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`Failed to fetch`);
+    }
+    const responseData = await response.json();
+    console.log(responseData);
+    return responseData;
+  } catch (error) {
+    console.error("Error fetching ", error);
+    return null;
+  }
+};
