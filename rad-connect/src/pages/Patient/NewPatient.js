@@ -16,7 +16,19 @@ const NewPatient = ({ onSubmitEmail, onSubmitCred }) => {
   const [password2, setPassword2] = useState("");
   const navigate = useNavigate();
 
+  const isValidEmail = (email) => {
+    // Regular expression for email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleSubmit = async (e) => {
+
+    if (!isValidEmail(userName)) {
+      alert("Please enter a valid email address");
+      return;
+    }
+
     onSubmitEmail(userName);
 
     e.preventDefault();

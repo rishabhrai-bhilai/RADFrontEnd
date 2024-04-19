@@ -6,7 +6,7 @@ export const DATA_PORT = "8081";
 export const IMAGES_PORT = "8080";
 export const CHAT_PORT = "8082";
 
-const hosts = ["192.168.0.122", "192.168.0.122", "192.168.0.122"];
+const hosts = ["localhost", "192.168.0.122", "192.168.0.122"];
 const ports = ["8081", "8080", "8082"];
 const hostNames = ["/teleRadiology", "/images", "/chat"];
 export const httpGet = async (dest, path, token) => {
