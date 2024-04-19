@@ -4,6 +4,8 @@ import { useUserIdContext } from "../../pages/Common/UserIdContext";
 import imgg from "../../assets/mri_img.png";
 import ButtonComponent from "./ButtonComponent";
 import "./ReportComponent.css";
+
+import Snackbar from "./Snackbar.js";
 import {
   DATA_HOST,
   DATA_PORT,
@@ -23,6 +25,12 @@ function ReportComponent() {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(true); // Loading
   const [reportIdInModal, setReportIdInModal] = useState(null);
+
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const togglePermission = () => {
+    setIsExpanded(!isExpanded);
+  };
 
   const openModal = (reportId) => {
     setShowModal(true);
@@ -131,9 +139,36 @@ function ReportComponent() {
                       <div className="">{report.dateOfIssue}</div>
                       <div className="report-button-container">
                         <div className="icon-buttons">
-                          <div className="icon-box">
-                            <i className="bx bxs-bell-ring"></i>
+                          <div
+                            className="icon-box notification-icon"
+                            
+                          >
+                            <i className="bx bxs-bell-ring" onClick={togglePermission}></i>
+                            <div class="notification-number">6</div>
+
+                            <div
+                              className={`permission-popup ${
+                                isExpanded ? "permission-expanded" : ""
+                              }`}
+                            >
+                              {isExpanded && (
+                                <button
+                                  className="permission-close-button"
+                                  onClick={togglePermission}
+                                >
+                                  <i class="bx bx-x"></i>
+                                </button>
+                              )}
+                              {isExpanded && (
+                                <div className="permission-expanded-content">
+                                  <Snackbar  />
+                                </div>
+                              ) }
+                            </div>
                           </div>
+
+
+
                           <div className="icon-box">
                             <ButtonComponent
                               openModal={() => openModal(report.id)}

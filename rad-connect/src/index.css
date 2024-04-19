@@ -292,8 +292,36 @@
     --white-light: #242526;
     --blue-dark: #3A3B3C;
     --blue-light: #3A3B3C;
+    /* --text-blue-extradark:rgb(163, 180, 240); */
     --grey-light:#FFF;
     --grey-dark:#CCC;
+
+
+
+    /* Colors  */
+    /* --body-color:#E4E9F7;
+    --sidebar-color: #FFF;
+    --primary-color: #695CFE;
+    --primary-color-light: #F6F5FF;
+    --toggle-color:#DDD;
+    --text-color:#707070; */
+
+    /* --white-dark:#E4E9F7;
+    --white-light: #FFF;
+    --blue-dark: #695CFE;
+    --blue-light: #F6F5FF;
+    --grey-light:#DDD;
+    --grey-dark:#707070; */
+
+    /* text colors  */
+    /* --text-white-dark:#E4E9F7;
+    --text-white-light: #FFF;
+    --text-blue-dark: #695CFE;
+    --text-blue-light: #F6F5FF;
+    --text-grey-light:#DDD;
+    --text-grey-dark:#707070;
+    --text-blue-extradark:rgba(5, 25, 96, 1); */
+
     }
 
   /* button */
