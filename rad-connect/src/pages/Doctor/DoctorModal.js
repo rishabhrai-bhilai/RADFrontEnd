@@ -103,14 +103,13 @@ const DoctorModal = ({ closeModal, reportId }) => {
                           : ""}{" "}
                         {radiologist.lastName}
                       </div>
+
+                      <div className="permission-status">
+                        <div className="danger">No Permission Yet</div>
+                      </div>
                       <div className="list-toggle-btn">
                         <div>
-                          <Toggle
-                            onToggle={(isToggled) =>
-                              handleToggle(isToggled, radiologist.id)
-                            }
-                            isToggled={true}
-                          />
+                        <button className="doct-btn doct-btn-7" ><i class='bx bx-mail-send'></i></button>
                         </div>
                       </div>
                     </div>

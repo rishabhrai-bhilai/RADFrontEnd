@@ -73,7 +73,7 @@
     height: 100%;
     display: flex;
     align-items: flex-start;
-    background-color: var(--white-light);
+    /* background-color: var(--white-light); */
     /* background-color: var(); */
     transition: width 0.5s ease-in-out;
 

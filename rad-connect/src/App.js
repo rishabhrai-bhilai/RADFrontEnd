@@ -9,7 +9,6 @@ import PatientRegistration from "./pages/Patient/PatientRegistration";
 import NewPatient from "./pages/Patient/NewPatient";
 import Reports from "./pages/Patient/Reports";
 import DoctorDashboard from "./pages/Doctor/DoctorDashboard";
-import PatientInformation from "./pages/Doctor/PatientInformation";
 import ChatPopup from "./components/ui/ChatPopup";
 import ChatPage from "./components/ui/ChatPage";
 import React, { useState } from "react";
@@ -37,7 +36,7 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<PatientDashboard />} />
+        <Route path="/" element={<Login />} />
         <Route
           path="/patientregistration"
           element={<PatientRegistration email={email} credId={credId} />}

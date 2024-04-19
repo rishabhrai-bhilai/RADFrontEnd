@@ -5,6 +5,12 @@ import DoctorModal from "./DoctorModal";
 import ButtonComponent from "../../components/ui/ButtonComponent";
 import "./DocReportComponent.css";
 
+import patientImg from "../../assets/patientImg.png";
+import ChatPopup from "../../components/ui/ChatPopup";
+import PatientDetails from "./PatientDetails";
+import Navbar from "../../components/navbar/Navbar";
+import PatientInformationCard from "../../components/ui/PatientInformationCard";
+
 import {
   DATA_HOST,
   DATA_PORT,
@@ -61,57 +67,95 @@ function DocReportComponent({ patientId }) {
   };
 
   return (
-    <div>
-      <div className="element-name-filter">
-        <div className="filter-type-dropdown">DropDown</div>
-        <div className="filter-type-search">Search</div>
-        <div className="filter-type-filter-by">Filter by</div>
-      </div>
+    <>
+      <Navbar></Navbar>
+      <section className="home">
+        <div className="parent-container">
+          <div className="all-items">
+            <div className="static-dashboard-heading | text-blue-extradark">
+              Patient Report
+            </div>
 
-      <div className="element-name-report-list">
-        <div className="report-heading"> </div>
-        <div className="ul-container">
-          <ul role="list" className="patient-reports-list">
-            <li>
-              <div className="report-list-box | report-data">
-                <div>Image</div>
-                {/* <div>Report Id</div> */}
-                {/* <div>Name</div> */}
-                <div>Type</div>
-                <div>Upload Date</div>
-                <div>buttons</div>
-              </div>
-            </li>
-            {report.map((reportItem, index) => (
-              <li key={index}>
-                <div className="report-list-box | report-data">
-                  <div className="report-image">
-                    <div className="image-box">
-                      <img src={reportItem.imageUrl} alt="Report" />
-                    </div>
-                  </div>
-                  <div className="">{reportItem.reportType}</div>
-                  <div className="">{reportItem.dateOfIssue}</div>
-                  <div className="report-button-container">
-                    <div className="icon-buttons">
-                      <div className="icon-box">
-                        <ButtonComponent openModal={() => openModal(1)} />
-                        {showModal &&
-                          reportIdInModal === 1 && ( // Check if showModal is true and the report id matches
-                            <DoctorModal closeModal={closeModal} reportId={1} /> // Pass report id to Modal
-                          )}
-                      </div>
-                      <button>Chat with Radiologist</button>
-                    </div>
+            {/* fixed part end here */}
+
+            <div className="patient-data-holder">
+              <PatientInformationCard patient={"patient"} />
+            </div>
+
+            {/* <div className="element-name-sub-navigation | text-grey-dark">
+              <div className="nav-1">Medical</div>
+              <div className="nav-2">Accesses</div>
+              <div className="nav-3">History</div>
+            </div> */}
+
+            <div className="patient-report-holder">
+              <div>
+                <div className="element-name-filter">
+                  <div className="filter-type-dropdown">DropDown</div>
+                  <div className="filter-type-search">Search</div>
+                  <div className="filter-type-filter-by">Filter by</div>
+                </div>
+
+                <div className="element-name-report-list">
+                  <div className="report-heading"> </div>
+                  <div className="ul-container">
+                    <ul role="list" className="patient-reports-list">
+                      <li>
+                        <div className="report-list-box | report-data">
+                          <div>Image</div>
+                          {/* <div>Report Id</div> */}
+                          {/* <div>Name</div> */}
+                          <div>Type</div>
+                          <div>Upload Date</div>
+                          <div>buttons</div>
+                        </div>
+                      </li>
+                      {report.map((reportItem, index) => (
+                        <li key={index}>
+                          <div className="report-list-box | report-data">
+                            <div className="report-image">
+                              <div className="image-box">
+                                <img src={reportItem.imageUrl} alt="Report" />
+                              </div>
+                            </div>
+                            <div className="">{reportItem.reportType}</div>
+                            <div className="">{reportItem.dateOfIssue}</div>
+                            <div className="report-button-container">
+                              <div className="icon-buttons">
+                                <div className="icon-box">
+                                  <ButtonComponent
+                                    openModal={() => openModal(1)}
+                                  />
+                                  {showModal &&
+                                    reportIdInModal === 1 && ( // Check if showModal is true and the report id matches
+                                      <DoctorModal
+                                        closeModal={closeModal}
+                                        reportId={1}
+                                      /> // Pass report id to Modal
+                                    )}
+                                </div>
+                                <div className="icon-box">
+                            <i className="bx bxs-download"></i>
+                          </div>
+                          <div className="icon-box">
+                            <i className="bx bx-trash"></i>
+                          </div>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                        //  ))
+                      ))}
+                    </ul>
                   </div>
                 </div>
-              </li>
-              //  ))
-            ))}
-          </ul>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      </section>
+      <ChatPopup></ChatPopup>
+    </>
   );
 }
 
