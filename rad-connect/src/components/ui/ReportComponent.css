@@ -155,3 +155,110 @@
     color: rgba(235, 87, 87, 1);
     background-color: rgba(235, 87, 87, 0.3);
 }
+
+
+
+
+
+
+.notification-icon{
+position: relative;
+background-color: #D54634;
+text-align: center;
+color: #FFF;
+background-color: rgba(235, 87, 87, 1);
+}
+
+
+.notification-number{
+position: absolute;
+top: 0;
+right: 0;
+transform: translate(-50%, -50%);
+z-index: 1;
+background: rgba(235, 87, 87, 1);;
+border: 3px solid #FFF;
+border-radius: 50%;
+padding-top: 5px;
+height: 22px;
+width: 22px;
+text-align: center;
+font-size: 0.7rem;
+font-weight: 700;
+line-height: 10px;
+color: #FFF;
+}
+
+
+
+
+
+
+
+
+
+
+
+.permission-popup {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    background-color: #985151;
+  }
+  
+  /* .permission-minimize-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  } */
+  
+  /* .permission-minimize-button:hover {
+    background-color: #0056b3;
+  } */
+  
+  .permission-expanded {
+    /* position: absolute; */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 50%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    /* border-radius: 10px; */
+    overflow: hidden;
+    background-color: var(--blue-light);
+    transition: var (--tran-05);
+    z-index: 12;
+  }
+  
+
+  .permission-expanded-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  
+.permission-close-button {
+    position: absolute;
+    top: 10px; /* Adjust the top position as needed */
+    right: 10px; /* Adjust the right position as needed */
+    /* padding: 2px 6px; */
+    background-color: #dc3545;
+    color: #985151;
+    background-color: var(--blue-light);
+    border: none;
+    /* border-radius: 30px; */
+    font-size: 2rem;
+    cursor: pointer;
+    /* transition: background-color 0.3s; */
+  }
+  
+  .permission-close-button:hover {
+    /* background-color: #c82333; */
+  }

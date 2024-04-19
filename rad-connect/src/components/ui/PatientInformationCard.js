@@ -30,16 +30,16 @@ function PatientInformationCard({ patient }) {
         </div>
         <div className="patient-info--attribute-container">
           <div className="patient-info--attribute">
-            <div>Email :</div>{" "}
+            <div>Email :</div>
             <span className="text-blue-extradark">{patient.email}</span>
           </div>
           <div className="patient-info--attribute"></div>
           <div className="patient-info--attribute">
-            <div>Phone No :</div>{" "}
+            <div>Phone No :</div>
             <span className="text-blue-extradark">{patient.phoneNumber}</span>
           </div>
           <div className="patient-info--attribute">
-            <div>Age :</div>{" "}
+            <div>Age :</div>
             <span className="text-blue-extradark">
               {calculateAge(patient.dateOfBirth)} yrs
             </span>

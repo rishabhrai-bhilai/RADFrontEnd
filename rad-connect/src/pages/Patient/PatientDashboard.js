@@ -188,21 +188,18 @@ function PatientDashboard() {
                           </div>
                           <div className="value fw-bold">
                             <span>1-2/day</span>
-                            <span>1-2/day</span>
                           </div>
                           <div className="value fw-bold">
-                            <span>3-5/day</span>
                             <span>3-5/day</span>
                           </div>
                           <div className="value fw-bold">
                             <span>Sometimes</span>
-                            <span>Sometimes</span>
                           </div>
                           <div className="value fw-bold">
-                            <span>More Than 5</span> <span>More Than 5</span>{" "}
+                            <span>More Than 5</span> 
                           </div>
                           <div className="value fw-bold">
-                            <span>I've Quit</span> <span>I've Quit</span>{" "}
+                            <span>I've Quit</span> 
                           </div>
                         </div>
                       </li>
@@ -210,8 +207,7 @@ function PatientDashboard() {
                       <li className="lifestyle-list-item">
                         <div className="topic">
                           <i className="bx bx-home-alt"></i>{" "}
-                          <span className="fw-bold">Drinking Habits</span>{" "}
-                          <span className="fw-bold">Drinking Habits</span>{" "}
+                          <span className="fw-bold">Drinking Habits</span>
                         </div>
                         <div className="values">
                           <div className="value fw-bold">
@@ -219,21 +215,18 @@ function PatientDashboard() {
                           </div>
                           <div className="value fw-bold">
                             <span>Social</span>
-                            <span>Social</span>
                           </div>
                           <div className="value fw-bold">
-                            <span>Regular</span>
                             <span>Regular</span>
                           </div>
                           <div className="value fw-bold">
                             <span>Sometimes</span>
-                            <span>Sometimes</span>
                           </div>
                           <div className="value fw-bold">
-                            <span>Heavy</span> <span>Heavy</span>{" "}
+                            <span>Heavy</span>
                           </div>
                           <div className="value fw-bold">
-                            <span>I've Quit</span> <span>I've Quit</span>{" "}
+                            <span>I've Quit</span> 
                           </div>
                         </div>
                       </li>
@@ -241,24 +234,19 @@ function PatientDashboard() {
                       <li className="lifestyle-list-item">
                         <div className="topic">
                           <i className="bx bx-home-alt"></i>{" "}
-                          <span className="fw-bold">Food Preferences</span>{" "}
-                          <span className="fw-bold">Food Preferences</span>{" "}
+                          <span className="fw-bold">Food Preferences</span>
                         </div>
                         <div className="values">
                           <div className="value fw-bold">
                             <span>Vegan</span>
-                            <span>Vegan</span>
                           </div>
                           <div className="value fw-bold">
-                            <span>Vegetarian</span>
                             <span>Vegetarian</span>
                           </div>
                           <div className="value fw-bold">
                             <span>Eggetarian</span>
-                            <span>Eggetarian</span>
                           </div>
                           <div className="value fw-bold">
-                            <span>Non-Veg</span>
                             <span>Non-Veg</span>
                           </div>
                         </div>

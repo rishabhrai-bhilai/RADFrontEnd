@@ -11,9 +11,11 @@
 .personal-info {
 width: 100%;
 border-radius: 16px;
-background-color: var(--white-light);
+/* background-color: var(--white-light); */
+background: white;
 /* height: 10px; */
 display: flex;
+/* color: var(--grey-dark); */
 
 
 }
@@ -25,6 +27,7 @@ display: flex;
     align-items: center;
     /* width: 30%; */
     flex: 2;
+
     border-right: 2px solid var(--grey-light);
     /* background-color: #9c9999; */
 }

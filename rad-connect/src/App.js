@@ -37,7 +37,7 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<PatientDashboard />} />
         <Route
           path="/patientregistration"
           element={<PatientRegistration email={email} credId={credId} />}
