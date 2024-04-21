@@ -19,7 +19,7 @@ import Navbar from "../../components/navbar/Navbar";
 
 function DoctorDashboard({ onClickPat }) {
   const [show, setShow] = useState(false);
-  const { data, token } = useUserIdContext();
+  const { data, token, setIsUserLoggedIn } = useUserIdContext();
   const [patients, setPatients] = useState([]);
   const [patient, setPatient] = useState(null);
 
@@ -39,7 +39,8 @@ function DoctorDashboard({ onClickPat }) {
         {
           method: "GET",
           headers: {
-            "Content-Type": "application/json", Authorization:`Bearer ${token}`
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );

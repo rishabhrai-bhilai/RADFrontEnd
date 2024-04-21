@@ -18,7 +18,7 @@ const DoctorModal = ({ closeModal, reportId }) => {
   const [radiologists, setRadiologists] = useState([]);
   const [filteredRadiologistsList, setFilteredRadiologistsList] = useState([]);
 
-  const { data, token } = useUserIdContext();
+  const { data, token, setIsUserLoggedIn } = useUserIdContext();
 
   const handleSearch = (searchTerm) => {
     const filteredNames = radiologists.filter((rad) =>
@@ -109,7 +109,9 @@ const DoctorModal = ({ closeModal, reportId }) => {
                       </div>
                       <div className="list-toggle-btn">
                         <div>
-                        <button className="doct-btn doct-btn-7" ><i class='bx bx-mail-send'></i></button>
+                          <button className="doct-btn doct-btn-7">
+                            <i class="bx bx-mail-send"></i>
+                          </button>
                         </div>
                       </div>
                     </div>

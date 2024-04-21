@@ -6,7 +6,7 @@ import {
   IMAGES_PORT,
   CHAT_HOST,
   CHAT_PORT,
-  httpPost,
+  HttpPost,
 } from "../../constants";
 import DragDropFiles from "./DragDropFiles";
 import { useUserIdContext } from "../../pages/Common/UserIdContext";
@@ -18,7 +18,7 @@ function LabUploadForm() {
   const [type, setType] = useState("");
   const [image, setImage] = useState(null);
   const [rid, setRid] = useState();
-  const { data, token } = useUserIdContext();
+  const { data, token, setIsUserLoggedIn } = useUserIdContext();
   const [responseMessage, setResponseMessage] = useState("");
 
   let responseData;
@@ -38,7 +38,10 @@ function LabUploadForm() {
       patEmail: email,
     };
 
-    responseData = await httpPost(0, "/uploadReport", token, formData);
+    responseData = await HttpPost(0, "/uploadReport", token, formData);
+    if (responseData == "Unauthorized") {
+      setIsUserLoggedIn(false);
+    }
     setRid(responseData.rid);
     setResponseMessage("Report Uploaded");
 
@@ -52,12 +55,15 @@ function LabUploadForm() {
   };
 
   const sendImageToBackend = async (imageUri, rand, val) => {
-    const responseData = await httpPost(1, "/uploadReport", token, {
+    const responseData = await HttpPost(1, "/uploadReport", token, {
       report: imageUri,
       reportId: val,
     });
     if (responseData == null) {
       alert("Unable to Load Details");
+    }
+    if (responseData == "Unauthorized") {
+      setIsUserLoggedIn(false);
     }
     setResponseMessage("Report Uploaded");
     setResponseMessage("Report Uploaded");

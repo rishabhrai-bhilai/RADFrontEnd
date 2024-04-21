@@ -13,7 +13,7 @@ import {
   IMAGES_PORT,
   CHAT_HOST,
   CHAT_PORT,
-  httpPost,
+  HttpPost,
 } from "../../constants";
 
 var stompClient = null;
@@ -34,7 +34,7 @@ const ReportPopup = ({
   });
   const [expanded, setExpanded] = useState(false);
   const [reports, setReports] = useState([]);
-  const { data, token } = useUserIdContext();
+  const { data, token, setIsUserLoggedIn } = useUserIdContext();
   const [selectedId, setSelectedId] = useState();
   const [reportLoading, setReportLoading] = useState(true);
 
@@ -46,9 +46,15 @@ const ReportPopup = ({
   useEffect(() => {
     const fetchImageData = async () => {
       setReportLoading(false);
-      const responseData = await httpPost(1, "/getAllReports", token, {
+      const responseData = await HttpPost(1, "/getAllReports", token, {
         reportIds: chatReports,
       });
+      if (responseData == "Unauthorized") {
+        setIsUserLoggedIn(false);
+      }
+      if (responseData == null) {
+        throw new Error("Failed to fetch doctors list");
+      }
       setReports(responseData.reports);
     };
     fetchImageData();

@@ -14,8 +14,8 @@ import {
   IMAGES_PORT,
   CHAT_HOST,
   CHAT_PORT,
-  httpPost,
-  httpGet,
+  HttpPost,
+  HttpGet,
 } from "../../constants";
 
 import ReportPopup from "./ReportPopup";
@@ -23,7 +23,7 @@ import ChatComponent from "./ChatComponent";
 
 const ChatPage = () => {
   const [userId, setUserId] = useState([]);
-  const { data, token } = useUserIdContext();
+  const { data, token, setIsUserLoggedIn } = useUserIdContext();
 
   const [selectedId, setSelectedId] = useState();
 
@@ -39,7 +39,10 @@ const ChatPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const responseData = await httpGet(0, "/getChats/" + data, token);
+      const responseData = await HttpGet(0, "/getChats/" + data, token);
+      if (responseData == "Unauthorized") {
+        setIsUserLoggedIn(false);
+      }
       if (responseData == null) {
         throw new Error("Failed to fetch chats");
       }

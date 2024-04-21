@@ -21,7 +21,7 @@ import {
 } from "../../constants";
 
 function DocReportComponent({ patientId }) {
-  const { data, token } = useUserIdContext();
+  const { data, token, setIsUserLoggedIn } = useUserIdContext();
   const [report, setReport] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [reportIdInModal, setReportIdInModal] = useState(null);
@@ -135,11 +135,11 @@ function DocReportComponent({ patientId }) {
                                     )}
                                 </div>
                                 <div className="icon-box">
-                            <i className="bx bxs-download"></i>
-                          </div>
-                          <div className="icon-box">
-                            <i className="bx bx-trash"></i>
-                          </div>
+                                  <i className="bx bxs-download"></i>
+                                </div>
+                                <div className="icon-box">
+                                  <i className="bx bx-trash"></i>
+                                </div>
                               </div>
                             </div>
                           </div>
