@@ -27,9 +27,11 @@ function ReportComponent() {
   const [reportIdInModal, setReportIdInModal] = useState(null);
 
   const [isExpanded, setIsExpanded] = useState(false);
+  const [repId, setRepId]=useState();
 
-  const togglePermission = () => {
-    setIsExpanded(!isExpanded);
+  const togglePermission = (rid) => {
+    setIsExpanded(!isExpanded);    
+    setRepId(rid);    
   };
 
   const openModal = (reportId) => {
@@ -143,7 +145,7 @@ function ReportComponent() {
                             className="icon-box notification-icon"
                             
                           >
-                            <i className="bx bxs-bell-ring" onClick={togglePermission}></i>
+                            <i className="bx bxs-bell-ring" onClick={()=>togglePermission(report.id)}></i>
                             <div class="notification-number">6</div>
 
                             <div
@@ -161,7 +163,7 @@ function ReportComponent() {
                               )}
                               {isExpanded && (
                                 <div className="permission-expanded-content">
-                                  <Snackbar  />
+                                  <Snackbar repId={repId}/>
                                 </div>
                               ) }
                             </div>

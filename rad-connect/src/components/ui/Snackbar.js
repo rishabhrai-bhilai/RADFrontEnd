@@ -4,17 +4,22 @@ import { useState, useEffect } from 'react';
 import { useUserIdContext } from "../../pages/Common/UserIdContext";
 import {
   httpGet,
+  httpPost,
 } from "../../constants";
 
-const Snackbar = () => {
+const Snackbar = ({repId}) => {
   const { data, token } = useUserIdContext();  
   const [notifications, setNotifications] = useState([]);
+
   useEffect(() => {
     fetchNotifications(data);
   }, [data]);
 
 const fetchNotifications = async (data) => {
-  const response = await httpGet(0, "/getNotifications/"+data, token);
+  const response = await httpPost(0, "/getNotifications", token, {
+    credId: data,
+    reportId: repId
+  });
   if (response == null) {
     throw new Error("Failed to fetch notifications");
   }
