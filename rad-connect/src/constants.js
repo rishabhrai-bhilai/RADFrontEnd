@@ -1,5 +1,4 @@
-import { Axios } from "axios";
-export const DATA_HOST = "192.168.0.122";
+export const DATA_HOST = "localhost";
 export const IMAGES_HOST = "192.168.0.122";
 export const CHAT_HOST = "192.168.0.122";
 export const DATA_PORT = "8081";
@@ -9,6 +8,7 @@ export const CHAT_PORT = "8082";
 const hosts = ["localhost", "192.168.0.122", "192.168.0.122"];
 const ports = ["8081", "8080", "8082"];
 const hostNames = ["/teleRadiology", "/images", "/chat"];
+//const { token } = useUserIdContext();
 export const httpGet = async (dest, path, token) => {
   try {
     const response = await fetch(
@@ -21,11 +21,10 @@ export const httpGet = async (dest, path, token) => {
         },
       }
     );
-
     if (!response.ok) {
       throw new Error("Failed to fetch report Viewers");
     }
-    const responseData = await response.json();
+    const responseData = await response.json();    
     return responseData;
   } catch (error) {
     console.error("Error fetching Report Viewers:", error);
@@ -47,10 +46,11 @@ export const httpPost = async (dest, path, token, reqBody) => {
       }
     );
     if (!response.ok) {
+        if(response.status==403)
+
       throw new Error(`Failed to fetch`);
     }
     const responseData = await response.json();
-    console.log(responseData);
     return responseData;
   } catch (error) {
     console.error("Error fetching ", error);

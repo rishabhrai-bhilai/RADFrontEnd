@@ -14,6 +14,7 @@ import {
   IMAGES_PORT,
   CHAT_HOST,
   CHAT_PORT,
+  httpPost,
 } from "../../constants";
 
 function PatientDashboard() {
@@ -34,33 +35,12 @@ function PatientDashboard() {
   }, []);
 
   const fetchPatient = async (data) => {
-    const headers1 = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    };
-    console.log(headers1);
-    try {
-      const response = await fetch(
-        "http://" + DATA_HOST + ":" + DATA_PORT + "/teleRadiology/getPatient",
-        {
-          method: "POST",
-          headers: headers1,
-          body: JSON.stringify({ id: parseInt(data) }),
-        }
-      );
-      // const response = await axios.post(`http://` + DATA_HOST + `:` + DATA_PORT + `/teleRadiology/getPatient`, { id: parseInt(data) },
-      // {headers:{
-      //   Authorization: `Bearer ${token}`
-      // }});
-      if (!response.ok) {
+    const patientData=await httpPost(0,"/getPatient",token,{ id: parseInt(data) });  
+      if (patientData==null) {
         throw new Error("Failed to fetch patient");
       }
-      const patientData = await response.json();
       setPatient(patientData);
       getPatientId(patientData.id);
-    } catch (error) {
-      console.error("Error fetching patient:", error);
-    }
   };
 
   return (

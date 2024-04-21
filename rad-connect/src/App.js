@@ -1,7 +1,7 @@
 // import logo from './logo.svg';
 // import './App.css';
 import Login from "./pages/Common/Login";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import Navbar from "./components/navbar/Navbar";
 import ReportUpload from "./pages/Lab/ReportUpload";
 import PatientDashboard from "./pages/Patient/PatientDashboard";
@@ -13,13 +13,14 @@ import ChatPopup from "./components/ui/ChatPopup";
 import ChatPage from "./components/ui/ChatPage";
 import React, { useState } from "react";
 import DocReportComponent from "./pages/Doctor/DocReportComponent";
-
 import SearchDoctor from "./pages/Patient/SearchDoctor";
+import { useUserIdContext } from "./pages/Common/UserIdContext";
 
-function App() {
+function App() {  
   const [email, setEmail] = useState("");
   const [credId, setCredId] = useState();
   const [patId, setPatId] = useState();
+  const { isUserLoggedIn } = useUserIdContext();
 
   const handleSubmitEmail = (email) => {
     setEmail(email);
@@ -37,7 +38,10 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route
+        <Route path="*" element={<Navigate to="/" replace = {true} />} />
+  {isUserLoggedIn && (
+    <>
+          <Route
           path="/patientregistration"
           element={<PatientRegistration email={email} credId={credId} />}
         />
@@ -62,12 +66,10 @@ function App() {
           path="/patient/reports"
           element={<DocReportComponent patientId={patId} />}
         />
+    </>
+  )}
 
-        {/* <Route path="/labprofile" element={<LabProfile/>}/> */}
-        {/* <Route path="/doctorprofile" element={<DoctorProfile/>}/> */}
       </Routes>
-      {/* <ChatPopup></ChatPopup>
-      <Navbar /> */}
     </div>
   );
 }

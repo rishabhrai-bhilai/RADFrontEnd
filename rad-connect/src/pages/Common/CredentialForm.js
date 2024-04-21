@@ -15,13 +15,13 @@ import {
   CHAT_PORT,
 } from "../../constants";
 
-const CredentialForm = ({ onSubmit }) => {
+const CredentialForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showError, setShowError] = useState(false);
   const [errorData, setErrorData] = useState("");
   // const [userValue, setUserValue] = useState(0);
-  const { getUserId, getUserToken } = useUserIdContext();
+  const { getUserId, getUserToken, setIsUserLoggedIn } = useUserIdContext();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -56,13 +56,12 @@ const CredentialForm = ({ onSubmit }) => {
         }
       );
 
-      if (response.ok) {
-        // If the response is successful, you might want to handle it accordingly.
+      if (response.ok) {        
         const responseData = await response.json();
-        const userId = responseData.user;
-
+        const userId = responseData.user;        
         getUserId(userId);
         getUserToken(responseData.token);
+        setIsUserLoggedIn(true);
 
         if (data === "Patient") navigate("/patientdashboard");
         if (data === "Lab") navigate("/labdashboard");

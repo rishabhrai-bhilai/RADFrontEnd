@@ -18,6 +18,8 @@ export const UserIdContextProvider = ({ children }) => {
     return storedToken ? storedToken : "";
   });
 
+  const [isUserLoggedIn,setIsUserLoggedIn]=useState(false);
+
   const getUserToken = (token) => {
     setToken(token);
   };
@@ -25,6 +27,10 @@ export const UserIdContextProvider = ({ children }) => {
   const getUserId = (id) => {
     setData(id);
   };
+
+  // const getIsUserLoggedIn =(isLoggedIn) => {
+  //   setIsUserLoggedIn(isLoggedIn);
+  // };
 
   useEffect(() => {
     // Store data in localStorage whenever it changes
@@ -37,7 +43,7 @@ export const UserIdContextProvider = ({ children }) => {
   }, [token]);
 
   return (
-    <UserIdContext.Provider value={{ data, getUserId, token, getUserToken }}>
+    <UserIdContext.Provider value={{ data, getUserId, token, getUserToken, isUserLoggedIn, setIsUserLoggedIn }}>
       {children}
     </UserIdContext.Provider>
   );
