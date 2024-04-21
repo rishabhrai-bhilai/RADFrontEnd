@@ -4,7 +4,7 @@ import "./Message.css";
 import { useUserIdContext } from "../../pages/Common/UserIdContext";
 
 const Message = ({ message }) => {
-  const { data, token } = useUserIdContext();
+  const { data, token, setIsUserLoggedIn } = useUserIdContext();
   return (
     <>
       {data == message.sender ? (

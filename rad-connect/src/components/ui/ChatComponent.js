@@ -13,7 +13,7 @@ import {
   IMAGES_PORT,
   CHAT_HOST,
   CHAT_PORT,
-  httpPost,
+  HttpPost,
 } from "../../constants";
 
 var stompClient = null;
@@ -27,7 +27,7 @@ const ChatComponent = ({ rId, uId, myId, chatName }) => {
     message: "",
   });
   const [messagesLoaded, setMessagesLoaded] = useState(false);
-  const { data, token } = useUserIdContext();
+  const { data, token, setIsUserLoggedIn } = useUserIdContext();
   useEffect(() => {
     setMessages([]);
     fetchMessages();
@@ -87,13 +87,16 @@ const ChatComponent = ({ rId, uId, myId, chatName }) => {
   };
 
   const fetchMessages = async () => {
-    const responseData = await httpPost(0, "/getMessages", token, {
+    const responseData = await HttpPost(0, "/getMessages", token, {
       user1Id: myId,
       user2Id: uId,
       reportId: rId,
     });
     if (responseData == null) {
       throw new Error("Failed to fetch chats");
+    }
+    if (responseData == "Unauthorized") {
+      setIsUserLoggedIn(false);
     }
     setMessages(responseData.messages);
   };
@@ -116,12 +119,15 @@ const ChatComponent = ({ rId, uId, myId, chatName }) => {
     displayMessages();
   }, [messages]);
   const sendMessage = async (text) => {
-    const responseData = await httpPost(0, "/addMessage", token, {
+    const responseData = await HttpPost(0, "/addMessage", token, {
       sender: myId,
       reciever: uId,
       message: text,
       report: rId,
     });
+    if (responseData == "Unauthorized") {
+      setIsUserLoggedIn(false);
+    }
     if (responseData == null) {
       throw new Error("Failed to add message");
     }

@@ -13,12 +13,12 @@ import {
   IMAGES_PORT,
   CHAT_HOST,
   CHAT_PORT,
-  httpPost,
+  HttpPost,
 } from "../../constants";
 
 function ReportComponent() {
   const [showModal, setShowModal] = useState(false);
-  const { data, token } = useUserIdContext();
+  const { data, token, setIsUserLoggedIn } = useUserIdContext();
   const [reports, setReports] = useState([]);
   const [patient, setPatient] = useState(-1);
   const [images, setImages] = useState([]);
@@ -42,7 +42,10 @@ function ReportComponent() {
   };
 
   const fetchPatient = async (data) => {
-    const patientData = await httpPost(0, "/getPatient", token, { id: data });
+    const patientData = await HttpPost(0, "/getPatient", token, { id: data });
+    if (patientData == "Unauthorized") {
+      setIsUserLoggedIn(false);
+    }
     if (patientData == null) {
       throw new Error("Failed to fetch patient");
     }
@@ -50,9 +53,12 @@ function ReportComponent() {
   };
 
   const fetchReports = async (patientId) => {
-    const responseData = await httpPost(0, "/getPatientReports", token, {
+    const responseData = await HttpPost(0, "/getPatientReports", token, {
       id: patientId,
     });
+    if (responseData == "Unauthorized") {
+      setIsUserLoggedIn(false);
+    }
     if (responseData == null) {
       throw new Error("Failed to fetch reports");
     }
@@ -61,9 +67,15 @@ function ReportComponent() {
 
   const getReportImages = async (ids) => {
     let arr = [];
-    const imageData = await httpPost(1, "/getAllReports", token, {
+    const imageData = await HttpPost(1, "/getAllReports", token, {
       reportIds: ids,
     });
+    if (imageData == "Unauthorized") {
+      setIsUserLoggedIn(false);
+    }
+    if (imageData == null) {
+      throw new Error("Failed to fetch images");
+    }
     arr = imageData.reports;
     setImages(arr);
     for (let i = 0; i < arr.length; i++) {
@@ -139,11 +151,11 @@ function ReportComponent() {
                       <div className="">{report.dateOfIssue}</div>
                       <div className="report-button-container">
                         <div className="icon-buttons">
-                          <div
-                            className="icon-box notification-icon"
-                            
-                          >
-                            <i className="bx bxs-bell-ring" onClick={togglePermission}></i>
+                          <div className="icon-box notification-icon">
+                            <i
+                              className="bx bxs-bell-ring"
+                              onClick={togglePermission}
+                            ></i>
                             <div class="notification-number">6</div>
 
                             <div
@@ -161,13 +173,11 @@ function ReportComponent() {
                               )}
                               {isExpanded && (
                                 <div className="permission-expanded-content">
-                                  <Snackbar  />
+                                  <Snackbar />
                                 </div>
-                              ) }
+                              )}
                             </div>
                           </div>
-
-
 
                           <div className="icon-box">
                             <ButtonComponent

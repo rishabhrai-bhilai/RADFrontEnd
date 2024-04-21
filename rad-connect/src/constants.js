@@ -8,8 +8,7 @@ export const CHAT_PORT = "8082";
 const hosts = ["localhost", "192.168.0.122", "192.168.0.122"];
 const ports = ["8081", "8080", "8082"];
 const hostNames = ["/teleRadiology", "/images", "/chat"];
-//const { token } = useUserIdContext();
-export const httpGet = async (dest, path, token) => {
+export const HttpGet = async (dest, path, token) => {
   try {
     const response = await fetch(
       "http://" + hosts[dest] + ":" + ports[dest] + hostNames[dest] + path,
@@ -21,10 +20,14 @@ export const httpGet = async (dest, path, token) => {
         },
       }
     );
+    if (response.status == 403 || response.status == 401) {
+      // setIsUserLoggedIn(false);
+      return "Unauthorized";
+    }
     if (!response.ok) {
       throw new Error("Failed to fetch report Viewers");
     }
-    const responseData = await response.json();    
+    const responseData = await response.json();
     return responseData;
   } catch (error) {
     console.error("Error fetching Report Viewers:", error);
@@ -32,7 +35,7 @@ export const httpGet = async (dest, path, token) => {
   }
 };
 
-export const httpPost = async (dest, path, token, reqBody) => {
+export const HttpPost = async (dest, path, token, reqBody) => {
   try {
     const response = await fetch(
       "http://" + hosts[dest] + ":" + ports[dest] + hostNames[dest] + path,
@@ -45,10 +48,11 @@ export const httpPost = async (dest, path, token, reqBody) => {
         body: JSON.stringify(reqBody),
       }
     );
+    if (response.status == 403 || response.status == 401) {
+      return "Unauthorized";
+    }
     if (!response.ok) {
-        if(response.status==403)
-
-      throw new Error(`Failed to fetch`);
+      if (response.status == 403) throw new Error(`Failed to fetch`);
     }
     const responseData = await response.json();
     return responseData;

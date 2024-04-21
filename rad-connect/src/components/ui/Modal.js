@@ -12,12 +12,12 @@ import {
   IMAGES_PORT,
   CHAT_HOST,
   CHAT_PORT,
-  httpGet,
-  httpPost,
+  HttpGet,
+  HttpPost,
 } from "../../constants";
 
 const Modal = ({ closeModal, reportId }) => {
-  const { data, token } = useUserIdContext();
+  const { data, token, setIsUserLoggedIn } = useUserIdContext();
 
   const [doctors, setDoctors] = useState([]);
   const [filteredDoctorsList, setFilteredDoctorsList] = useState([]);
@@ -56,7 +56,10 @@ const Modal = ({ closeModal, reportId }) => {
   }, [filteredDoctorsList, reportViewers]);
 
   const getAllDoctors = async () => {
-    const responseData = await httpGet(0, "/getAllDoctors", token);
+    const responseData = await HttpGet(0, "/getAllDoctors", token);
+    if (responseData == "Unauthorized") {
+      setIsUserLoggedIn(false);
+    }
     if (responseData == null) {
       throw new Error("Failed to fetch doctors list");
     }
@@ -70,9 +73,15 @@ const Modal = ({ closeModal, reportId }) => {
   };
 
   const getReportViewers = async (reportId) => {
-    setReportViewers(
-      (await httpGet(0, "/getReportViewers/" + reportId, token)) || []
+    const responseData = await HttpGet(
+      0,
+      "/getReportViewers/" + reportId,
+      token
     );
+    if (responseData == "Unauthorized") {
+      setIsUserLoggedIn(false);
+    }
+    setReportViewers(responseData || []);
   };
 
   const binarySearch = (arr, target) => {

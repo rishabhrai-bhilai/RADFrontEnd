@@ -8,8 +8,8 @@ import {
   IMAGES_PORT,
   CHAT_HOST,
   CHAT_PORT,
-  httpPost,
-  httpGet,
+  HttpPost,
+  HttpGet,
 } from "../../constants";
 
 const OTP = ({
@@ -21,7 +21,7 @@ const OTP = ({
 }) => {
   const [otp, setOtp] = useState("");
   const { data } = usePatientIdContext();
-  const { token } = useUserIdContext();
+  const { token, setIsUserLoggedIn } = useUserIdContext();
 
   useEffect(() => {
     getOtp(data);
@@ -46,12 +46,15 @@ const OTP = ({
         otp: intOtp,
       };
 
-      const responseData = await httpPost(
+      const responseData = await HttpPost(
         0,
         "/giveConsent",
         token,
         requestBody
       );
+      if (responseData == "Unauthorized") {
+        setIsUserLoggedIn(false);
+      }
       if (responseData != null) {
         setResponseMessage("Consent Given");
       } else {
@@ -64,7 +67,7 @@ const OTP = ({
         patientId: data,
         otp: intOtp,
       };
-      const responseData = await httpPost(
+      const responseData = await HttpPost(
         0,
         "/removeConsent",
         token,
@@ -81,7 +84,10 @@ const OTP = ({
   };
 
   const getOtp = async (data) => {
-    const responseData = await httpGet(0, "/otpVerification/" + data, token);
+    const responseData = await HttpGet(0, "/otpVerification/" + data, token);
+    if (responseData == "Unauthorized") {
+      setIsUserLoggedIn(false);
+    }
     if (responseData == null) {
       throw new Error("Failed to get OTP");
     }

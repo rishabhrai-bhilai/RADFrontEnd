@@ -14,7 +14,7 @@ import {
   IMAGES_PORT,
   CHAT_HOST,
   CHAT_PORT,
-  httpPost,
+  HttpPost,
 } from "../../constants";
 
 function PatientDashboard() {
@@ -26,7 +26,7 @@ function PatientDashboard() {
 
   const [loading, setLoading] = useState(true);
 
-  const { data, token } = useUserIdContext();
+  const { data, token, setIsUserLoggedIn } = useUserIdContext();
 
   const { getPatientId } = usePatientIdContext();
 
@@ -35,12 +35,17 @@ function PatientDashboard() {
   }, []);
 
   const fetchPatient = async (data) => {
-    const patientData=await httpPost(0,"/getPatient",token,{ id: parseInt(data) });  
-      if (patientData==null) {
-        throw new Error("Failed to fetch patient");
-      }
-      setPatient(patientData);
-      getPatientId(patientData.id);
+    const patientData = await HttpPost(0, "/getPatient", token, {
+      id: parseInt(data),
+    });
+    if (patientData == "Unauthorized") {
+      setIsUserLoggedIn(false);
+    }
+    if (patientData == null) {
+      throw new Error("Failed to fetch patient");
+    }
+    setPatient(patientData);
+    getPatientId(patientData.id);
   };
 
   return (
@@ -176,10 +181,10 @@ function PatientDashboard() {
                             <span>Sometimes</span>
                           </div>
                           <div className="value fw-bold">
-                            <span>More Than 5</span> 
+                            <span>More Than 5</span>
                           </div>
                           <div className="value fw-bold">
-                            <span>I've Quit</span> 
+                            <span>I've Quit</span>
                           </div>
                         </div>
                       </li>
@@ -206,7 +211,7 @@ function PatientDashboard() {
                             <span>Heavy</span>
                           </div>
                           <div className="value fw-bold">
-                            <span>I've Quit</span> 
+                            <span>I've Quit</span>
                           </div>
                         </div>
                       </li>
