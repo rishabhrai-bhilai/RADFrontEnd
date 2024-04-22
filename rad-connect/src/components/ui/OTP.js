@@ -15,8 +15,10 @@ const OTP = ({
   reportId,
   doctorId,
   toggleValue,
+  radiologistId,
   setShowOTPComponent,
   setResponseMessage,
+  notificationId,
 }) => {
   const [otp, setOtp] = useState("");
   const { token, setIsUserLoggedIn, roleId } = useUserIdContext();
@@ -36,12 +38,13 @@ const OTP = ({
 
     let intOtp = parseInt(otp);
 
-    if (toggleValue === 1) {
+    if (toggleValue === 1 || toggleValue === 4) {
       const requestBody = {
         doctorId: doctorId,
         patientId: roleId,
         reportId: reportId,
         otp: intOtp,
+        radiologistId: radiologistId,
       };
 
       const responseData = await HttpPost(
@@ -58,11 +61,28 @@ const OTP = ({
       } else {
         setResponseMessage("Unable to give Consent");
       }
-    } else {
+
+      if (toggleValue === 4) {
+        const responseData = HttpGet(
+          0,
+          "/deleteNotification/" + notificationId,
+          token
+        );
+        if (responseData == "Unauthorized") {
+          setIsUserLoggedIn(false);
+        }
+        if (responseData != null) {
+          setResponseMessage("Request Acceoted");
+        } else {
+          setResponseMessage("Could not delete notification");
+        }
+      }
+    } else if (toggleValue === 0) {
       const requestBody = {
         reportId: reportId,
         doctorId: doctorId,
         patientId: roleId,
+        radiologistId: radiologistId,
         otp: intOtp,
       };
       const responseData = await HttpPost(
@@ -71,10 +91,27 @@ const OTP = ({
         token,
         requestBody
       );
+      if (responseData == "Unauthorized") {
+        setIsUserLoggedIn(false);
+      }
       if (responseData != null) {
         setResponseMessage("Consent Removed");
       } else {
         setResponseMessage("Unable to remove Consent");
+      }
+    } else {
+      const responseData = HttpGet(
+        0,
+        "/deleteNotification/" + notificationId,
+        token
+      );
+      if (responseData == "Unauthorized") {
+        setIsUserLoggedIn(false);
+      }
+      if (responseData != null) {
+        setResponseMessage("Request Rejected");
+      } else {
+        setResponseMessage("Unable to reject request");
       }
     }
 
