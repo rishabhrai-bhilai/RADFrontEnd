@@ -19,8 +19,8 @@ import { useUserIdContext } from "./pages/Common/UserIdContext";
 function App() {  
   const [email, setEmail] = useState("");
   const [credId, setCredId] = useState();
-  const [patId, setPatId] = useState();
-  const { isUserLoggedIn } = useUserIdContext();
+  const [pat, setPat] = useState(null);
+  const { isUserLoggedIn } = useUserIdContext();  
 
   const handleSubmitEmail = (email) => {
     setEmail(email);
@@ -30,8 +30,8 @@ function App() {
     setCredId(credId);
   };
 
-  const handlePatId = (patId) => {
-    setPatId(patId);
+  const handlePat = (patient) => {
+    setPat(patient);
   };
 
   return (
@@ -60,11 +60,11 @@ function App() {
         <Route path="/patientchat" element={<ChatPage />} />
         <Route
           path="/doctordashboard"
-          element={<DoctorDashboard onClickPat={handlePatId} />}
+          element={<DoctorDashboard onClickPat={handlePat} />}
         />
         <Route
           path="/patient/reports"
-          element={<DocReportComponent patientId={patId} />}
+          element={<DocReportComponent patient={pat} />}
         />
     </>
   )}

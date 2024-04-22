@@ -12,13 +12,32 @@ import {
   IMAGES_PORT,
   CHAT_HOST,
   CHAT_PORT,
+  HttpGet,
+  HttpPost
 } from "../../constants";
 
-const DoctorModal = ({ closeModal, reportId }) => {
+const DoctorModal = ({ closeModal, reportId, patientId, receiverId }) => {
   const [radiologists, setRadiologists] = useState([]);
   const [filteredRadiologistsList, setFilteredRadiologistsList] = useState([]);
 
-  const { data, token, setIsUserLoggedIn } = useUserIdContext();
+  const { data, token, setIsUserLoggedIn, roleId } = useUserIdContext();
+
+  const askForConsent = async (radId) => {
+
+    const responseData = await HttpPost(0, "/addNotification", token, {
+      patientId: patientId,
+      doctorId: roleId,
+      reciverId: receiverId,
+      radiologistId: radId,
+      reportId: reportId
+    });
+    if (responseData == "Unauthorized") {
+      setIsUserLoggedIn(false);
+    }
+    if (responseData == null) {
+      throw new Error("Failed to ask for consent");
+    }    
+  };
 
   const handleSearch = (searchTerm) => {
     const filteredNames = radiologists.filter((rad) =>
@@ -27,49 +46,26 @@ const DoctorModal = ({ closeModal, reportId }) => {
     setFilteredRadiologistsList(filteredNames);
   };
 
-  const handleToggle = (isToggled, radId) => {
-    console.log("Toggle state:", isToggled ? "On" : "Off");
-    // if(isToggled){
-    // }else{
-    //setShowOTPComponent(false);
-    //}
-  };
-
   useEffect(() => {
     getAllRadiologists();
   }, [data]);
 
   const getAllRadiologists = async () => {
-    try {
-      const response = await fetch(
-        "http://" +
-          DATA_HOST +
-          ":" +
-          DATA_PORT +
-          "/teleRadiology/getAllRadiologists",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch doctors list");
-      }
-      const responseData = await response.json();
+    const responseData = await HttpGet(0, "/getAllRadiologists", token);
+
+    if (responseData == "Unauthorized") {
+      setIsUserLoggedIn(false);
+    }
+    if (responseData == null) {
+      throw new Error("Failed to fetch radiologists");
+    }
 
       const updatedList = responseData.map((radiologist) => {
         return { ...radiologist, consent: 0 };
       });
-
-      //console.log(updatedList);
+            
       setRadiologists(updatedList || []);
       setFilteredRadiologistsList(updatedList || []);
-    } catch (error) {
-      console.log("Error Fetching Doctors list:", error);
-    }
   };
 
   return (
@@ -110,7 +106,7 @@ const DoctorModal = ({ closeModal, reportId }) => {
                       <div className="list-toggle-btn">
                         <div>
                           <button className="doct-btn doct-btn-7">
-                            <i class="bx bx-mail-send"></i>
+                            < i class = "bx bx-mail-send" onClick={()=>askForConsent(radiologist.id)}> </i>
                           </button>
                         </div>
                       </div>

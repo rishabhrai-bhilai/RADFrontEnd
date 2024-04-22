@@ -158,7 +158,7 @@ function ReportComponent() {
                             
                           >
                             <i className="bx bxs-bell-ring" onClick={()=>togglePermission(report.id)}></i>
-                            <div class="notification-number">6</div>
+                            <div class="notification-number">!</div>
 
                             <div
                               className={`permission-popup ${

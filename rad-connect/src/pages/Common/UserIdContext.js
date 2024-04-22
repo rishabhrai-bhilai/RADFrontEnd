@@ -13,8 +13,12 @@ export const UserIdContextProvider = ({ children }) => {
   });
 
   const [token, setToken] = useState(() => {
-    // Initialize token from localStorage if available
     const storedToken = localStorage.getItem("userToken");
+    return storedToken ? storedToken : "";
+  });
+
+  const [roleId, setRoleId] = useState(() => {
+    const storedToken = localStorage.getItem("userRoleId");
     return storedToken ? storedToken : "";
   });
 
@@ -28,22 +32,24 @@ export const UserIdContextProvider = ({ children }) => {
     setData(id);
   };
 
+  const getRoleId = (roleId) => {
+    setRoleId(roleId);
+  }
+
   // const getIsUserLoggedIn =(isLoggedIn) => {
   //   setIsUserLoggedIn(isLoggedIn);
   // };
 
   useEffect(() => {
-    // Store data in localStorage whenever it changes
     localStorage.setItem("userData", JSON.stringify(data));
   }, [data]);
 
   useEffect(() => {
-    // Store token in localStorage whenever it changes
     localStorage.setItem("userToken", token);
   }, [token]);
 
   return (
-    <UserIdContext.Provider value={{ data, getUserId, token, getUserToken, isUserLoggedIn, setIsUserLoggedIn }}>
+    <UserIdContext.Provider value={{ data, getUserId, token, getUserToken, isUserLoggedIn, setIsUserLoggedIn, roleId, setRoleId }}>
       {children}
     </UserIdContext.Provider>
   );

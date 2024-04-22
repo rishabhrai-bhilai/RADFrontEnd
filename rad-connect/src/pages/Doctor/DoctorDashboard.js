@@ -14,18 +14,35 @@ import {
   IMAGES_PORT,
   CHAT_HOST,
   CHAT_PORT,
+  HttpPost
 } from "../../constants";
 import Navbar from "../../components/navbar/Navbar";
 
 function DoctorDashboard({ onClickPat }) {
   const [show, setShow] = useState(false);
-  const { data, token, setIsUserLoggedIn } = useUserIdContext();
+  const { data, token, setIsUserLoggedIn, setRoleId } = useUserIdContext();
+  const [doctor, setDoctor] =useState(null);
   const [patients, setPatients] = useState([]);
   const [patient, setPatient] = useState(null);
 
   useEffect(() => {
+    fetchDoctor(data);
     fetchConsentPatients(data);
   }, []);
+
+  const fetchDoctor = async (data) => {
+    const doctorData = await HttpPost(0, "/getDoctor", token, {
+      id: parseInt(data),
+    });
+    if (doctorData == "Unauthorized") {
+      setIsUserLoggedIn(false);
+    }
+    if (doctorData == null) {
+      throw new Error("Failed to fetch Doctor");
+    }
+    setDoctor(doctorData);
+    setRoleId(doctorData.id);
+  };
 
   const fetchConsentPatients = async (data) => {
     try {
@@ -56,7 +73,7 @@ function DoctorDashboard({ onClickPat }) {
 
   const handleArrowClick = (patient) => {
     setPatient(patient);
-    onClickPat(patient.id);
+    onClickPat(patient);
     setShow(true);
   };
 

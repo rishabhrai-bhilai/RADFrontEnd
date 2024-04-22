@@ -4,7 +4,6 @@ import patientImg from "../../assets/patientImg.png";
 import PatientInformationCard from "../../components/ui/PatientInformationCard";
 import Navbar from "../../components/navbar/Navbar";
 import { useUserIdContext } from "../Common/UserIdContext";
-import { usePatientIdContext } from "./PatientIdContext";
 import ChatPopup from "../../components/ui/ChatPopup";
 import axios from "axios";
 import {
@@ -26,9 +25,7 @@ function PatientDashboard() {
 
   const [loading, setLoading] = useState(true);
 
-  const { data, token, setIsUserLoggedIn } = useUserIdContext();
-
-  const { getPatientId } = usePatientIdContext();
+  const { data, token, setIsUserLoggedIn, setRoleId } = useUserIdContext();
 
   useEffect(() => {
     fetchPatient(data);
@@ -42,10 +39,10 @@ function PatientDashboard() {
       setIsUserLoggedIn(false);
     }
     if (patientData == null) {
-      throw new Error("Failed to fetch patient");
+      throw new Error("Failed to fetch Patient");
     }
-    setPatient(patientData);
-    getPatientId(patientData.id);
+    setPatient(patientData);    
+    setRoleId(patientData.id);
   };
 
   return (

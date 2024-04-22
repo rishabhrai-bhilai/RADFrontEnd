@@ -23,8 +23,8 @@ function Reports() {
 
           <div className="element-name-sub-navigation | text-grey-dark">
             <div className="nav-1">Medical</div>
-            <div className="nav-2">Accesses</div>
-            <div className="nav-3">History</div>
+            {/* <div className="nav-2">Accesses</div>
+            <div className="nav-3">History</div> */}
           </div>
           <ReportComponent></ReportComponent>
         </div>

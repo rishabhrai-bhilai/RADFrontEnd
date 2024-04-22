@@ -6,11 +6,9 @@ import { BrowserRouter } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import { LoginRoleContextProvider } from "./pages/Common/LoginRoleContext";
 import { UserIdContextProvider } from "./pages/Common/UserIdContext";
-import { PatientIdContextProvider } from "./pages/Patient/PatientIdContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <PatientIdContextProvider>
+root.render(    
     <UserIdContextProvider>
       <LoginRoleContextProvider>
         <BrowserRouter>
@@ -18,7 +16,6 @@ root.render(
         </BrowserRouter>
       </LoginRoleContextProvider>
     </UserIdContextProvider>
-  </PatientIdContextProvider>
 );
 
 reportWebVitals();

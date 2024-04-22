@@ -20,7 +20,7 @@ import {
   CHAT_PORT,
 } from "../../constants";
 
-function DocReportComponent({ patientId }) {
+function DocReportComponent({ patient }) {  
   const { data, token, setIsUserLoggedIn } = useUserIdContext();
   const [report, setReport] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -36,7 +36,7 @@ function DocReportComponent({ patientId }) {
   };
 
   useEffect(() => {
-    getConsentedReports(patientId, data);
+    getConsentedReports(patient.id, data);
   }, []);
 
   const getConsentedReports = async (patientId, data) => {
@@ -124,13 +124,15 @@ function DocReportComponent({ patientId }) {
                               <div className="icon-buttons">
                                 <div className="icon-box">
                                   <ButtonComponent
-                                    openModal={() => openModal(1)}
+                                    openModal={() => openModal(reportItem.id)}
                                   />
                                   {showModal &&
-                                    reportIdInModal === 1 && ( // Check if showModal is true and the report id matches
+                                    reportIdInModal === reportItem.id && ( // Check if showModal is true and the report id matches
                                       <DoctorModal
                                         closeModal={closeModal}
-                                        reportId={1}
+                                        reportId={reportIdInModal}
+                                        patientId={patient.id}
+                                        receiverId={patient.userId}
                                       /> // Pass report id to Modal
                                     )}
                                 </div>

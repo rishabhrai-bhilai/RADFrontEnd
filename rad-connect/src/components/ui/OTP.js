@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { usePatientIdContext } from "../../pages/Patient/PatientIdContext";
 import { useUserIdContext } from "../../pages/Common/UserIdContext";
 import {
   DATA_HOST,
@@ -20,11 +19,10 @@ const OTP = ({
   setResponseMessage,
 }) => {
   const [otp, setOtp] = useState("");
-  const { data } = usePatientIdContext();
-  const { token, setIsUserLoggedIn } = useUserIdContext();
+  const { token, setIsUserLoggedIn, roleId } = useUserIdContext();
 
   useEffect(() => {
-    getOtp(data);
+    getOtp(roleId);
   }, []);
 
   const handleOtpChange = (e) => {
@@ -41,7 +39,7 @@ const OTP = ({
     if (toggleValue === 1) {
       const requestBody = {
         doctorId: doctorId,
-        patientId: data,
+        patientId: roleId,
         reportId: reportId,
         otp: intOtp,
       };
@@ -64,7 +62,7 @@ const OTP = ({
       const requestBody = {
         reportId: reportId,
         doctorId: doctorId,
-        patientId: data,
+        patientId: roleId,
         otp: intOtp,
       };
       const responseData = await HttpPost(
@@ -83,8 +81,9 @@ const OTP = ({
     setOtp("");
   };
 
-  const getOtp = async (data) => {
-    const responseData = await HttpGet(0, "/otpVerification/" + data, token);
+  const getOtp = async (roleId) => {
+    console.log(roleId);
+    const responseData = await HttpGet(0, "/otpVerification/" + roleId, token);
     if (responseData == "Unauthorized") {
       setIsUserLoggedIn(false);
     }
