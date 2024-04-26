@@ -1,53 +1,61 @@
 // Navbar.js
-import React, { useState } from 'react';
-import '../navbar/navbar.css'; // Import your CSS file
-import '../../../src/index.css';
-import logo from '../../assets/final1.png';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import "../navbar/navbar.css"; // Import your CSS file
+import "../../../src/index.css";
+import logo from "../../assets/final1.png";
+import { useNavigate } from "react-router-dom";
+import { useUserIdContext } from "../../pages/Common/UserIdContext";
+import { HttpPost } from "../../constants";
 
 function Navbar() {
   const [sidebarClosed, setSidebarClosed] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
   const navigate = useNavigate();
-
+  const { token, setIsUserLoggedIn } = useUserIdContext();
   const toggleSidebar = () => {
     setSidebarClosed(!sidebarClosed);
   };
 
-  const navigateToNewComponent=()=>{
-    navigate('/patientreports')
-  }
+  const navigateToNewComponent = () => {
+    navigate("/patientreports");
+  };
 
-  const navigateToChat=()=>{
-    navigate('/patientchat')
-  }
+  const navigateToChat = () => {
+    navigate("/patientchat");
+  };
 
   const handleSearchClick = () => {
     const body = document.querySelector("body"); // Define 'body'
     const searchBtn = body.querySelector(".search-box");
     const sidebar = body.querySelector(".sidebar");
     sidebar.classList.remove("close");
-};
+  };
 
+  const handleLogout = () => {
+    HttpPost(0, "/logout", token, { token: token });
+    setIsUserLoggedIn(false);
+  };
   const handleModeSwitch = () => {
     const body = document.querySelector("body");
     const modeText = document.querySelector(".mode-text");
-  
+
     body.classList.toggle("dark");
-  
+
     if (body.classList.contains("dark")) {
       modeText.innerText = "Light Mode";
     } else {
       modeText.innerText = "Dark Mode";
     }
-};
-
+  };
 
   return (
-    <nav className={`sidebar ${sidebarClosed ? 'close' : ''} `}>
+    <nav className={`sidebar ${sidebarClosed ? "close" : ""} `}>
       <header>
         <div className="image-text">
-          <span className="image"> <img src={logo} alt="logo" /> </span>
+          <span className="image">
+            {" "}
+            <img src={logo} alt="logo" />{" "}
+          </span>
 
           <div className="text header-text">
             <span className="name">CodingLab</span>
@@ -55,7 +63,12 @@ function Navbar() {
           </div>
         </div>
 
-        <i className="bx bx-chevron-right toggle bg-blue-dark" onClick={toggleSidebar}> </i>
+        <i
+          className="bx bx-chevron-right toggle bg-blue-dark"
+          onClick={toggleSidebar}
+        >
+          {" "}
+        </i>
       </header>
 
       <div className="menu-bar">
@@ -71,13 +84,13 @@ function Navbar() {
                 <span className="text nav-text">Dashboard</span>
               </a>
             </li>
-            <li className="nav-link" onClick ={navigateToNewComponent}>
+            <li className="nav-link" onClick={navigateToNewComponent}>
               <a href="#">
                 <i className="bx bx-chart icon"></i>
-                <span className="text nav-text" >Reports</span>
+                <span className="text nav-text">Reports</span>
               </a>
             </li>
-            <li className="nav-link" onClick ={navigateToChat}>
+            <li className="nav-link" onClick={navigateToChat}>
               <a href="#">
                 <i className="bx bx-bell icon"></i>
                 <span className="text nav-text">Chats</span>
@@ -99,7 +112,7 @@ function Navbar() {
         </div>
 
         <div className="bottom-content">
-          <li>
+          <li onClick={handleLogout}>
             <a href="#">
               <i className="bx bx-log-out icon"></i>
               <span className="text nav-text">Logout</span>

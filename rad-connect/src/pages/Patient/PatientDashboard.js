@@ -26,7 +26,6 @@ function PatientDashboard() {
   const [loading, setLoading] = useState(true);
 
   const { data, token, setIsUserLoggedIn, setRoleId } = useUserIdContext();
-
   useEffect(() => {
     fetchPatient(data);
   }, []);
@@ -41,7 +40,7 @@ function PatientDashboard() {
     if (patientData == null) {
       throw new Error("Failed to fetch Patient");
     }
-    setPatient(patientData);    
+    setPatient(patientData);
     setRoleId(patientData.id);
   };
 
