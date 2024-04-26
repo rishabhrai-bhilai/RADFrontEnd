@@ -15,6 +15,7 @@ import {
   CHAT_PORT,
   HttpPost,
 } from "../../constants";
+import { useNavigate } from "react-router-dom";
 
 function PatientDashboard() {
   const [patient, setPatient] = useState(() => {
@@ -23,6 +24,7 @@ function PatientDashboard() {
     return storedPatient ? JSON.parse(storedPatient) : {};
   });
 
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
   const { data, token, setIsUserLoggedIn, setRoleId } = useUserIdContext();
@@ -44,9 +46,22 @@ function PatientDashboard() {
     setRoleId(patientData.id);
   };
 
+  const navigateToReports = () => {
+    navigate("/patientreports");
+  };
+  const navigateToDashboard = () => {
+    navigate("/patientdashboard");
+  };
+
   return (
     <>
-      <Navbar></Navbar>
+      <Navbar
+        options={[
+          { name: "Dashoboard", icon: "bx-home-alt" },
+          { name: "Reports", icon: "bx-chart" },
+        ]}
+        functions={[navigateToDashboard, navigateToReports]}
+      ></Navbar>
       <section className="home">
         <div className="parent-container">
           <div className="all-items">
