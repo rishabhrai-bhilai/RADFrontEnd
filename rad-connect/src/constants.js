@@ -1,11 +1,11 @@
-export const DATA_HOST = "localhost";
-export const IMAGES_HOST = "192.168.24.211";
-export const CHAT_HOST = "192.168.24.211";
+export const DATA_HOST = "l192.168.0.122";
+export const IMAGES_HOST = "192.168.0.122";
+export const CHAT_HOST = "192.168.0.122";
 export const DATA_PORT = "8081";
 export const IMAGES_PORT = "8080";
 export const CHAT_PORT = "8082";
 
-const hosts = ["localhost", "192.168.24.211", "192.168.24.211"];
+const hosts = ["192.168.0.122", "192.168.0.122", "192.168.0.122"];
 const ports = ["8081", "8080", "8082"];
 const hostNames = ["/teleRadiology", "/images", "/chat"];
 export const HttpGet = async (dest, path, token) => {
