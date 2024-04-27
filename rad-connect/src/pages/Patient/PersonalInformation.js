@@ -322,8 +322,8 @@ function PersonalInformation({ username, uid }) {
               type="radio"
               name="smokingHabit"
               id="never"
-              value="never"
-              checked={smokingHabit === "never"}
+              value="Never"
+              checked={smokingHabit === "Never"}
               onChange={(e) => setSmokingHabit(e.target.value)}
             />
             <label htmlFor="never">Never</label>
@@ -349,8 +349,8 @@ function PersonalInformation({ username, uid }) {
               type="radio"
               name="smokingHabit"
               id="sometimes"
-              value="sometimes"
-              checked={smokingHabit === "sometimes"}
+              value="Sometimes"
+              checked={smokingHabit === "Sometimes"}
               onChange={(e) => setSmokingHabit(e.target.value)}
             />
             <label htmlFor="sometimes">Sometimes</label>
@@ -358,8 +358,8 @@ function PersonalInformation({ username, uid }) {
               type="radio"
               name="smokingHabit"
               id="moreThan5"
-              value="moreThan5"
-              checked={smokingHabit === "moreThan5"}
+              value="More than 5"
+              checked={smokingHabit === "More than 5"}
               onChange={(e) => setSmokingHabit(e.target.value)}
             />
             <label htmlFor="moreThan5">More than 5</label>
@@ -367,8 +367,8 @@ function PersonalInformation({ username, uid }) {
               type="radio"
               name="smokingHabit"
               id="quit"
-              value="quit"
-              checked={smokingHabit === "quit"}
+              value="I've Quit"
+              checked={smokingHabit === "I've Quit"}
               onChange={(e) => setSmokingHabit(e.target.value)}
             />
             <label htmlFor="quit">I've Quit</label>
@@ -381,8 +381,8 @@ function PersonalInformation({ username, uid }) {
               type="radio"
               name="drinkingHabit"
               id="never1"
-              value="never"
-              checked={drinkingHabit === "never"}
+              value="Never"
+              checked={drinkingHabit === "Never"}
               onChange={(e) => setDrinkingHabit(e.target.value)}
             />
             <label htmlFor="never1">Never</label>
@@ -390,8 +390,8 @@ function PersonalInformation({ username, uid }) {
               type="radio"
               name="drinkingHabit"
               id="regular"
-              value="regular"
-              checked={drinkingHabit === "regular"}
+              value="Regular"
+              checked={drinkingHabit === "Regular"}
               onChange={(e) => setDrinkingHabit(e.target.value)}
             />
             <label htmlFor="regular">Regular</label>
@@ -399,8 +399,8 @@ function PersonalInformation({ username, uid }) {
               type="radio"
               name="drinkingHabit"
               id="social"
-              value="social"
-              checked={drinkingHabit === "social"}
+              value="Social"
+              checked={drinkingHabit === "Social"}
               onChange={(e) => setDrinkingHabit(e.target.value)}
             />
             <label htmlFor="social">Social</label>
@@ -408,8 +408,8 @@ function PersonalInformation({ username, uid }) {
               type="radio"
               name="drinkingHabit"
               id="sometimes1"
-              value="sometimes"
-              checked={drinkingHabit === "sometimes"}
+              value="Sometimes"
+              checked={drinkingHabit === "Sometimes"}
               onChange={(e) => setDrinkingHabit(e.target.value)}
             />
             <label htmlFor="sometimes1">Sometimes</label>
@@ -417,8 +417,8 @@ function PersonalInformation({ username, uid }) {
               type="radio"
               name="drinkingHabit"
               id="heavy"
-              value="heavy"
-              checked={drinkingHabit === "heavy"}
+              value="Heavy"
+              checked={drinkingHabit === "Heavy"}
               onChange={(e) => setDrinkingHabit(e.target.value)}
             />
             <label htmlFor="heavy">Heavy</label>
@@ -426,8 +426,8 @@ function PersonalInformation({ username, uid }) {
               type="radio"
               name="drinkingHabit"
               id="quit1"
-              value="quit"
-              checked={drinkingHabit === "quit"}
+              value="I've Quit"
+              checked={drinkingHabit === "I've Quit"}
               onChange={(e) => setDrinkingHabit(e.target.value)}
             />
             <label htmlFor="quit1">I've Quit</label>
@@ -440,8 +440,8 @@ function PersonalInformation({ username, uid }) {
               type="radio"
               name="food"
               id="vegan"
-              value="vegan"
-              checked={food === "vegan"}
+              value="Vegan"
+              checked={food === "Vegan"}
               onChange={(e) => setFood(e.target.value)}
             />
             <label htmlFor="vegan">Vegan</label>
@@ -449,8 +449,8 @@ function PersonalInformation({ username, uid }) {
               type="radio"
               name="food"
               id="vegetarian"
-              value="vegetarian"
-              checked={food === "vegetarian"}
+              value="Vegetarian"
+              checked={food === "Vegetarian"}
               onChange={(e) => setFood(e.target.value)}
             />
             <label htmlFor="vegetarian">Vegetarian</label>
@@ -458,8 +458,8 @@ function PersonalInformation({ username, uid }) {
               type="radio"
               name="food"
               id="eggetarian"
-              value="eggetarian"
-              checked={food === "eggetarian"}
+              value="Eggetarian"
+              checked={food === "Eggetarian"}
               onChange={(e) => setFood(e.target.value)}
             />
             <label htmlFor="eggetarian">Eggetarian</label>
