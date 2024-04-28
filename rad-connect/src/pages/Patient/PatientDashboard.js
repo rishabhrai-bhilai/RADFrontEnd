@@ -15,6 +15,7 @@ import {
   CHAT_PORT,
   HttpPost,
 } from "../../constants";
+import { useNavigate } from "react-router-dom";
 
 function PatientDashboard() {
   const [patient, setPatient] = useState(() => {
@@ -23,10 +24,10 @@ function PatientDashboard() {
     return storedPatient ? JSON.parse(storedPatient) : {};
   });
 
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
   const { data, token, setIsUserLoggedIn, setRoleId } = useUserIdContext();
-
   useEffect(() => {
     fetchPatient(data);
   }, []);
@@ -41,13 +42,26 @@ function PatientDashboard() {
     if (patientData == null) {
       throw new Error("Failed to fetch Patient");
     }
-    setPatient(patientData);    
+    setPatient(patientData);
     setRoleId(patientData.id);
+  };
+
+  const navigateToReports = () => {
+    navigate("/patientreports");
+  };
+  const navigateToDashboard = () => {
+    navigate("/patientdashboard");
   };
 
   return (
     <>
-      <Navbar></Navbar>
+      <Navbar
+        options={[
+          { name: "Dashoboard", icon: "bx-home-alt" },
+          { name: "Reports", icon: "bx-chart" },
+        ]}
+        functions={[navigateToDashboard, navigateToReports]}
+      ></Navbar>
       <section className="home">
         <div className="parent-container">
           <div className="all-items">
@@ -94,10 +108,7 @@ function PatientDashboard() {
                               Allergies
                             </p>
                             <span className=" subheading  text-grey-dark">
-                              Butterflyaphobia, Raindropitis, Cotton Candy
-                              Intolerance
-                              {/* {patient.allergies} */}
-                              {/* {patient.allergies} */}
+                              {patient.allergies}
                             </span>
                           </div>
                         </div>
@@ -110,11 +121,10 @@ function PatientDashboard() {
                           </div>
                           <div className="medical-data |text-blue-extradark">
                             <p className="heading  text-blue-extradark fw-bold">
-                              Current Medication Current Medication
+                              Current Medication
                             </p>
                             <span className=" subheading  text-grey-dark">
-                              Butterflyaphobia, Raindropitis, Cotton Candy
-                              Intolerance
+                              {patient.currentMedication}
                             </span>
                           </div>
                         </div>
@@ -127,11 +137,10 @@ function PatientDashboard() {
                           </div>
                           <div className="medical-data |text-blue-extradark">
                             <p className="heading text-blue-extradark fw-bold">
-                              Past Medication Past Medication
+                              Past Medication
                             </p>
                             <span className=" subheading text-grey-dark">
-                              Butterflyaphobia, Raindropitis, Cotton Candy
-                              Intolerance
+                              {patient.pastMedication}
                             </span>
                           </div>
                         </div>
@@ -144,11 +153,10 @@ function PatientDashboard() {
                           </div>
                           <div className="medical-data |text-blue-extradark">
                             <p className="heading text-blue-extradark fw-bold">
-                              Chronic Diseases Chronic Diseases
+                              Chronic Diseases
                             </p>
                             <span className=" subheading text-grey-dark">
-                              Butterflyaphobia, Raindropitis, Cotton Candy
-                              Intolerance
+                              {patient.chronicDiseases}
                             </span>
                           </div>
                         </div>
@@ -165,7 +173,7 @@ function PatientDashboard() {
                           <span className="fw-bold">Smoking Habits</span>
                         </div>
                         <div className="values">
-                          <div className="value fw-bold">
+                          {/* <div className="value fw-bold">
                             <span>Never</span>
                           </div>
                           <div className="value fw-bold">
@@ -182,7 +190,13 @@ function PatientDashboard() {
                           </div>
                           <div className="value fw-bold">
                             <span>I've Quit</span>
-                          </div>
+                          </div> */}
+                          {/* Highlighting smoking habits based on patient data */}
+                          {["Never", "1-2/day", "3-5/day", "Sometimes", "More Than 5", "I've Quit"].map(habit => (
+                            <div className={`value fw-bold ${patient.smokingHabits === habit ? 'highlight' : ''}`}>
+                              <span>{habit}</span>
+                            </div>
+                          ))}
                         </div>
                       </li>
 
@@ -192,24 +206,11 @@ function PatientDashboard() {
                           <span className="fw-bold">Drinking Habits</span>
                         </div>
                         <div className="values">
-                          <div className="value fw-bold">
-                            <span>Never</span>
-                          </div>
-                          <div className="value fw-bold">
-                            <span>Social</span>
-                          </div>
-                          <div className="value fw-bold">
-                            <span>Regular</span>
-                          </div>
-                          <div className="value fw-bold">
-                            <span>Sometimes</span>
-                          </div>
-                          <div className="value fw-bold">
-                            <span>Heavy</span>
-                          </div>
-                          <div className="value fw-bold">
-                            <span>I've Quit</span>
-                          </div>
+                          {["Never", "Regular", "Social", "Sometimes", "Heavy", "I've Quit"].map(habit => (
+                            <div className={`value fw-bold ${patient.drinkingHabits === habit ? 'highlight1' : ''}`}>
+                              <span>{habit}</span>
+                            </div>
+                          ))}
                         </div>
                       </li>
 
@@ -219,18 +220,11 @@ function PatientDashboard() {
                           <span className="fw-bold">Food Preferences</span>
                         </div>
                         <div className="values">
-                          <div className="value fw-bold">
-                            <span>Vegan</span>
-                          </div>
-                          <div className="value fw-bold">
-                            <span>Vegetarian</span>
-                          </div>
-                          <div className="value fw-bold">
-                            <span>Eggetarian</span>
-                          </div>
-                          <div className="value fw-bold">
-                            <span>Non-Veg</span>
-                          </div>
+                          {["Vegan", "Vegetarian", "Eggetarian", "Non-Veg"].map(habit => (
+                            <div className={`value fw-bold ${patient.foodPreferences === habit ? 'highlight2' : ''}`}>
+                              <span>{habit}</span>
+                            </div>
+                          ))}
                         </div>
                       </li>
                     </ul>

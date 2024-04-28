@@ -25,6 +25,8 @@ function ReportComponent() {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(true); // Loading
   const [reportIdInModal, setReportIdInModal] = useState(null);
+  const {roleId} = useUserIdContext();
+
 
   const [isExpanded, setIsExpanded] = useState(false);
   const [repId, setRepId]=useState();
@@ -43,20 +45,22 @@ function ReportComponent() {
     setShowModal(false);
   };
 
-  const fetchPatient = async (data) => {
-    const patientData = await HttpPost(0, "/getPatient", token, { id: data });
-    if (patientData == "Unauthorized") {
-      setIsUserLoggedIn(false);
-    }
-    if (patientData == null) {
-      throw new Error("Failed to fetch patient");
-    }
-    setPatient(patientData);
-  };
+  // const fetchPatient = async (data) => {
+  //   const patientData = await HttpPost(0, "/getPatient", token, { id: data });
+  //   if (patientData == "Unauthorized") {
+  //     setIsUserLoggedIn(false);
+  //   }
+  //   if (patientData == null) {
+  //     throw new Error("Failed to fetch patient");
+  //   }
+  //   setPatient(patientData);
+  // };
 
-  const fetchReports = async (patientId) => {
+  const fetchReports = async () => {
+    setLoading(true);
+    console.log(roleId);
     const responseData = await HttpPost(0, "/getPatientReports", token, {
-      id: patientId,
+      id: roleId,
     });
     if (responseData == "Unauthorized") {
       setIsUserLoggedIn(false);
@@ -65,49 +69,46 @@ function ReportComponent() {
       throw new Error("Failed to fetch reports");
     }
     setReports(responseData.reports || []);
+    setLoading(false);
   };
 
-  const getReportImages = async (ids) => {
-    let arr = [];
-    const imageData = await HttpPost(1, "/getAllReports", token, {
-      reportIds: ids,
-    });
-    if (imageData == "Unauthorized") {
-      setIsUserLoggedIn(false);
-    }
-    if (imageData == null) {
-      throw new Error("Failed to fetch images");
-    }
-    arr = imageData.reports;
-    setImages(arr);
-    for (let i = 0; i < arr.length; i++) {
-      for (let j = 0; j < reports.length; j++) {
-        if (arr[i].reportId === reports[j].id) {
-          reports[i].imageUrl = arr[i].report;
-        }
-      }
-    }
+  // const getReportImages = async (ids) => {
+  //   let arr = [];
+  //   const imageData = await HttpPost(1, "/getAllReports", token, {
+  //     reportIds: ids,
+  //   });
+  //   if (imageData == "Unauthorized") {
+  //     setIsUserLoggedIn(false);
+  //   }
+  //   if (imageData == null) {
+  //     throw new Error("Failed to fetch images");
+  //   }
+  //   arr = imageData.reports;
+  //   setImages(arr);
+  //   for (let i = 0; i < arr.length; i++) {
+  //     for (let j = 0; j < reports.length; j++) {
+  //       if (arr[i].reportId === reports[j].id) {
+  //         reports[i].imageUrl = arr[i].report;
+  //       }
+  //     }
+  //   }
 
-    setReports(reports);
+  //   setReports(reports);
 
-    setLoading(false); // Set loading to false after images are fetched
-  };
-
-  useEffect(() => {
-    fetchPatient(data);
-  }, []);
+  //   setLoading(false); // Set loading to false after images are fetched
+  // };
 
   useEffect(() => {
-    fetchReports(patient.id);
-  }, [patient]);
+    fetchReports();
+  }, [roleId]);
 
-  useEffect(() => {
-    let ids = [];
-    reports.forEach((element) => {
-      ids.push(element.id);
-    });
-    getReportImages(ids);
-  }, [reports]);
+  // useEffect(() => {
+  //   let ids = [];
+  //   reports.forEach((element) => {
+  //     ids.push(element.id);
+  //   });
+  //   getReportImages(ids);
+  // }, [reports]);
 
   useEffect(() => {
     setShow(true);
@@ -144,7 +145,7 @@ function ReportComponent() {
                     <div className="report-list-box | report-data">
                       <div className="report-image">
                         <div className="image-box">
-                          <img src={report.imageUrl} alt="Report" />
+                          <img src={report.report} alt="Report" />
                         </div>
                       </div>
                       {/* <div className="">{report.id}</div> */}

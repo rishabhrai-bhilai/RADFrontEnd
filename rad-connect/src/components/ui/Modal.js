@@ -178,6 +178,8 @@ const Modal = ({ closeModal, reportId }) => {
                   reportId={reportId}
                   doctorId={selectedDoctorId}
                   toggleValue={toggleValue}
+                  radiologistId={-1}
+                  notificationId={-1}
                   setShowOTPComponent={setShowOTPComponent}
                   setResponseMessage={setResponseMessage}
                 />

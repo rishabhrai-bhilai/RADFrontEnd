@@ -20,7 +20,7 @@ import {
   CHAT_PORT,
 } from "../../constants";
 
-function DocReportComponent({ patient }) {  
+function DocReportComponent({ patient }) {
   const { data, token, setIsUserLoggedIn } = useUserIdContext();
   const [report, setReport] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -79,7 +79,7 @@ function DocReportComponent({ patient }) {
             {/* fixed part end here */}
 
             <div className="patient-data-holder">
-              <PatientInformationCard patient={"patient"} />
+              <PatientInformationCard patient={patient} />
             </div>
 
             {/* <div className="element-name-sub-navigation | text-grey-dark">
@@ -115,7 +115,7 @@ function DocReportComponent({ patient }) {
                           <div className="report-list-box | report-data">
                             <div className="report-image">
                               <div className="image-box">
-                                <img src={reportItem.imageUrl} alt="Report" />
+                                <img src={reportItem.report} alt="Report" />
                               </div>
                             </div>
                             <div className="">{reportItem.reportType}</div>

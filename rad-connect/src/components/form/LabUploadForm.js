@@ -142,8 +142,6 @@ function LabUploadForm() {
               Submit
             </button>
           </div>
-          {responseMessage.length > 0 && <div>{responseMessage}</div>}
-          {responseMessage.length > 0 && <div>{responseMessage}</div>}
         </div>
       </div>
       {responseMessage.length > 0 && <div>{responseMessage}</div>}
