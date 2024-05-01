@@ -5,6 +5,8 @@ import { useUserIdContext } from "../../pages/Common/UserIdContext";
 import Toggle from "./Toggle";
 import patientImage from "../../assets/patientbox.png";
 import OTP from "./OTP";
+
+import OTPInput from '../form/OTPInput';
 import {
   DATA_HOST,
   DATA_PORT,
@@ -184,6 +186,21 @@ const Modal = ({ closeModal, reportId }) => {
                   setResponseMessage={setResponseMessage}
                 />
               )}
+
+              <div>
+              {/* {showOTPComponent && (
+                <OTPInput
+                  reportId={reportId}
+                  doctorId={selectedDoctorId}
+                  toggleValue={toggleValue}
+                  radiologistId={-1}
+                  notificationId={-1}
+                  setShowOTPComponent={setShowOTPComponent}
+                  setResponseMessage={setResponseMessage}
+                />
+              )} */}
+              </div>
+
             </div>
             {responseMessage.length > 0 && <div>{responseMessage}</div>}
           </div>

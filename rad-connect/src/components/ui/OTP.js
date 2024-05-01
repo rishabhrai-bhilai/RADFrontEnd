@@ -11,6 +11,8 @@ import {
   HttpGet,
 } from "../../constants";
 
+import OTPInput from "../form/OTPInput";
+
 const OTP = ({
   reportId,
   doctorId,
@@ -27,12 +29,15 @@ const OTP = ({
     getOtp(roleId);
   }, []);
 
-  const handleOtpChange = (e) => {
-    setOtp(e.target.value);
-  };
+  {/* commented by Rishabh  */}
+  // const handleOtpChange = (e) => {
+  //   setOtp(e.target.value);
+  // };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+
+    {/* commented by Rishabh  */}
+    // e.preventDefault();
 
     setShowOTPComponent(false);
 
@@ -132,7 +137,9 @@ const OTP = ({
   return (
     <div className="otp-container">
       <h3>Enter OTP:</h3>
-      <form onSubmit={handleSubmit}>
+
+      {/* commented by Rishabh  */}
+      {/* <form onSubmit={handleSubmit}>
         <input
           type="text"
           value={otp}
@@ -140,7 +147,12 @@ const OTP = ({
           placeholder="Enter OTP"
         />
         <button type="submit">Submit</button>
-      </form>
+      </form> */}
+
+<OTPInput handleSubmit={handleSubmit} setOtpValue={setOtp} />
+   
+
+
     </div>
   );
 };
