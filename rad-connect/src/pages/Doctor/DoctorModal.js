@@ -203,14 +203,16 @@ const DoctorModal = ({ closeModal, reportId, patientId, receiverId }) => {
                         {radiologist.consent == 2 && "Pending Consent"}
                         {/* {radiologist.consent} */}
                       </div>
-                      </div>
+                      </div>                      
+                      {radiologist.consent === 0 && (
                       <div className="list-toggle-btn">
                         <div>
                           <button className="doct-btn doct-btn-7">
-                            < i class = "bx bx-mail-send" onClick={()=>askForConsent(radiologist.id)}> </i>
+                            <i className="bx bx-mail-send" onClick={() => askForConsent(radiologist.id)}></i>
                           </button>
                         </div>
                       </div>
+                    )}                   
                     </div>
                   </li>
                 ))}
