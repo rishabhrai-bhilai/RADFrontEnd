@@ -77,7 +77,7 @@ const OTP = ({
           setIsUserLoggedIn(false);
         }
         if (responseData != null) {
-          setResponseMessage("Request Acceoted");
+          setResponseMessage("Request Accepted");
         } else {
           setResponseMessage("Could not delete notification");
         }

@@ -15,6 +15,7 @@ import React, { useState } from "react";
 import DocReportComponent from "./pages/Doctor/DocReportComponent";
 import SearchDoctor from "./pages/Patient/SearchDoctor";
 import { useUserIdContext } from "./pages/Common/UserIdContext";
+import ForgotPassword from "./pages/Common/ForgotPassword";
 
 function App() {  
   const [email, setEmail] = useState("");
@@ -38,10 +39,9 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="*" element={<Navigate to="/" replace = {true} />} />
-  {isUserLoggedIn && (
-    <>
-          <Route
+        <Route
           path="/patientregistration"
           element={<PatientRegistration email={email} credId={credId} />}
         />
@@ -54,6 +54,8 @@ function App() {
             />
           }
         />
+  {isUserLoggedIn && (
+    <>          
         <Route path="/patientdashboard" element={<PatientDashboard />} />
         <Route path="/patientreports" element={<Reports />} />
         <Route path="/labdashboard" element={<ReportUpload />} />

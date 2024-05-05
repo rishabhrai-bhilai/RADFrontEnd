@@ -56,7 +56,7 @@ const CredentialForm = () => {
         }
       );
 
-      if (response.ok) {        
+      if (response.ok) {
         const responseData = await response.json();
         const userId = responseData.user;        
         getUserId(userId);
@@ -78,11 +78,7 @@ const CredentialForm = () => {
       console.error("Error posting credentials:", error.message);
     }
   };
-
-  const handleForgotPassword = () => {
-    alert("Forgot Password clicked!");
-  };
-
+  
   const { data } = useLoginRoleContext();
 
   return (
@@ -111,9 +107,8 @@ const CredentialForm = () => {
         <p />
         <p>
           <Link
-            to="/forgot-password"
-            className="link"
-            onClick={handleForgotPassword}
+            to="/forgotpassword"
+            className="link"            
           >
             Forgot Password?
           </Link>
