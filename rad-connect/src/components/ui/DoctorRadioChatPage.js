@@ -17,7 +17,7 @@ import {
   HttpPost,
   HttpGet,
 } from "../../constants";
-
+import DicomViewer from "../dicom/DicomViewer";
 import ReportPopup from "./ReportPopup";
 import ChatComponent from "./ChatComponent";
 
@@ -122,32 +122,19 @@ const DoctorRadioChatPage = () => {
         </div>
 
         <div className="chat-box">
-
-
           {/* DICOM IMAGE WORKING    */}
           <div className="dicom__container border-solid border-4 border-violet-400 p-2 shadow-white shadow-sm">
-            <div className="dicom_img">
-              {/* <img src="https://www.vladsiv.com/assets/images/posts/dicom-basics/dicom-basics-header.jpg" alt="" /> */}
-              <img
-                src="https://www.peco602.com/post/0090-python-dicom/featured.jpg"
-                alt=""
-              />
-            </div>
+            {/* <div className="dicom_img"> */}
+            <DicomViewer id={1} role="doctor" />
+            {/* </div> */}
           </div>
 
-          {/* DICOM IMAGE WORKING  CLOSED */}
-
-
-          {repId == -1 ? (
-            <div className="rightside-chat"></div>
-          ) : (
-            <ChatComponent
-              rId={repId}
-              uId={userId}
-              myId={data}
-              chatName={chatName}
-            />
-          )}
+          <ChatComponent
+            rId={repId}
+            uId={userId}
+            myId={data}
+            chatName={chatName}
+          />
         </div>
       </div>
 

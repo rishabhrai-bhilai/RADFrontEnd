@@ -105,12 +105,7 @@ class DwvComponent extends React.Component {
           value={tool}
           key={tool}
           title={tool}
-          disabled={
-            !dataLoaded ||
-            !this.canRunTool(tool) ||
-            (this.props.userRole !== "doctor" &&
-              this.props.userRole !== "radiologist")
-          }
+          disabled={!dataLoaded || !this.canRunTool(tool)}
         >
           {this.getToolIcon(tool)}
         </ToggleButton>

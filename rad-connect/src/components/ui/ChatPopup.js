@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import "./ChatPopup.css";
 import ChatPage from "./ChatPage";
 
-import DoctorRadioChatPage from "./DoctorRadioChatPage";
-
 const ChatPopup = () => {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -22,7 +20,6 @@ const ChatPopup = () => {
       {isExpanded ? (
         <div className="expanded-content">
           <ChatPage onClose={toggleChat} />
-          {/* <DoctorRadioChatPage /> */}
         </div>
       ) : (
         <button className="minimize-button" onClick={toggleChat}>
