@@ -72,7 +72,10 @@ function App() {
               path="/patient/reports"
               element={<DocReportComponent patient={pat} />}
             />
-            <Route path="/patient/dicom" element={<DicomViewer />} />
+            <Route
+              path="/patient/dicom"
+              element={<DicomViewer id={2} role={"patient"} />}
+            />
           </>
         )}
       </Routes>
