@@ -31,7 +31,7 @@ function DocReportComponent({ patient }) {
   const [popupContent, setPopupContent] = useState(null);
   const [radiologists, setRadiologists] = useState([]);
   const [showRadiologistPopup, setShowRadiologistPopup] = useState(false);
-
+  const [radRepId, setRadRepId] = useState(-1);
   const openModal = (reportId) => {
     setShowModal(true);
     setReportIdInModal(reportId);
@@ -46,34 +46,39 @@ function DocReportComponent({ patient }) {
     setPopupContent(content);
   };
 
-  const toggleRadiologistList = () => {
+  const toggleRadiologistList = (repId) => {
     setShowRadiologistPopup(!showRadiologistPopup);
     // Fetch radiologists list from the backend when toggling the list
-    fetchRadiologists();
+    fetchRadiologists(repId);
   };
 
-  const fetchRadiologists = async () => {
+  const fetchRadiologists = async (repId) => {
+    // setRadiologists(responseData);
     try {
-      const response = HttpGet(0, "/getChats/" + data, token);
-      if (response.ok) {
-        const responseData = await response.json();
-        setRadiologists(responseData);
-      } else {
-        // If API fetch fails, set a dummy list
-        setRadiologists([
-          { name: "Dr. John Doe" },
-          { name: "Dr. Jane Smith" },
-          { name: "Dr. Michael Johnson" },
-        ]);
+      const responseData = await HttpGet(0, "/getChats/" + data, token);
+      if (responseData == "Unauthorized") {
+        setIsUserLoggedIn(false);
+      }
+      if (responseData == null) {
+        throw new Error("Failed to fetch chats");
+      }
+      let radiologists = responseData.rads;
+      if (radiologists) {
+        let repRads = [];
+        for (let i = 0; i < radiologists.length; i++) {
+          let radReports = radiologists[i].reports;
+          for (let j = 0; j < radReports.length; j++) {
+            if (radReports[j] == repId) {
+              repRads.push(radiologists[i]);
+              break;
+            }
+          }
+        }
+        setRadRepId(repId);
+        setRadiologists(repRads);
       }
     } catch (error) {
       console.error("Error fetching radiologists:", error);
-      // If an error occurs, set a dummy list
-      setRadiologists([
-        { name: "Dr. John Doe" },
-        { name: "Dr. Jane Smith" },
-        { name: "Dr. Michael Johnson" },
-      ]);
     }
   };
 
@@ -194,7 +199,9 @@ function DocReportComponent({ patient }) {
                                 <div className="icon-box">
                                   <i
                                     className="bx bx-chat"
-                                    onClick={toggleRadiologistList}
+                                    onClick={() => {
+                                      toggleRadiologistList(reportItem.id);
+                                    }}
                                   ></i>
                                 </div>
                               </div>
@@ -219,7 +226,7 @@ function DocReportComponent({ patient }) {
             >
               X
             </button>
-            <RadiologistList radiologists={radiologists} />
+            <RadiologistList radiologists={radiologists} repId={radRepId} />
           </div>
         </div>
       )}

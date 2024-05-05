@@ -20,9 +20,13 @@ import {
 import DicomViewer from "../dicom/DicomViewer";
 import ReportPopup from "./ReportPopup";
 import ChatComponent from "./ChatComponent";
+import { useLocation } from "react-router-dom";
 
 const DoctorRadioChatPage = () => {
-  const [userId, setUserId] = useState([]);
+  const location = useLocation();
+
+  const { repId, userId, chatName } = location.state;
+
   const { data, token, setIsUserLoggedIn } = useUserIdContext();
 
   const [selectedId, setSelectedId] = useState();
@@ -30,12 +34,7 @@ const DoctorRadioChatPage = () => {
   const [chats, setChats] = useState([]);
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [repId, setRepId] = useState(-1);
-  const [chatName, setChatName] = useState("");
 
-  const handleReportClick = (repId) => {
-    setRepId(repId);
-  };
   return (
     <>
       {/* <Navbar /> */}
@@ -44,13 +43,13 @@ const DoctorRadioChatPage = () => {
           <div className="chat-heading-name">
             {loading === true ? null : ( // Use null instead of an empty object
               <div className="chat-report-container">
-                <ReportPopup
+                {/* <ReportPopup
                   chatReports={reports}
                   userId={userId}
                   setParticularId={setSelectedId}
                   onRepClick={handleReportClick}
                   removeChat={setRepId}
-                ></ReportPopup>
+                ></ReportPopup> */}
               </div>
             )}
           </div>
