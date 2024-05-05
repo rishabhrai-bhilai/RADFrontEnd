@@ -1,7 +1,12 @@
 // import logo from './logo.svg';
 // import './App.css';
 import Login from "./pages/Common/Login";
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import Navbar from "./components/navbar/Navbar";
 import ReportUpload from "./pages/Lab/ReportUpload";
 import PatientDashboard from "./pages/Patient/PatientDashboard";
@@ -16,12 +21,14 @@ import DocReportComponent from "./pages/Doctor/DocReportComponent";
 import SearchDoctor from "./pages/Patient/SearchDoctor";
 import { useUserIdContext } from "./pages/Common/UserIdContext";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
+import ForgotPassword from "./pages/Common/ForgotPassword";
+import DicomViewer from "./components/dicom/DicomViewer";
 
-function App() {  
+function App() {
   const [email, setEmail] = useState("");
   const [credId, setCredId] = useState();
   const [pat, setPat] = useState(null);
-  const { isUserLoggedIn } = useUserIdContext();  
+  const { isUserLoggedIn } = useUserIdContext();
 
   const handleSubmitEmail = (email) => {
     setEmail(email);
@@ -39,10 +46,9 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="*" element={<Navigate to="/" replace = {true} />} />
-  {isUserLoggedIn && (
-    <>
-          <Route
+        <Route
           path="/patientregistration"
           element={<PatientRegistration email={email} credId={credId} />}
         />
@@ -55,6 +61,8 @@ function App() {
             />
           }
         />
+  {isUserLoggedIn && (
+    <>          
         <Route path="/patientdashboard" element={<PatientDashboard />} />
         <Route path="/patientreports" element={<Reports />} />
         <Route path="/labdashboard" element={<ReportUpload />} />
@@ -66,6 +74,10 @@ function App() {
         <Route
           path="/patient/reports"
           element={<DocReportComponent patient={pat} />}
+        />
+        <Route
+          path="/patient/dicom"
+          element={<DicomViewer id={1} role={"patient"} />}
         />
     </>
   )}
