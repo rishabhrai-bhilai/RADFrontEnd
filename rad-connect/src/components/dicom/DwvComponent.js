@@ -31,6 +31,7 @@ import TagsTable from "./TagsTable";
 
 import "./DwvComponent.css";
 import { App, getDwvVersion, decoderScripts } from "dwv";
+// import { useLoginRoleContext } from "../../pages/Common/LoginRoleContext";
 
 // Image decoders (for web workers)
 decoderScripts.jpeg2000 = `${process.env.PUBLIC_URL}/assets/dwv/decoders/pdfjs/decode-jpeg2000.js`;
@@ -104,7 +105,12 @@ class DwvComponent extends React.Component {
           value={tool}
           key={tool}
           title={tool}
-          disabled={!dataLoaded || !this.canRunTool(tool)}
+          disabled={
+            !dataLoaded ||
+            !this.canRunTool(tool) ||
+            (this.props.userRole !== "doctor" &&
+              this.props.userRole !== "radiologist")
+          }
         >
           {this.getToolIcon(tool)}
         </ToggleButton>
@@ -129,7 +135,11 @@ class DwvComponent extends React.Component {
             size="small"
             value="reset"
             title="Reset"
-            disabled={!dataLoaded}
+            disabled={
+              !dataLoaded ||
+              (this.props.userRole !== "doctor" &&
+                this.props.userRole !== "radiologist")
+            }
             onChange={this.onReset}
           >
             <RefreshIcon />
@@ -139,7 +149,11 @@ class DwvComponent extends React.Component {
             size="small"
             value="toggleOrientation"
             title="Toggle Orientation"
-            disabled={!dataLoaded}
+            disabled={
+              !dataLoaded ||
+              (this.props.userRole !== "doctor" &&
+                this.props.userRole !== "radiologist")
+            }
             onClick={this.toggleOrientation}
           >
             <CameraswitchIcon />
@@ -154,7 +168,10 @@ class DwvComponent extends React.Component {
           >
             <LibraryBooksIcon />
           </ToggleButton>
-          <ScreenshotButton></ScreenshotButton>
+          {(this.props.userRole === "doctor" ||
+            this.props.userRole === "radiologist") && (
+            <ScreenshotButton></ScreenshotButton>
+          )}
 
           <Dialog
             open={this.state.showDicomTags}
@@ -301,9 +318,8 @@ class DwvComponent extends React.Component {
     // store
     this.setState({ dwvApp: app });
 
-    let imageId = localStorage.getItem("imageId");
+    let imageId = this.props.imageId;
     console.log(imageId);
-    imageId = 1;
     fetch("http://localhost:8081/teleRadiology/download/" + imageId)
       .then((response) => response.arrayBuffer())
       .then((data) => {
