@@ -15,6 +15,7 @@ import React, { useState } from "react";
 import DocReportComponent from "./pages/Doctor/DocReportComponent";
 import SearchDoctor from "./pages/Patient/SearchDoctor";
 import { useUserIdContext } from "./pages/Common/UserIdContext";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
 
 function App() {  
   const [email, setEmail] = useState("");
