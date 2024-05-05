@@ -61,7 +61,7 @@ function ReportComponent() {
     const responseData = await HttpPost(0, "/getPatientReports", token, {
       id: roleId,
     });
-    if (responseData == "Unauthorized") {a
+    if (responseData == "Unauthorized") {
       setIsUserLoggedIn(false);
     }
     if (responseData == null) {
