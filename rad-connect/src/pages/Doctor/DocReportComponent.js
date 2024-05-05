@@ -19,6 +19,7 @@ import {
   IMAGES_PORT,
   CHAT_HOST,
   CHAT_PORT,
+  HttpGet,
 } from "../../constants";
 
 function DocReportComponent({ patient }) {
@@ -53,20 +54,7 @@ function DocReportComponent({ patient }) {
 
   const fetchRadiologists = async () => {
     try {
-      const response = await fetch(
-        "http://" +
-          DATA_HOST +
-          ":" +
-          DATA_PORT +
-          "/teleRadiology/getRadiologists",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = HttpGet(0, "/getChats/" + data, token);
       if (response.ok) {
         const responseData = await response.json();
         setRadiologists(responseData);

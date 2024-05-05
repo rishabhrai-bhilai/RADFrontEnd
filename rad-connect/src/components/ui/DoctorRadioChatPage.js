@@ -29,104 +29,37 @@ const DoctorRadioChatPage = () => {
 
   const [chats, setChats] = useState([]);
   const [reports, setReports] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [repId, setRepId] = useState(-1);
   const [chatName, setChatName] = useState("");
 
   const handleReportClick = (repId) => {
     setRepId(repId);
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const responseData = await HttpGet(0, "/getChats/" + data, token);
-      if (responseData == "Unauthorized") {
-        setIsUserLoggedIn(false);
-      }
-      if (responseData == null) {
-        throw new Error("Failed to fetch chats");
-      }
-      settingChats(responseData);
-    };
-    fetchData();
-  }, []);
-
-  const settingChats = (chats1) => {
-    let newChats = [];
-    if (chats1.pats != null) {
-      chats1.pats.forEach((element) => {
-        let json = {
-          id: element.userId,
-          name: element.name,
-          reports: element.reports,
-        };
-
-        newChats.push(json);
-      });
-    }
-    if (chats1.docs != null) {
-      chats1.docs.forEach((element) => {
-        let json = {
-          id: element.userId,
-          name: element.name,
-          reports: element.reports,
-        };
-        newChats.push(json);
-      });
-    }
-    if (chats1.rads != null) {
-      chats1.rads.forEach((element) => {
-        let json = {
-          id: element.userId,
-          name: element.name,
-          reports: element.reports,
-        };
-        newChats.push(json);
-      });
-    }
-
-    setChats(newChats);
-  };
-
-  const handleClick = (chatReports, id, chatName) => {
-    setLoading(true);
-    setReports(chatReports);
-    setUserId(id);
-    setLoading(false);
-    setChatName(chatName);
-  };
-  const handleSearchClick = () => {
-    // const body = document.querySelector("body"); // Define 'body'
-    // const searchBtn = body.querySelector(".search-box");
-    // const sidebar = body.querySelector(".sidebar");
-    // sidebar.classList.remove("close");
-  };
-
   return (
     <>
       {/* <Navbar /> */}
       <div className="dicom-chat-container">
         <div className="chat-head">
-          <div className="chat-heading-name">Chat</div>
-          {loading === true ? null : ( // Use null instead of an empty object
-            <div className="chat-report-container">
-              <ReportPopup
-                chatReports={reports}
-                userId={userId}
-                setParticularId={setSelectedId}
-                onRepClick={handleReportClick}
-                removeChat={setRepId}
-              ></ReportPopup>
-            </div>
-          )}
+          <div className="chat-heading-name">
+            {loading === true ? null : ( // Use null instead of an empty object
+              <div className="chat-report-container">
+                <ReportPopup
+                  chatReports={reports}
+                  userId={userId}
+                  setParticularId={setSelectedId}
+                  onRepClick={handleReportClick}
+                  removeChat={setRepId}
+                ></ReportPopup>
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="chat-box">
           {/* DICOM IMAGE WORKING    */}
           <div className="dicom__container border-solid border-4 border-violet-400 p-2 shadow-white shadow-sm">
-            {/* <div className="dicom_img"> */}
             <DicomViewer id={1} role="doctor" />
-            {/* </div> */}
           </div>
 
           <ChatComponent
