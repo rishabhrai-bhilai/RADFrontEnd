@@ -22,6 +22,7 @@ import SearchDoctor from "./pages/Patient/SearchDoctor";
 import { useUserIdContext } from "./pages/Common/UserIdContext";
 import ForgotPassword from "./pages/Common/ForgotPassword";
 import DicomViewer from "./components/dicom/DicomViewer";
+import RadiologistDashboard from "./pages/Radiologist/RadiologistDashboard";
 
 function App() {
   const [email, setEmail] = useState("");
@@ -63,6 +64,7 @@ function App() {
   {isUserLoggedIn && (
     <>          
         <Route path="/patientdashboard" element={<PatientDashboard />} />
+        <Route path="/radiologistdashboard" element={<RadiologistDashboard />} />
         <Route path="/patientreports" element={<Reports />} />
         <Route path="/labdashboard" element={<ReportUpload />} />
         <Route path="/patientchat" element={<ChatPage />} />

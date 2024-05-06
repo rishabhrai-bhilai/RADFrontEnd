@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import TermsAndConditions from "../../components/ui/TermsAndConditions";
 import "./NewPatient.css";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -14,6 +15,8 @@ const NewPatient = ({ onSubmitEmail, onSubmitCred }) => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
+  const [termsCond, setTermsCond] = useState(false);
+  const [acceptTermsCond, setAcceptTermsCond] = useState(false);
   const navigate = useNavigate();
 
   const isValidEmail = (email) => {
@@ -21,6 +24,10 @@ const NewPatient = ({ onSubmitEmail, onSubmitCred }) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
+
+  const handleBackToLogin = () => {
+      navigate("/");
+  }
 
   const handleSubmit = async (e) => {
 
@@ -37,6 +44,12 @@ const NewPatient = ({ onSubmitEmail, onSubmitCred }) => {
       alert("Different Password");
       return;
     }
+
+    console.log("Hi");
+
+    setTermsCond(true);
+
+    if(acceptTermsCond) {
 
     const formData = {
       email: userName,
@@ -69,6 +82,7 @@ const NewPatient = ({ onSubmitEmail, onSubmitCred }) => {
     } catch (error) {
       console.error("There was a problem saving the data:", error);
     }
+  }  
   };
 
   return (
@@ -117,7 +131,7 @@ const NewPatient = ({ onSubmitEmail, onSubmitCred }) => {
           </div>
 
           <div className="footer">
-            <button className="footButtons" type="submit">
+            <button className="footButtons" type="submit" onClick={handleBackToLogin}>
               Back To Login
             </button>
             {/* <Link to="/patientregistration"> */}
@@ -128,6 +142,7 @@ const NewPatient = ({ onSubmitEmail, onSubmitCred }) => {
           </div>
         </form>
       </div>
+      {termsCond && <TermsAndConditions setTermsCondComp={setTermsCond} setTermsAndCond={setAcceptTermsCond}/>}
     </>
   );
 };

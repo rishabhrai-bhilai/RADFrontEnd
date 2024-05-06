@@ -66,6 +66,7 @@ const CredentialForm = () => {
         if (data === "Patient") navigate("/patientdashboard");
         if (data === "Lab") navigate("/labdashboard");
         if (data === "Doctor") navigate("/doctordashboard");
+        if (data === "Radiologist") navigate("/radiologistdashboard");
       } else {
         // Handle errors
         setShowError(true);

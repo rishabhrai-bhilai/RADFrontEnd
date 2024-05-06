@@ -89,7 +89,7 @@ function DoctorDashboard({ onClickPat }) {
 
             {/* fixed part end here */}
 
-            <div className="doctor-dashboard-containers-top">
+            {/* <div className="doctor-dashboard-containers-top">
               <div className="doctor-dashboard-badge">
                 <div className="doctor-dashboard-icon-holder">
                   <i class="bx bx-child | icon-button"></i>
@@ -127,7 +127,7 @@ function DoctorDashboard({ onClickPat }) {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <div className="doctor-dashboard-containers-bottom ">
               <div className="doctor-dashboard-left">
@@ -181,7 +181,7 @@ function DoctorDashboard({ onClickPat }) {
           </div>
         </div>
       </section>
-      <ChatPopup></ChatPopup>
+      {/* <ChatPopup></ChatPopup> */}
     </>
   );
 }
