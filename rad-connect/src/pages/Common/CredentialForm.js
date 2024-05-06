@@ -34,6 +34,7 @@ const CredentialForm = () => {
       if (data === "Doctor") role = "ROLE_DOC";
       if (data === "Radiologist") role = "ROLE_RADIOLOGIST";
       if (data === "Lab") role = "ROLE_LAB";
+      if (data === "Admin") role = "ROLE_ADMIN";
 
       const requestBody = {
         email: username,
@@ -66,6 +67,7 @@ const CredentialForm = () => {
         if (data === "Patient") navigate("/patientdashboard");
         if (data === "Lab") navigate("/labdashboard");
         if (data === "Doctor") navigate("/doctordashboard");
+        if (data === "Admin") navigate("/admindashboard");
       } else {
         // Handle errors
         setShowError(true);
