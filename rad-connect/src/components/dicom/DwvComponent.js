@@ -105,12 +105,7 @@ class DwvComponent extends React.Component {
           value={tool}
           key={tool}
           title={tool}
-          disabled={
-            !dataLoaded ||
-            !this.canRunTool(tool) ||
-            (this.props.userRole !== "doctor" &&
-              this.props.userRole !== "radiologist")
-          }
+          disabled={!dataLoaded || !this.canRunTool(tool)}
         >
           {this.getToolIcon(tool)}
         </ToggleButton>
@@ -170,7 +165,13 @@ class DwvComponent extends React.Component {
           </ToggleButton>
           {(this.props.userRole === "doctor" ||
             this.props.userRole === "radiologist") && (
-            <ScreenshotButton></ScreenshotButton>
+            <ScreenshotButton
+              reportId={this.props.imageId}
+              doctorUserId={this.props.docUserId}
+              radiologistUserId={this.props.radUserId}
+              jwt={this.props.token}
+              logout={this.props.setUserLogin}
+            ></ScreenshotButton>
           )}
 
           <Dialog

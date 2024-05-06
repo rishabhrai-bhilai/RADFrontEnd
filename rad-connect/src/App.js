@@ -20,8 +20,10 @@ import React, { useState } from "react";
 import DocReportComponent from "./pages/Doctor/DocReportComponent";
 import SearchDoctor from "./pages/Patient/SearchDoctor";
 import { useUserIdContext } from "./pages/Common/UserIdContext";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
 import ForgotPassword from "./pages/Common/ForgotPassword";
 import DicomViewer from "./components/dicom/DicomViewer";
+import DoctorRadioChatPage from "./components/ui/DoctorRadioChatPage";
 import RadiologistDashboard from "./pages/Radiologist/RadiologistDashboard";
 
 function App() {
@@ -47,7 +49,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
-        <Route path="*" element={<Navigate to="/" replace = {true} />} />
+        <Route path="*" element={<Navigate to="/" replace={true} />} />
         <Route
           path="/patientregistration"
           element={<PatientRegistration email={email} credId={credId} />}
@@ -61,28 +63,28 @@ function App() {
             />
           }
         />
-  {isUserLoggedIn && (
-    <>          
-        <Route path="/patientdashboard" element={<PatientDashboard />} />
-        <Route path="/radiologistdashboard" element={<RadiologistDashboard />} />
+        {isUserLoggedIn && (
+          <>
+            <Route path="/patientdashboard" element={<PatientDashboard />} />
+            <Route path="/radiologistdashboard" element={<RadiologistDashboard />} />
         <Route path="/patientreports" element={<Reports />} />
-        <Route path="/labdashboard" element={<ReportUpload />} />
-        <Route path="/patientchat" element={<ChatPage />} />
-        <Route
-          path="/doctordashboard"
-          element={<DoctorDashboard onClickPat={handlePat} />}
-        />
-        <Route
-          path="/patient/reports"
-          element={<DocReportComponent patient={pat} />}
-        />
-        <Route
-          path="/patient/dicom"
-          element={<DicomViewer id={1} role={"patient"} />}
-        />
-    </>
-  )}
-
+            <Route path="/labdashboard" element={<ReportUpload />} />
+            <Route path="/patientchat" element={<ChatPage />} />
+            <Route
+              path="/doctordashboard"
+              element={<DoctorDashboard onClickPat={handlePat} />}
+            />
+            <Route
+              path="/patient/reports"
+              element={<DocReportComponent patient={pat} />}
+            />
+            {/* <Route
+              path="/patient/dicom"
+              element={<DicomViewer id={1} role={"patient"} />}
+            /> */}
+            <Route path="/doctor/radioChat" element={<DoctorRadioChatPage />} />
+          </>
+        )}
       </Routes>
     </div>
   );

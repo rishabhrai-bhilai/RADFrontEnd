@@ -1,0 +1,272 @@
+/* *{
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+    font-family: 'Quicksand', sans-serif;
+    font-family: 'Raleway', sans-serif;
+} */
+
+.blue {
+    color:var(--blue-extradark);
+}
+
+.grey{
+    color:var(--blue-extradark);
+}
+
+.underliner{
+    /* background-color: #ffdddd; */
+  border-left: 6px solid var(--blue-extradark) ;
+}
+.heading_secondary{
+    font-size: 0.8rem;
+}
+
+/* body {
+    margin: 0;
+    -moz-osx-font-smoothing: grayscale;
+    
+} */
+
+.admin__container{
+    display: flex;
+    background-color: white;
+    height: 100vh;
+    width: 100vw;
+    font-size: 1rem;
+}
+
+
+.left__box{
+    /* flex-grow: 8; */
+    flex:2;
+    height: 100%;
+    background: var(--blue-light);
+    border-radius: 0 25px 25px 0;
+    display: flex;
+
+}
+.right__box{
+    /* flex-grow: 2; */
+    flex: 5;
+    /* width: 50vw; */
+    height: 100%;
+    /* background-color: rgb(194, 165, 149); */
+}
+
+
+
+.admin_name{
+    font-size: 16px;
+    letter-spacing: 2px;
+    font-weight: bold;
+    margin: 12px 0px;
+  }
+  .admin_title {
+    font-size: 12px;
+    color:var(--blue-extradark);
+  }
+
+
+
+
+
+
+
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    font-weight: bold;
+  }
+  
+   .list_item{
+    /* border: 1px solid #ddd; */
+    /* margin-top: -1px; Prevent double borders */
+    /* background-color: #724141; */
+    padding: 12px;
+    margin-top: 20px;
+    
+  }
+
+  .list_item:hover{
+    color:var(--blue-extradark);
+  }
+ 
+
+
+  /* Main body part implementation goes here (admin_dashboard)  */
+
+  .left__body{
+    /* flex-grow: 8; */
+    width: 65vw;
+    /* background-color: #e39999; */
+    margin-top: 40px;
+    margin-bottom: 40px;
+    min-width: 800px;
+    
+    display: flex;
+    flex-direction: column;
+
+}
+
+.body_box1{
+    width: 100%;
+    /* background-color: #584f4f; */
+}
+
+.prof_name{
+    /* background-color: #502727; */
+    color:var(--blue-extradark);
+    letter-spacing: 1px;
+    padding: 24px 20px;
+    margin: 20px 10px;
+    margin-top: 0px;
+    padding-top: 0px;
+    margin-bottom: 0px;
+}
+
+.greeting{
+    margin-bottom: 3px;
+    padding-left: 4px;
+    
+}
+
+.body_box2 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:space-between;
+    /* align-items: center; */
+    /* background: #695f5f; */
+    padding: 0px 20px;
+}
+
+.subject_details {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 280px;
+    /* height: 200px; */
+    /* text-align: center; */
+    
+    padding: 24px 20px;
+    /* margin: 10px 10px; */
+    color: #ffffff;
+    border-radius: 10px;
+  }
+  
+  .color1 {
+    background-color:var(--blue-extradark);
+  }
+  .color2{
+    background-color:var(--blue-dark);
+  }
+  .color3{
+    background-color: var(--blue-dark);
+  }
+  .subject_details:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+
+  .subject_title{
+    
+    padding: 10px;
+    padding-right: 50px;
+    /* padding-left: 0px; */
+    /* background: #000; */
+    /* text-align: center; */
+    font-size: 24px;
+    text-wrap: wrap;
+  }
+
+
+
+  /* Notes Module  */
+  .body_box3 {
+    /* background: #e48989; */
+    
+  }
+.timetable_heading{
+    color:var(--blue-extradark);
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+  .todays_timetable{
+
+display: flex;
+flex-direction: column;
+padding: 24px 20px;
+    margin: 20px 10px;
+    margin-top: 0px;
+    padding-top: 0px;
+    
+  }
+
+  .danger,.success,.info,.warning{
+    margin-bottom: 15px;
+    padding: 4px 12px; 
+    width: 400px;
+    height: 70px;
+  }
+  
+  
+  
+  
+  .class_name{
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  
+  
+/* Right side Calendar Box working  */
+  .right__box{
+    /* background-color: #d37f7f; */
+    max-height: 90vh;
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
+  .right__box_heading{
+    margin-left: 2rem;
+    padding-left: 4px;
+    /* margin-bottom: 65px; */
+  }
+
+  
+
+  
+
+  
+
+  
+
+  
+ 
+
+  .border_violet{
+    border-left: 6px solid var(--blue-extradark); ;
+    border-radius: 10px 10px 10px 10px;
+  }
+
+  .border_blue{
+    border-left: 6px solid hsl(183, 31%, 53%) ;
+    border-radius: 10px 10px 10px 10px;
+  }
+
+  .border_orange{
+    border-left: 6px solid hsl(15.61deg 98.86% 65.69%) ;
+    border-radius: 10px 10px 10px 10px;
+  }
+
+
+  .admin-img{
+    /* background: #000; */
+    /* display: flex;
+    justify-content: center; */
+
+  }
+  .admin-img img{
+    /* width: 50%; */
+    height: 80vh;
+  }
