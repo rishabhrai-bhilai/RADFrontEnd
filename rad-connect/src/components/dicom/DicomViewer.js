@@ -7,7 +7,7 @@ import { indigo, pink } from "@mui/material/colors";
 import "./DicomViewer.css";
 import DwvComponent from "./DwvComponent";
 
-const DicomViewer = ({ id, role }) => {
+const DicomViewer = ({ repId, role, jwt, docId, radId, logout }) => {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const theme = createTheme({
     typography: {
@@ -28,7 +28,14 @@ const DicomViewer = ({ id, role }) => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <div className="App">
-        <DwvComponent imageId={id} userRole={role} />
+        <DwvComponent
+          imageId={repId}
+          userRole={role}
+          token={jwt}
+          docUserId={docId}
+          radUserId={radId}
+          setUserLogin={logout}
+        />
       </div>
     </ThemeProvider>
   );
