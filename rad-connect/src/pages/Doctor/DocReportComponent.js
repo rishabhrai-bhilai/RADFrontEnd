@@ -4,12 +4,13 @@ import imgg from "../../assets/mri_img.png";
 import DoctorModal from "./DoctorModal";
 import ButtonComponent from "../../components/ui/ButtonComponent";
 import "./DocReportComponent.css";
-
+import ChatComponent from "../../components/ui/ChatComponent";
 import patientImg from "../../assets/patientImg.png";
 import ChatPopup from "../../components/ui/ChatPopup";
 import PatientDetails from "./PatientDetails";
 import Navbar from "../../components/navbar/Navbar";
 import PatientInformationCard from "../../components/ui/PatientInformationCard";
+import { RadiologistList } from "./RadiologistList";
 
 import {
   DATA_HOST,
@@ -18,6 +19,7 @@ import {
   IMAGES_PORT,
   CHAT_HOST,
   CHAT_PORT,
+  HttpGet,
 } from "../../constants";
 
 function DocReportComponent({ patient }) {
@@ -25,7 +27,11 @@ function DocReportComponent({ patient }) {
   const [report, setReport] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [reportIdInModal, setReportIdInModal] = useState(null);
-
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupContent, setPopupContent] = useState(null);
+  const [radiologists, setRadiologists] = useState([]);
+  const [showRadiologistPopup, setShowRadiologistPopup] = useState(false);
+  const [radRepId, setRadRepId] = useState(-1);
   const openModal = (reportId) => {
     setShowModal(true);
     setReportIdInModal(reportId);
@@ -33,6 +39,47 @@ function DocReportComponent({ patient }) {
 
   const closeModal = () => {
     setShowModal(false);
+  };
+
+  const togglePopup = (content) => {
+    setShowPopup(!showPopup);
+    setPopupContent(content);
+  };
+
+  const toggleRadiologistList = (repId) => {
+    setShowRadiologistPopup(!showRadiologistPopup);
+    // Fetch radiologists list from the backend when toggling the list
+    fetchRadiologists(repId);
+  };
+
+  const fetchRadiologists = async (repId) => {
+    // setRadiologists(responseData);
+    try {
+      const responseData = await HttpGet(0, "/getChats/" + data, token);
+      if (responseData == "Unauthorized") {
+        setIsUserLoggedIn(false);
+      }
+      if (responseData == null) {
+        throw new Error("Failed to fetch chats");
+      }
+      let radiologists = responseData.rads;
+      if (radiologists) {
+        let repRads = [];
+        for (let i = 0; i < radiologists.length; i++) {
+          let radReports = radiologists[i].reports;
+          for (let j = 0; j < radReports.length; j++) {
+            if (radReports[j] == repId) {
+              repRads.push(radiologists[i]);
+              break;
+            }
+          }
+        }
+        setRadRepId(repId);
+        setRadiologists(repRads);
+      }
+    } catch (error) {
+      console.error("Error fetching radiologists:", error);
+    }
   };
 
   useEffect(() => {
@@ -82,12 +129,6 @@ function DocReportComponent({ patient }) {
               <PatientInformationCard patient={patient} />
             </div>
 
-            {/* <div className="element-name-sub-navigation | text-grey-dark">
-              <div className="nav-1">Medical</div>
-              <div className="nav-2">Accesses</div>
-              <div className="nav-3">History</div>
-            </div> */}
-
             <div className="patient-report-holder">
               <div>
                 <div className="element-name-filter">
@@ -103,8 +144,6 @@ function DocReportComponent({ patient }) {
                       <li>
                         <div className="report-list-box | report-data">
                           <div>Image</div>
-                          {/* <div>Report Id</div> */}
-                          {/* <div>Name</div> */}
                           <div>Type</div>
                           <div>Upload Date</div>
                           <div>buttons</div>
@@ -127,26 +166,48 @@ function DocReportComponent({ patient }) {
                                     openModal={() => openModal(reportItem.id)}
                                   />
                                   {showModal &&
-                                    reportIdInModal === reportItem.id && ( // Check if showModal is true and the report id matches
+                                    reportIdInModal === reportItem.id && (
                                       <DoctorModal
                                         closeModal={closeModal}
                                         reportId={reportIdInModal}
                                         patientId={patient.id}
                                         receiverId={patient.userId}
-                                      /> // Pass report id to Modal
+                                      />
                                     )}
                                 </div>
                                 <div className="icon-box">
-                                  <i className="bx bxs-download"></i>
+                                  <i
+                                    className="bx bx-plus-medical"
+                                    onClick={() =>
+                                      togglePopup(
+                                        <ChatComponent
+                                          rId={reportItem.id}
+                                          chatName={
+                                            patient.firstName +
+                                            " " +
+                                            patient.middleName +
+                                            " " +
+                                            patient.lastName
+                                          }
+                                          myId={data}
+                                          uId={patient.userId}
+                                        />
+                                      )
+                                    }
+                                  ></i>
                                 </div>
                                 <div className="icon-box">
-                                  <i className="bx bx-trash"></i>
+                                  <i
+                                    className="bx bx-chat"
+                                    onClick={() => {
+                                      toggleRadiologistList(reportItem.id);
+                                    }}
+                                  ></i>
                                 </div>
                               </div>
                             </div>
                           </div>
                         </li>
-                        //  ))
                       ))}
                     </ul>
                   </div>
@@ -156,7 +217,32 @@ function DocReportComponent({ patient }) {
           </div>
         </div>
       </section>
-      <ChatPopup></ChatPopup>
+      {showRadiologistPopup && (
+        <div className="popup-overlay">
+          <div className="popup">
+            <button
+              className="close-button"
+              onClick={() => setShowRadiologistPopup(false)}
+            >
+              X
+            </button>
+            <RadiologistList radiologists={radiologists} repId={radRepId} />
+          </div>
+        </div>
+      )}
+      {showPopup && (
+        <div className="popup-overlay">
+          <div className="popup">
+            <button
+              className="close-button"
+              onClick={() => setShowPopup(false)}
+            >
+              X
+            </button>
+            {popupContent}
+          </div>
+        </div>
+      )}
     </>
   );
 }

@@ -15,7 +15,7 @@ import {
   CHAT_PORT,
   HttpPost,
 } from "../../constants";
-
+import { useNavigate } from "react-router-dom";
 function ReportComponent() {
   const [showModal, setShowModal] = useState(false);
   const { data, token, setIsUserLoggedIn } = useUserIdContext();
@@ -25,15 +25,14 @@ function ReportComponent() {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(true); // Loading
   const [reportIdInModal, setReportIdInModal] = useState(null);
-  const {roleId} = useUserIdContext();
-
+  const { roleId } = useUserIdContext();
 
   const [isExpanded, setIsExpanded] = useState(false);
-  const [repId, setRepId]=useState();
-
+  const [repId, setRepId] = useState();
+  const navigate = useNavigate();
   const togglePermission = (rid) => {
-    setIsExpanded(!isExpanded);    
-    setRepId(rid);    
+    setIsExpanded(!isExpanded);
+    setRepId(rid);
   };
 
   const openModal = (reportId) => {
@@ -102,6 +101,10 @@ function ReportComponent() {
     fetchReports();
   }, [roleId]);
 
+  const openDicom = async (id) => {
+    localStorage.setItem("imageId", id);
+    navigate("/patient/dicom");
+  };
   // useEffect(() => {
   //   let ids = [];
   //   reports.forEach((element) => {
@@ -144,7 +147,12 @@ function ReportComponent() {
                   <li key={report.id}>
                     <div className="report-list-box | report-data">
                       <div className="report-image">
-                        <div className="image-box">
+                        <div
+                          className="image-box"
+                          onClick={() => {
+                            openDicom(report.id);
+                          }}
+                        >
                           <img src={report.report} alt="Report" />
                         </div>
                       </div>
@@ -154,11 +162,11 @@ function ReportComponent() {
                       <div className="">{report.dateOfIssue}</div>
                       <div className="report-button-container">
                         <div className="icon-buttons">
-                          <div
-                            className="icon-box notification-icon"
-                            
-                          >
-                            <i className="bx bxs-bell-ring" onClick={()=>togglePermission(report.id)}></i>
+                          <div className="icon-box notification-icon">
+                            <i
+                              className="bx bxs-bell-ring"
+                              onClick={() => togglePermission(report.id)}
+                            ></i>
                             <div class="notification-number">!</div>
 
                             <div
@@ -176,7 +184,7 @@ function ReportComponent() {
                               )}
                               {isExpanded && (
                                 <div className="permission-expanded-content">
-                                  <Snackbar repId={repId}/>
+                                  <Snackbar repId={repId} />
                                 </div>
                               )}
                             </div>

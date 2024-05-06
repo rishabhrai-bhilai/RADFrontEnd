@@ -11,6 +11,7 @@ import {
 import DragDropFiles from "./DragDropFiles";
 import { useUserIdContext } from "../../pages/Common/UserIdContext";
 import "./LabUploadForm.css";
+import axios from "axios";
 
 function LabUploadForm() {
   const [email, setEmail] = useState("");
@@ -20,8 +21,6 @@ function LabUploadForm() {
   const [rid, setRid] = useState();
   const { data, token, setIsUserLoggedIn } = useUserIdContext();
   const [responseMessage, setResponseMessage] = useState("");
-
-  let responseData;
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -37,36 +36,51 @@ function LabUploadForm() {
       lid: data,
       patEmail: email,
     };
-
+    let responseData = null;
     responseData = await HttpPost(0, "/uploadReport", token, formData);
     if (responseData == "Unauthorized") {
       setIsUserLoggedIn(false);
     }
     setRid(responseData.rid);
-    setResponseMessage("Report Uploaded");
+    // setResponseMessage("Report Uploaded");
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const imageUri = reader.result;
-      const rand = Math.random();
-      sendImageToBackend(imageUri, rand, responseData.rid);
-    };
-    reader.readAsDataURL(image);
+    let success = await sendImageToBackend(responseData.rid);
+    if (success) {
+      setResponseMessage("Report Uploaded");
+    } else {
+      setResponseMessage("Report Upload Failed");
+    }
   };
 
-  const sendImageToBackend = async (imageUri, rand, val) => {
-    const responseData = await HttpPost(1, "/uploadReport", token, {
-      report: imageUri,
-      reportId: val,
-    });
-    if (responseData == null) {
-      alert("Unable to Load Details");
+  const sendImageToBackend = async (val) => {
+    // event.preventDefault();
+    const formData = new FormData();
+    formData.append("file", image);
+    let responseData = null;
+    let response = null;
+    try {
+      response = await axios.post(
+        "http://localhost:8081/teleRadiology/upload/" + val,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.status == 403 || response.status == 401) {
+        setIsUserLoggedIn(false);
+      }
+      // console.log(response.ok);
+      if (response.status == 200) {
+        return true;
+      }
+    } catch (error) {
+      console.error("Error uploading file: ", error);
+      alert("Failed to upload file");
+      return false;
     }
-    if (responseData == "Unauthorized") {
-      setIsUserLoggedIn(false);
-    }
-    setResponseMessage("Report Uploaded");
-    setResponseMessage("Report Uploaded");
   };
 
   return (

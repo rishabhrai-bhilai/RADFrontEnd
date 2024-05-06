@@ -57,7 +57,7 @@ const CredentialForm = () => {
         }
       );
 
-      if (response.ok) {        
+      if (response.ok) {
         const responseData = await response.json();
         const userId = responseData.user;        
         getUserId(userId);
@@ -80,15 +80,11 @@ const CredentialForm = () => {
       console.error("Error posting credentials:", error.message);
     }
   };
-
-  const handleForgotPassword = () => {
-    alert("Forgot Password clicked!");
-  };
-
+  
   const { data } = useLoginRoleContext();
 
   return (
-    <div className="form-container">
+    <div className="form-container shadow-md">
       <form className="form-group" onSubmit={handleSubmit}>
         <p className="loginrole">Login As {data}</p>
         <br />
@@ -101,7 +97,8 @@ const CredentialForm = () => {
           onChange={(e) => setUsername(e.target.value)}
         />
         <p />
-        <p className="paragraph">Password</p>
+
+        <p className="paragraph mt-4">Password</p>
         <p />
         <input
           type="password"
@@ -112,9 +109,8 @@ const CredentialForm = () => {
         <p />
         <p>
           <Link
-            to="/forgot-password"
-            className="link"
-            onClick={handleForgotPassword}
+            to="/forgotpassword"
+            className="link"            
           >
             Forgot Password?
           </Link>

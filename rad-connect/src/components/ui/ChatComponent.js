@@ -163,9 +163,10 @@ const ChatComponent = ({ rId, uId, myId, chatName }) => {
       </div>
       {messagesLoaded && (
         <div className="message-container">
-          {messages.map((message) => (
-            <Message key={message.id} message={message} />
-          ))}
+          {messages &&
+            messages.map((message) => (
+              <Message key={message.id} message={message} />
+            ))}
         </div>
       )}
 
