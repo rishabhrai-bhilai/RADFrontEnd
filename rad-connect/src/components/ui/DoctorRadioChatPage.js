@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import patientChatImg from "../../assets/patientbox.png";
 import { useUserIdContext } from "../../pages/Common/UserIdContext";
+import { useLoginRoleContext } from "../../pages/Common/LoginRoleContext";
 import "./DoctorRadioChatPage.css";
 import Message from "./Message";
 import MessageInput from "./MessageInput";
@@ -34,6 +35,7 @@ const DoctorRadioChatPage = () => {
   const [chats, setChats] = useState([]);
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { role } = useLoginRoleContext();
 
   return (
     <>
@@ -58,22 +60,27 @@ const DoctorRadioChatPage = () => {
         <div className="chat-box">
           {/* DICOM IMAGE WORKING    */}
           <div className="dicom__container border-solid border-4 border-violet-400 p-2 shadow-white shadow-sm">
-            <DicomViewer
-              repId={1}
-              role="doctor"
-              jwt={token}
-              docId={data}
-              radId={userId}
-              logout={setIsUserLoggedIn}
-            />
-            {/* <DicomViewer
-              repId={1}
-              role="radiologist"
-              jwt={token}
-              docId={userId}
-              radId={data}
-              logout={setIsUserLoggedIn}
-            /> */}
+          {role === "doctor" && (
+          <DicomViewer
+            repId={repId}
+            role="Doctor"
+            jwt={token}
+            docId={data}
+            radId={userId}
+            logout={setIsUserLoggedIn}
+          />
+          )}
+          {role === "Radiologist" && (
+          <DicomViewer
+            repId={repId}
+            role="radiologist"
+            jwt={token}
+            docId={userId}
+            radId={data}
+            logout={setIsUserLoggedIn}
+          />
+          )}
+
           </div>
 
           <ChatComponent

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./PersonalInformation.css";
 import {
   DATA_HOST,
@@ -32,6 +33,7 @@ function PersonalInformation({ username, uid }) {
   const [food, setFood] = useState("");
   const [emergencyContact, setEmergencyContact] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,6 +65,7 @@ function PersonalInformation({ username, uid }) {
     };
 
     try {
+      console.log(formData);
       const response = await fetch(
         "http://" + DATA_HOST + ":" + DATA_PORT + "/teleRadiology/addPatient",
         {
@@ -77,12 +80,15 @@ function PersonalInformation({ username, uid }) {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      setResponseMessage("Patient Registered");
-      setResponseMessage("Patient Registered");
+      setResponseMessage("Patient Registered");      
     } catch (error) {
       console.error("There was a problem saving the data:", error);
     }
   };
+
+  const handleBackToLogin = () => {
+    navigate("/");
+}
 
   return (
     <>
@@ -476,15 +482,14 @@ function PersonalInformation({ username, uid }) {
         </div>
 
         <div className="footer">
-          <button className="footButtons" type="submit">
+          <button className="footButtons" type="submit" onClick={handleBackToLogin}>
             Back To Login
           </button>
           <button className="footButtons" type="submit">
             Submit
           </button>
         </div>
-        {responseMessage.length > 0 && <div>{responseMessage}</div>}
-        {responseMessage.length > 0 && <div>{responseMessage}</div>}
+        {responseMessage.length > 0 && <div>{responseMessage}</div>}        
       </form>
     </>
   );

@@ -23,6 +23,8 @@ function RadiologistDashboard() {
   const [chats, setChats] = useState(null);
   const [show, setShow] = useState(false);
   const [reports, setReports] = useState([]);
+  const [doctorName, setDoctorName] = useState("");
+  const [doctorCredId, setDoctorCredId] = useState(0);
   
   useEffect(() => {
     fetchRadiologist(data);
@@ -58,7 +60,9 @@ function RadiologistDashboard() {
 
     const handleArrowClick = (chat) => {
        setShow(true);
-       setReports(chat.reports);
+       setReports(chat.reportsWithDetails);
+       setDoctorName(chat.name);
+       setDoctorCredId(chat.userId);
     };
 
   return (
@@ -94,7 +98,7 @@ function RadiologistDashboard() {
                               <div className="ongoing-diagnosis-details-data">
                                 <div>
                                   <span>
-                                    {chat.name}                          
+                                    {chat.name}
                                   </span>
                                 </div>
                                 <div></div>
@@ -115,7 +119,7 @@ function RadiologistDashboard() {
               </div>
 
               <div className="doctor-dashboard-right">
-                {show && <ListReports reports={reports} />}
+                {show && <ListReports reports={reports} doctorName={doctorName} doctorCredId={doctorCredId}/>}
               </div>
             </div>
           </div>
