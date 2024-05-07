@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import OTP from "../../components/ui/OTP";
+import { useUserIdContext } from "./UserIdContext";
+import { useNavigate } from "react-router-dom";
 import "../Common/ForgotPassword.css";
 import {
     DATA_HOST,
@@ -14,9 +16,18 @@ const ForgotPassword = () => {
     const [changePassword, setChangePassword] = useState(0);
     const [email, setEmail] = useState("");
     const [errorData, setErrorData] = useState("");
+    const [successData, setSuccessData] = useState("");
     const [showError, setShowError] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
     const [newPassword, setNewPassword] = useState("");
     const [confirmNewPassword, setConfirmNewPassword] = useState("");
+    const [credId, setCredId] = useState("");
+    const { getUserId } = useUserIdContext();
+    const navigate = useNavigate();
+    
+    const handleBackToLogin = () => {
+        navigate("/");
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -40,7 +51,9 @@ const ForgotPassword = () => {
                 if (response.ok) {
                     const responseData = await response.json();
                     console.log(responseData);
-                    setChangePassword(1); // Change to OTP component
+                    getUserId(responseData.id);
+                    setCredId(responseData.id);
+                    setChangePassword(1); // Change to OTP component                    
                 } else {
                     setShowError(true);
                     setTimeout(() => {
@@ -59,16 +72,49 @@ const ForgotPassword = () => {
                 }, 2000);
                 setErrorData("New Password and Confirm New Password does not match");
             } else {
-                // Proceed with changing the password
+                try {
+                    const requestBody = {
+                        id: credId,
+                        password: newPassword         
+                      };
+
+                    const response = await fetch(
+                        "http://" +
+                        DATA_HOST +
+                        ":" +
+                        DATA_PORT +
+                        "/teleRadiology/changePassword",
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(requestBody),
+                        }
+                    );
+    
+                    if (response.ok) {
+                        setShowSuccess(true);
+                        setTimeout(() => {
+                            setShowSuccess(false);
+                        }, 2000);
+                        setSuccessData("Password Changed Successfully");
+                    }
+
+                } catch (error) {
+                    console.error("Error changing password:", error.message);
+                }                
             }
         }
     };
 
     return (
         <div className="form-container">
+            {changePassword !== 1 && (
             <div className="logo-container">
-                {changePassword === 0 && changePassword !== 1 ? "Forgot Password" : "Change Password"}
+                {changePassword === 0 ? "Forgot Password" : "Change Password"}
             </div>
+            )}
 
             <form className="form" onSubmit={handleSubmit}>
                 {changePassword === 0 && (
@@ -119,14 +165,21 @@ const ForgotPassword = () => {
                 {showError && (
                     <div style={{ color: "red", margin: "10px 0" }}>{errorData}</div>
                 )}
+
+                {showSuccess && (
+                    <div style={{ color: "green", margin: "10px 0" }}>{successData}</div>
+                )}
+
                 {changePassword !== 1 && (
                     <button className="form-submit-btn" type="submit">
                         {changePassword === 0 ? "Continue" : "Change Password"}
                     </button>
                 )}
+
+                <div className="back_login" onClick={handleBackToLogin}><i class='bx bx-chevrons-left'></i> Back to Login</div>
             </form>
 
-            {changePassword === 1 && <OTP/>}
+            {changePassword === 1 && <OTP toggleValue = {5} setChangePass={setChangePassword}/>}
         </div>
     );
 };

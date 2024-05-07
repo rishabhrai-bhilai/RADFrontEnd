@@ -24,6 +24,7 @@ import AdminDashboard from "./pages/Admin/AdminDashboard";
 import ForgotPassword from "./pages/Common/ForgotPassword";
 import DicomViewer from "./components/dicom/DicomViewer";
 import DoctorRadioChatPage from "./components/ui/DoctorRadioChatPage";
+import RadiologistDashboard from "./pages/Radiologist/RadiologistDashboard";
 
 function App() {
   const [email, setEmail] = useState("");
@@ -65,6 +66,7 @@ function App() {
         {isUserLoggedIn && (
           <>
             <Route path="/patientdashboard" element={<PatientDashboard />} />
+            <Route path="/radiologistdashboard" element={<RadiologistDashboard />} />
             <Route path="/admindashboard" element={<AdminDashboard />} />
             <Route path="/patientreports" element={<Reports />} />
             <Route path="/labdashboard" element={<ReportUpload />} />

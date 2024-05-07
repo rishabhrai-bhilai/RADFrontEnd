@@ -21,29 +21,31 @@ const OTP = ({
   setShowOTPComponent,
   setResponseMessage,
   notificationId,
+  setChangePass
 }) => {
   const [otp, setOtp] = useState("");
-  const { token, setIsUserLoggedIn, roleId } = useUserIdContext();
+  const { data, token, setIsUserLoggedIn, roleId } = useUserIdContext();
 
   useEffect(() => {
-    getOtp(roleId);
+    getOtp(data);
   }, []);
 
   {/* commented by Rishabh  */}
-  // const handleOtpChange = (e) => {
-  //   setOtp(e.target.value);
-  // };
+  const handleOtpChange = (e) => {
+    setOtp(e.target.value);
+  };
 
   const handleSubmit = async (e) => {
 
     {/* commented by Rishabh  */}
-    // e.preventDefault();
-
-    setShowOTPComponent(false);
+    e.preventDefault();    
 
     let intOtp = parseInt(otp);
 
+    console.log(intOtp);
+
     if (toggleValue === 1 || toggleValue === 4) {
+      setShowOTPComponent(false);
       const requestBody = {
         doctorId: doctorId,
         patientId: roleId,
@@ -67,7 +69,7 @@ const OTP = ({
         setResponseMessage("Unable to give Consent");
       }
 
-      if (toggleValue === 4) {
+      if (toggleValue === 4) {      
         const responseData = HttpGet(
           0,
           "/deleteNotification/" + notificationId,
@@ -83,6 +85,7 @@ const OTP = ({
         }
       }
     } else if (toggleValue === 0) {
+      setShowOTPComponent(false);
       const requestBody = {
         reportId: reportId,
         doctorId: doctorId,
@@ -90,6 +93,8 @@ const OTP = ({
         radiologistId: radiologistId,
         otp: intOtp,
       };
+
+      console.log(requestBody);
       const responseData = await HttpPost(
         0,
         "/removeConsent",
@@ -104,7 +109,39 @@ const OTP = ({
       } else {
         setResponseMessage("Unable to remove Consent");
       }
+    } else if (toggleValue === 5) {
+
+      try {
+        const requestBody = {
+          credId: data,
+          otp: intOtp
+        };
+
+        const response = await fetch(
+            "http://" +
+            DATA_HOST +
+            ":" +
+            DATA_PORT +
+            "/teleRadiology/verifyOtp",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(requestBody),
+            }
+        );
+
+        if (response.ok) {          
+            setChangePass(2);
+        }
+
+      } catch (error) {
+        console.error("Error verifying OTP", error.message);
+      }      
+    
     } else {
+      setShowOTPComponent(false);
       const responseData = HttpGet(
         0,
         "/deleteNotification/" + notificationId,
@@ -123,9 +160,9 @@ const OTP = ({
     setOtp("");
   };
 
-  const getOtp = async (roleId) => {
+  const getOtp = async (credId) => {
     console.log(roleId);
-    const responseData = await HttpGet(0, "/otpVerification/" + roleId, token);
+    const responseData = await HttpGet(0, "/otpVerification/" + credId, token);
     if (responseData == "Unauthorized") {
       setIsUserLoggedIn(false);
     }
@@ -139,7 +176,7 @@ const OTP = ({
       <h3>Enter OTP:</h3>
 
       {/* commented by Rishabh  */}
-      {/* <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           value={otp}
@@ -147,9 +184,9 @@ const OTP = ({
           placeholder="Enter OTP"
         />
         <button type="submit">Submit</button>
-      </form> */}
+      </form>
 
-<OTPInput handleSubmit={handleSubmit} setOtpValue={setOtp} />
+{/* <OTPInput handleSub={handleSubmit} setOtpValue={setOtp} /> */}
    
 
 

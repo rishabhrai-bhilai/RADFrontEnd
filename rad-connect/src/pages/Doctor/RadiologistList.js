@@ -8,6 +8,7 @@ export const RadiologistList = ({ radiologists, repId }) => {
     navigate("/doctor/radioChat", {
       state: {
         repId: repId,
+        // repId: 1,
         userId: userId,
         chatName: name,
       },
