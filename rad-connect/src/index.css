@@ -11,6 +11,14 @@
     --blue-extradark:rgba(5, 25, 96, 1);
     --grey-light:#DDD;
     --grey-dark:#707070;
+    --black:#212121;
+    --black-hover:#313131;
+
+    --tooltip-bg:#7579e7;
+    --tooltip-color:white;
+
+    --tooltip-bg-dark: #212121;
+    --tooltip-color:white;
 
 
     /* text colors  */
@@ -296,6 +304,8 @@
     --grey-light:#FFF;
     --grey-dark:#CCC;
 
+    --tooltip-bg:white;
+    --tooltip-color:black;
 
 
     /* Colors  */

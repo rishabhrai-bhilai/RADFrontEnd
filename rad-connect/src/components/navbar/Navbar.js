@@ -136,16 +136,17 @@
 
 // export default Navbar;
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../navbar/navbar.css"; // Import your CSS file
 import "../../../src/index.css";
 import logo from "../../assets/final1.png";
 import { useNavigate } from "react-router-dom";
 import { useUserIdContext } from "../../pages/Common/UserIdContext";
 import { HttpPost } from "../../constants";
+import Tooltip from "../ui/Tooltip";
 
-function Navbar({ options, functions }) {
-  const [sidebarClosed, setSidebarClosed] = useState(true);
+function Navbar({ options, functions, logicalBool }) {
+  const [sidebarClosed, setSidebarClosed] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const navigate = useNavigate();
   const { token, setIsUserLoggedIn } = useUserIdContext();
@@ -153,6 +154,13 @@ function Navbar({ options, functions }) {
   const toggleSidebar = () => {
     setSidebarClosed(!sidebarClosed);
   };
+
+  useEffect(() => {
+    // This code block will execute only once when the component mounts
+    if (logicalBool) {
+      setSidebarClosed(!sidebarClosed);
+    }
+  }, []);
 
   // const navigateToNewComponent = () => {
   //   navigate("/patientreports");
@@ -226,12 +234,18 @@ function Navbar({ options, functions }) {
               {options.map((option, index) => (
                 <li
                   key={index}
-                  className="nav-link"
+                  className="nav-link tooltip-container"
                   onClick={() => handleOptionClick(index)}
                 >
                   <a href="#">
-                    {option.icon && (
+                    {option.icon && !sidebarClosed && (
                       <i className={`bx ${option.icon} icon`}></i>
+                    )}
+
+                    {option.icon && sidebarClosed && (
+                      <Tooltip content={option.name} key={index}>
+                        <i className={`bx ${option.icon} icon`}></i>
+                      </Tooltip>
                     )}
                     <span className="text nav-text">{option.name}</span>
                   </a>
@@ -242,12 +256,14 @@ function Navbar({ options, functions }) {
         </div>
 
         <div className="bottom-content">
-          <li onClick={handleLogout}>
-            <a href="#">
-              <i className="bx bx-log-out icon"></i>
-              <span className="text nav-text">Logout</span>
-            </a>
-          </li>
+          {logicalBool && (
+            <li onClick={handleLogout}>
+              <a href="#">
+                <i className="bx bx-log-out icon"></i>
+                <span className="text nav-text">Logout</span>
+              </a>
+            </li>
+          )}
           <li className="mode" onClick={handleModeSwitch}>
             <div className="moon-sun">
               <i className="bx bx-moon icon moon"></i>

@@ -109,7 +109,7 @@ const ForgotPassword = () => {
     };
 
     return (
-        <div className="form-container">
+        <div className="forgot-form-container">
             {changePassword !== 1 && (
             <div className="logo-container">
                 {changePassword === 0 ? "Forgot Password" : "Change Password"}

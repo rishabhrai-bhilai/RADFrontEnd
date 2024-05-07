@@ -47,13 +47,14 @@ const Login = () => {
 
       <Navbar
         options={[
-          { name: "Admin", icon: "bx-home-alt" },
-          { name: "Doctor", icon: "bx-chart" },
-          { name: "Patient", icon: "bx-home-alt" },
+          { name: "Admin", icon: "bx bx-user" },
+          { name: "Doctor", icon: "bx bx-injection" },
+          { name: "Patient", icon: "bx bx-user-plus" },
           { name: "Radiologist", icon: "bx-chart" },
-          { name: "Lab", icon: "bx-home-alt" },
+          { name: "Lab", icon: "bx bx-dna" },
         ]}
         functions={[handleAdminRole,handleDoctorRole,handlePatientRole,handleRadiologistRole,handleLabRole]}
+        logicalBool={false}
       ></Navbar>
 
 
