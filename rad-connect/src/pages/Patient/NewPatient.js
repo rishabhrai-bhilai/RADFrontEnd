@@ -19,10 +19,14 @@ const NewPatient = ({ onSubmitEmail, onSubmitCred }) => {
   const [acceptTermsCond, setAcceptTermsCond] = useState(false);
   const navigate = useNavigate();
 
-  const isValidEmail = (email) => {
-    // Regular expression for email validation
+  const isValidEmail = (email) => {    
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+  };
+
+  const isValidPassword = (password) => {    
+    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}{":;'?/>.<,])(?=.*[a-zA-Z]).{8,}$/;
+    return passwordRegex.test(password);
   };
 
   const handleBackToLogin = () => {
@@ -45,7 +49,10 @@ const NewPatient = ({ onSubmitEmail, onSubmitCred }) => {
       return;
     }
 
-    console.log("Hi");
+    if(!isValidPassword(password)) {
+      alert("Password is not strong");
+      return;
+    }
 
     setTermsCond(true);
 

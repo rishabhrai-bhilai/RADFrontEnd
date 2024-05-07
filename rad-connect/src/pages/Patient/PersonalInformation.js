@@ -33,10 +33,11 @@ function PersonalInformation({ username, uid }) {
   const [food, setFood] = useState("");
   const [emergencyContact, setEmergencyContact] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
+  const [profilePicture, setProfilePicture] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault();  
 
     const formData = {
       firstName: firstName,
@@ -480,6 +481,18 @@ function PersonalInformation({ username, uid }) {
             <label htmlFor="Non-Veg">Non-Veg</label>
           </div>
         </div>
+
+        <div className="onePartRow">
+        <div className="item">
+          <label htmlFor="profilePicture">Profile Picture</label>
+          <input
+            type="file"
+            id="profilePicture"
+            accept="image/*"
+            onChange={(e) => setProfilePicture(e.target.value)}
+          />
+        </div>
+      </div>
 
         <div className="footer">
           <button className="footButtons" type="submit" onClick={handleBackToLogin}>

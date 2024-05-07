@@ -29,6 +29,11 @@ const ForgotPassword = () => {
         navigate("/");
     }
 
+    const isValidPassword = (password) => {    
+        const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}{":;'?/>.<,])(?=.*[a-zA-Z]).{8,}$/;
+        return passwordRegex.test(password);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -71,6 +76,12 @@ const ForgotPassword = () => {
                     setShowError(false);
                 }, 2000);
                 setErrorData("New Password and Confirm New Password does not match");
+            } else if(!isValidPassword(newPassword)) {
+                setShowError(true);
+                setTimeout(() => {
+                    setShowError(false);
+                }, 2000);
+                setErrorData("Password is not strong");               
             } else {
                 try {
                     const requestBody = {
