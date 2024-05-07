@@ -42,7 +42,7 @@ const Snackbar = ({ repId }) => {
     }
   }, [responseMessage]);
   const handleAccept = (doctorId, radioId, notifiId) => {
-    setDocId(-1);
+    setDocId(doctorId);
     setRadId(radioId);
     setToggleVal(4);
     setNotId(notifiId);
@@ -90,7 +90,7 @@ const Snackbar = ({ repId }) => {
         ))}
         {showOtp && (
           <OTP
-            doctorId={-1}
+            doctorId={docId}
             reportId={repId}
             radiologistId={radId}
             toggleValue={toggleVal}

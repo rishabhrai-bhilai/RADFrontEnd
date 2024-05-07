@@ -50,116 +50,22 @@ const DoctorModal = ({ closeModal, reportId, patientId, receiverId }) => {
   };
 
   useEffect(() => {
-    getAllRadiologists();
+    getAllRadiologists(reportId);
   }, [data]);
 
-  useEffect(() => {
-    setIsLoaded(false);
-    getConsentReports();
-    getNotifications();
-  }, [reportId]);
   
-  // useEffect(() => {    
-  //   getNotifications();
-  // }, [reportId]);
-
-  useEffect(() => {
-    if (filteredRadiologistsList.length > 0 && (reportViewers !== null || notifications.length > 0)) {
-      updateFilteredRadiologistList();
-    }
-    // setIsLoaded(true);
-
-  }, [notifications]);  
-
-  const getAllRadiologists = async () => {
-    const responseData = await HttpGet(0, "/getAllRadiologists", token);
+  const getAllRadiologists = async () => {    
+    const responseData = await HttpGet(0, "/getRadiologists/"+reportId, token);
 
     if (responseData == "Unauthorized") {
       setIsUserLoggedIn(false);
     }
     if (responseData == null) {
       throw new Error("Failed to fetch radiologists");
-    }
-      const updatedList = responseData.map((radiologist) => {
-        return { ...radiologist, consent: 0 };
-      });
-            
-      setRadiologists(updatedList || []);
-      setFilteredRadiologistsList(updatedList || []);
-  };
-
-  const getConsentReports = async () => {
-    const responseData = await HttpGet(0, "/getReportViewers/"+reportId, token);
-
-    if (responseData == "Unauthorized") {
-      setIsUserLoggedIn(false);
-    }
-    if (responseData == null) {
-      throw new Error("Failed to fetch radiologists");
-    }
-
-    setReportViewers(responseData);
-  };
-
-  const getNotifications = async () => {
-    const responseData = await HttpPost(0, "/getNotifications", token, {
-      credId: receiverId,
-      reportId: reportId
-    });
-
-    if (responseData == "Unauthorized") {
-      setIsUserLoggedIn(false);
-    }
-    if (responseData == null) {
-      throw new Error("Failed to fetch notifications");
-    }
-     setNotifications(responseData.notifications);
-    // setIsLoaded(true);
-  };
-  
-  const binarySearch = (arr, target, c) => {
-    let low = 0;
-    let high = arr.length - 1;
-
-    while (low <= high) {
-      const mid = Math.floor((low + high) / 2);
-      let midVal;
-
-      if (c == 1) {
-          midVal = arr[mid].userId;
-      } else {
-          midVal = arr[mid].id;
-      }
-
-      if (midVal === target) {
-        return mid; // Found the target
-      } else if (midVal < target) {
-        low = mid + 1; // Search the right half
-      } else {
-        high = mid - 1; // Search the left half
-      }
-    }
-
-    return -1;
-  };
-
-  const updateFilteredRadiologistList = () => {
-    for (let i = 0; i < reportViewers.length; i++) {
-      const viewerId = reportViewers[i].viewerId;
-      const index = binarySearch(filteredRadiologistsList, viewerId, 1);
-      if (index !== -1) {
-        filteredRadiologistsList[index].consent = 1;
-      }
-    }
-
-    for (let i = 0; i < notifications.length; i++) {
-      const radId = notifications[i].radiologistId;
-      const index = binarySearch(filteredRadiologistsList, radId, 2);
-      if (index !== -1) {
-        filteredRadiologistsList[index].consent = 2;
-      }
-    }
-     setIsLoaded(true);
+    }      
+      console.log(responseData);
+      setRadiologists(responseData);
+      setFilteredRadiologistsList(responseData);
   };
 
   return (
@@ -173,9 +79,7 @@ const DoctorModal = ({ closeModal, reportId, patientId, receiverId }) => {
           <div>
             <SearchBar onSearch={handleSearch} />
           </div>
-          <div className="modal-doctor-container">
-            {isLoaded && (
-            <>
+          <div className="modal-doctor-container">            
             {filteredRadiologistsList.length === 0 ? (
               <div>No users found</div>
             ) : (
@@ -217,9 +121,7 @@ const DoctorModal = ({ closeModal, reportId, patientId, receiverId }) => {
                   </li>
                 ))}
               </ul>
-            )}
-            </>
-            )}
+            )}                    
           </div>
         </div>
       </div>
