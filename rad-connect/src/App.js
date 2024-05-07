@@ -65,6 +65,7 @@ function App() {
         {isUserLoggedIn && (
           <>
             <Route path="/patientdashboard" element={<PatientDashboard />} />
+            <Route path="/admindashboard" element={<AdminDashboard />} />
             <Route path="/patientreports" element={<Reports />} />
             <Route path="/labdashboard" element={<ReportUpload />} />
             <Route path="/patientchat" element={<ChatPage />} />

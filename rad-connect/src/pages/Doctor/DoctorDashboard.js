@@ -17,6 +17,7 @@ import {
   HttpPost
 } from "../../constants";
 import Navbar from "../../components/navbar/Navbar";
+import DoctorInformationCard from "./DoctorInformationCard";
 
 function DoctorDashboard({ onClickPat }) {
   const [show, setShow] = useState(false);
@@ -87,46 +88,12 @@ function DoctorDashboard({ onClickPat }) {
               Dashboard
             </div>
 
-            {/* fixed part end here */}
-
             <div className="doctor-dashboard-containers-top">
+              {doctor && (
               <div className="doctor-dashboard-badge">
-                <div className="doctor-dashboard-icon-holder">
-                  <i class="bx bx-child | icon-button"></i>
-                </div>
-                <div className="doctor-dashboard-stat-holder">
-                  <div className="doctor-dashboard-stats-head">Treatment</div>
-                  <div className="doctor-dashboard-stats-para | text-blue-extradark">
-                    <span>600</span>
-                  </div>
-                </div>
+                <DoctorInformationCard doctor={doctor} />
               </div>
-
-              <div className="doctor-dashboard-badge">
-                <div className="doctor-dashboard-icon-holder">
-                  <i class="bx bxs-calendar | icon-button"></i>
-                </div>
-                <div className="doctor-dashboard-stat-holder">
-                  <div className="doctor-dashboard-stats-head">
-                    Current Treatment
-                  </div>
-                  <div className="doctor-dashboard-stats-para | text-blue-extradark">
-                    <span>600</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="doctor-dashboard-badge">
-                <div className="doctor-dashboard-icon-holder">
-                  <i class="bx bx-heart | icon-button"></i>
-                </div>
-                <div className="doctor-dashboard-stat-holder">
-                  <div className="doctor-dashboard-stats-head">Cured</div>
-                  <div className="doctor-dashboard-stats-para | text-blue-extradark">
-                    <span>600</span>
-                  </div>
-                </div>
-              </div>
+              )}
             </div>
 
             <div className="doctor-dashboard-containers-bottom ">
