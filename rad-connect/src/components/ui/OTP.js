@@ -93,6 +93,8 @@ const OTP = ({
         radiologistId: radiologistId,
         otp: intOtp,
       };
+
+      console.log(requestBody);
       const responseData = await HttpPost(
         0,
         "/removeConsent",
