@@ -21,101 +21,45 @@ import {
 const Modal = ({ closeModal, reportId }) => {
   const { data, token, setIsUserLoggedIn } = useUserIdContext();
 
-  const [doctors, setDoctors] = useState([]);
-  const [filteredDoctorsList, setFilteredDoctorsList] = useState([]);
+  const [doctorsAndRadiologists, setDoctorsAndRadiologists] = useState([]);
+  const [filteredDoctorsAndRadiologists, setFilteredDoctorsAndRadiologists] = useState([]);
   const [showOTPComponent, setShowOTPComponent] = useState(false);
-  const [selectedDoctorId, setSelectedDoctorId] = useState(null);
-  const [reportViewers, setReportViewers] = useState(null);
-  const [toggleValue, setToggleValue] = useState();
-  const [show, setShow] = useState(false);
+  const [selectedDoctorId, setSelectedDoctorId] = useState(null);  
+  const [toggleValue, setToggleValue] = useState();  
   const [responseMessage, setResponseMessage] = useState("");
+  const [roleVal, setRoleVal] = useState("");
 
   const handleSearch = (searchTerm) => {
-    const filteredNames = doctors.filter((doc) =>
-      doc.firstName.toLowerCase().startsWith(searchTerm.toLowerCase())
+    const filteredNames = doctorsAndRadiologists.filter((element) =>
+      element.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    setFilteredDoctorsList(filteredNames);
+     
+     setFilteredDoctorsAndRadiologists(filteredNames);
   };
 
-  const handleToggle = (isToggled, doctorId) => {
+  const handleToggle = (isToggled, doctorId, roleVal) => {
     isToggled ? setToggleValue(1) : setToggleValue(0);
     setSelectedDoctorId(doctorId);
     setShowOTPComponent(true);
+    setRoleVal(roleVal);
   };
 
   useEffect(() => {
-    getAllDoctors();
+    getDocAndRadio(reportId);
   }, [data]);
+  
 
-  useEffect(() => {
-    getReportViewers(reportId);
-  }, [reportId]);
-
-  useEffect(() => {
-    if (filteredDoctorsList.length > 0 && reportViewers !== null) {
-      updateFilteredDoctorsList();
-    }
-  }, [filteredDoctorsList, reportViewers]);
-
-  const getAllDoctors = async () => {
-    const responseData = await HttpGet(0, "/getAllDoctors", token);
+  const getDocAndRadio = async (reportId) => {
+    const responseData = await HttpGet(0, "/getAllDoctorsAndRadiologits/"+reportId, token);
     if (responseData == "Unauthorized") {
       setIsUserLoggedIn(false);
     }
     if (responseData == null) {
       throw new Error("Failed to fetch doctors list");
-    }
-
-    const updatedList = responseData.map((doctor) => {
-      return { ...doctor, consent: 0 };
-    });
-
-    setDoctors(updatedList || []);
-    setFilteredDoctorsList(updatedList || []);
-  };
-
-  const getReportViewers = async (reportId) => {
-    const responseData = await HttpGet(
-      0,
-      "/getReportViewers/" + reportId,
-      token
-    );
-    if (responseData == "Unauthorized") {
-      setIsUserLoggedIn(false);
-    }
-    setReportViewers(responseData || []);
-  };
-
-  const binarySearch = (arr, target) => {
-    let low = 0;
-    let high = arr.length - 1;
-
-    while (low <= high) {
-      const mid = Math.floor((low + high) / 2);
-      const midVal = arr[mid].userId;
-
-      if (midVal === target) {
-        return mid; // Found the target
-      } else if (midVal < target) {
-        low = mid + 1; // Search the right half
-      } else {
-        high = mid - 1; // Search the left half
-      }
-    }
-
-    return -1;
-  };
-
-  const updateFilteredDoctorsList = () => {
-    for (let i = 0; i < reportViewers.length; i++) {
-      const viewerId = reportViewers[i].viewerId;
-      const index = binarySearch(filteredDoctorsList, viewerId);
-      if (index !== -1) {
-        filteredDoctorsList[index].consent = 1;
-      }
-    }
-
-    setShow(true);
+    }     
+     
+     setDoctorsAndRadiologists(responseData);
+     setFilteredDoctorsAndRadiologists(responseData);     
   };
 
   useEffect(() => {
@@ -141,11 +85,11 @@ const Modal = ({ closeModal, reportId }) => {
             <SearchBar onSearch={handleSearch} />
           </div>
           <div className="modal-doctor-container">
-            {filteredDoctorsList.length === 0 ? (
+            {filteredDoctorsAndRadiologists.length === 0 ? (
               <div>No users found</div>
             ) : (
               <ul role="list" className="modal-doctor-list">
-                {filteredDoctorsList.map((doctor) => (
+                {filteredDoctorsAndRadiologists.map((doctor) => (
                   <li className="modal-doctor-list-item">
                     <div className="list-item-box">
                       <div className="list-image-holder">
@@ -154,16 +98,17 @@ const Modal = ({ closeModal, reportId }) => {
                         </div>
                       </div>
                       <div className="list-name">
-                        {doctor.firstName}{" "}
-                        {doctor.middleName !== null ? doctor.middleName : ""}{" "}
-                        {doctor.lastName}
+                        {doctor.name}                        
+                      </div>
+                      <div className="list-name">
+                        {doctor.role}                         
                       </div>
                       <div className="list-date">{doctor.gender}</div>
                       <div className="list-toggle-btn">
                         <div>
                           <Toggle
                             onToggle={(isToggled) =>
-                              handleToggle(isToggled, doctor.id)
+                              handleToggle(isToggled, doctor.id, doctor.role)
                             }
                             isToggled={doctor.consent === 1}
                           />
@@ -174,33 +119,32 @@ const Modal = ({ closeModal, reportId }) => {
                 ))}
               </ul>
             )}
-            <div>
-              {showOTPComponent && (
-                <OTP
-                  reportId={reportId}
-                  doctorId={selectedDoctorId}
-                  toggleValue={toggleValue}
-                  radiologistId={-1}
-                  notificationId={-1}
-                  setShowOTPComponent={setShowOTPComponent}
-                  setResponseMessage={setResponseMessage}
-                />
-              )}
-
-              <div>
-              {/* {showOTPComponent && (
-                <OTPInput
-                  reportId={reportId}
-                  doctorId={selectedDoctorId}
-                  toggleValue={toggleValue}
-                  radiologistId={-1}
-                  notificationId={-1}
-                  setShowOTPComponent={setShowOTPComponent}
-                  setResponseMessage={setResponseMessage}
-                />
-              )} */}
-              </div>
-
+            <div>              
+              {/* {showOTPComponent && ( */}
+                {showOTPComponent && roleVal === 'Doctor' && (
+                  <OTP
+                    reportId={reportId}
+                    doctorId={selectedDoctorId}
+                    toggleValue={toggleValue}
+                    radiologistId={-1}
+                    notificationId={-1}
+                    setShowOTPComponent={setShowOTPComponent}
+                    setResponseMessage={setResponseMessage}
+                  />
+                )}
+                
+                {showOTPComponent && roleVal === 'Radiologist' && (
+                  <OTP
+                    reportId={reportId}
+                    doctorId={-1}
+                    toggleValue={toggleValue}
+                    radiologistId={selectedDoctorId}
+                    notificationId={-1}
+                    setShowOTPComponent={setShowOTPComponent}
+                    setResponseMessage={setResponseMessage}
+                  />
+                )}
+              {/* )}                          */}
             </div>
             {responseMessage.length > 0 && <div>{responseMessage}</div>}
           </div>
