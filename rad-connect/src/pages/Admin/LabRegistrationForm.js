@@ -57,14 +57,28 @@ const LabRegistrationForm = ({role}) => {
 
   return (
     <>
-    <div class="admin-form-container mx-8 shadow-md">
-      <div class="logo-container">
+    <div class="admin-form-container px-4">
+      {/* <div class="logo-container">
         New Lab Registration
-      </div>
+      </div> */}
 
+        
       <form class="form" onSubmit={handleSubmit}>
         <div class="form-group">
-          <input 
+
+        <div className="flex">
+
+          
+        <input
+            type="text"
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder='Name'
+            required
+          />
+          
+        <input 
             type="email" 
             id="email" 
             value={email}
@@ -80,23 +94,9 @@ const LabRegistrationForm = ({role}) => {
             placeholder="Password" 
             required 
           />
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder='Name'
-            required
-          />
-          <input
-            type="text"
-            id="address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            placeholder='Address'
-            required
-          />
-          <input
+        </div>
+        <div className="flex">
+        <input
             type="text"
             id="city"
             value={city}
@@ -120,7 +120,18 @@ const LabRegistrationForm = ({role}) => {
             placeholder='Pincode'
             required
           />
+        </div>
+        <div className="flex">
           <input
+            type="text"
+            id="address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            placeholder='Address'
+            required
+          />
+
+<input
             type="text"
             id="phoneNumber"
             value={phoneNumber}
@@ -128,6 +139,12 @@ const LabRegistrationForm = ({role}) => {
             placeholder='Phone Number'
             required
           />
+
+          </div>
+
+          
+          
+          
         </div>
         <button class="form-submit-btn" type="submit">Register</button>
         {responseMessage.length > 0 && <div>{responseMessage}</div>}

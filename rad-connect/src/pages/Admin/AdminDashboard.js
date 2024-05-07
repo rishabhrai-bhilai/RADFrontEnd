@@ -5,19 +5,35 @@ import RadiologistRegistrationForm from './RadiologistRegistrationForm'
 import LabRegistrationForm from './LabRegistrationForm'
 import DeactivateUser from '../../components/ui/DeactivateUser'
 import AdminWelcome from '../../assets/AdminWelcome.png'
+import Navbar from '../../components/navbar/Navbar'
 
 const AdminDashboard = () => {
-  const [displayForm, setDisplayForm] = useState("null")
+  const [displayForm, setDisplayForm] = useState("Doctor")
+  
 
   return (
+
     <>
+
+      <Navbar
+      options={[
+        { name: "Dashboard", icon: "bx bxs-dashboard" },
+        { name: "Analytics", icon: "bx-chart" },
+        { name: "Setting", icon: "bx bx-cog" },
+      ]}
+       alwaysClose={true}></Navbar>
+
+      <section className="home">
+        <div className="parent-container">
+        <div className="all-items">
+    
     <div className="admin__container">
       <div className="left__box">
         <div className="left__nav">
           
         </div>
 
-        <div className="left__body">
+        <div className="left__body mt-8">
           <div className="body_box1">
             <div className="prof_name">
               <h2 className="greeting underliner"><strong>Hello, ADMIN</strong></h2>
@@ -27,30 +43,42 @@ const AdminDashboard = () => {
           <div className="body_box2">
             <div className="subject_details color1" onClick={(e) => setDisplayForm("Doctor")}>
               <div>
-                <h4 className="subject_title"><b>Doctor</b></h4>
+                <h6 className="subject_title"><b>Doctor</b></h6>
               </div>
             </div>
             <div className="subject_details color2" onClick={(e) => setDisplayForm("Lab")}>
               <div>
-                <h4 className="subject_title"><b>Lab</b></h4>
+                <h6 className="subject_title"><b>Lab</b></h6>
               </div>
             </div>
             <div className="subject_details color3" onClick={(e) => setDisplayForm("Radiologist")}>
               <div>
-                <h4 className="subject_title"><b>Radiologist</b></h4>
+                <h6 className="subject_title"><b>Radiologist</b></h6>
               </div>
             </div>
+
+            <div className="subject_details color3" onClick={(e) => setDisplayForm("Deactivate")}>
+              <div>
+                <h6 className="subject_title"><b>Deactivate User's</b></h6>
+              </div>
+            </div>
+
           </div>
 
-          <div className="body_box3  mt-4">
-            <div class="todays_timetable">
-              <div class="timetable_heading underliner">
-                <h2 class=" mx-1"><b>Deactivate Users</b></h2>
+          <div className="body_box3  mt-4 mx-2">
+            <div class="todays_timetable ">
+              <div class="timetable_heading mt-4  underliner">
+                <h2 class=" mx-1 "><b>New {displayForm} Registration</b></h2>
               </div>
               <div>
-                <div className='border-solid border-2 border-slate-300 rounded-lg'>
-                  <DeactivateUser />
-                </div>
+              {/* {displayForm == "null" && <div className='mx-8 admin-img'><img src={AdminWelcome} alt="" /></div>} */}
+        {displayForm == "Doctor" && <DoctorRegistrationForm role={"ROLE_DOCTOR"} />}
+        {displayForm == "Radiologist" && <RadiologistRegistrationForm role={"ROLE_RADIOLOGIST"} />}
+        {displayForm == "Lab" && <LabRegistrationForm role={"ROLE_LAB"} />}
+        {displayForm == "Deactivate" && 
+        <div className='border-solid border-2 border-slate-300 rounded-lg'>
+        <DeactivateUser />
+      </div>}
               </div>
             </div>
           </div>
@@ -59,12 +87,21 @@ const AdminDashboard = () => {
       </div>
 
       <div className="right__box">
-        {displayForm == "null" && <div className='mx-8 admin-img'><img src={AdminWelcome} alt="" /></div>}
-        {displayForm == "Doctor" && <DoctorRegistrationForm role={"ROLE_DOC"} />}
-        {displayForm == "Radiologist" && <RadiologistRegistrationForm role={"ROLE_RADIOLOGIST"} />}
-        {displayForm == "Lab" && <LabRegistrationForm role={"ROLE_LAB"} />}
+
+
+      {/* <div className='border-solid border-2 border-slate-300 rounded-lg'>
+        <DeactivateUser />
+      </div> */}
+
+        
       </div>
     </div>
+
+    </div>
+
+    </div>
+
+    </section>
     
 
     </>

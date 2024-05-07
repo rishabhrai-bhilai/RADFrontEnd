@@ -68,7 +68,13 @@ function RadiologistDashboard() {
 
   return (
     <>
-      <Navbar></Navbar>
+      <Navbar
+      options={[
+        { name: "Dashboard", icon: "bx bxs-dashboard" },
+        { name: "Setting", icon: "bx bx-cog" },
+      ]}
+      ></Navbar>
+
       <section className="home">
         <div className="parent-container">
           <div className="all-items">
@@ -78,8 +84,8 @@ function RadiologistDashboard() {
             
             <div className="doctor-dashboard-containers-bottom ">
               <div className="doctor-dashboard-left">
-                <div className="doctor-dashboard-left-heading">
-                  <p>Ongoing Diagnosis</p>
+                <div className="doctor-dashboard-left-heading my-2">
+                  <p>Doctors List</p>
                 </div>
                 <div className="doctor-dashboard-left-item-box">
                   {chats && chats.length > 0 && (

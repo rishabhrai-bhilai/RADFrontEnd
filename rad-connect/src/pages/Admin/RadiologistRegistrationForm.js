@@ -58,14 +58,46 @@ const RadiologistRegistrationForm = ({role}) => {
 
   return (
     <>
-    <div class="admin-form-container mx-8 shadow-md">
-      <div class="logo-container">
+    <div class="admin-form-container px-4">
+      {/* <div class="logo-container">
         New Radiologist Registration
-      </div>
+      </div> */}
+
 
       <form class="form" onSubmit={handleSubmit}>
         <div class="form-group">
-          <input 
+
+        <div className="flex">
+
+<input
+    type="text"
+    id="firstName"
+    value={firstName}
+    onChange={(e) => setFirstName(e.target.value)}
+    placeholder='First Name'
+    required
+  />
+  <input
+    type="text"
+    id="middleName"
+    value={middleName}
+    onChange={(e) => setMiddleName(e.target.value)}
+    placeholder='Middle Name'
+  />
+  <input
+    type="text"
+    id="lastName"
+    value={lastName}
+    onChange={(e) => setLastName(e.target.value)}
+    placeholder='Last Name'
+    required
+  />
+
+        </div>
+  
+
+        <div className="flex">
+        <input 
             type="email" 
             id="email" 
             value={email}
@@ -83,36 +115,17 @@ const RadiologistRegistrationForm = ({role}) => {
           />
           <input
             type="text"
-            id="firstName"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            placeholder='First Name'
-            required
-          />
-          <input
-            type="text"
-            id="middleName"
-            value={middleName}
-            onChange={(e) => setMiddleName(e.target.value)}
-            placeholder='Middle Name'
-          />
-          <input
-            type="text"
-            id="lastName"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            placeholder='Last Name'
-            required
-          />
-          <input
-            type="text"
             id="phoneNumber"
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
             placeholder='Phone Number'
             required
           />
-          <input
+  
+        </div>
+        <div className="flex">
+
+        <input
             type="number"
             id="expirence"
             value={expirence}
@@ -128,12 +141,21 @@ const RadiologistRegistrationForm = ({role}) => {
             placeholder='Highest Education'
             required
           />
+
+        </div>
+
+        
+          
+          
+          
           <input
             type="file"
             id="profilePhoto"
             value={profilePhoto}
             onChange={(e) => setProfilePhoto(e.target.value)}
             placeholder='Profile Photo'
+            class="flex  rounded-md border border-input bg-white px-3 py-2 text-sm text-gray-400 file:border-0 file:bg-transparent file:text-gray-600 file:text-sm file:font-medium"
+             
           />
         </div>
         <button class="form-submit-btn" type="submit">Register</button>

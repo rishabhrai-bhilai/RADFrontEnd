@@ -4,6 +4,7 @@ import SearchBar from "../../components/ui/SearchBar.js";
 import { useUserIdContext } from "../../pages/Common/UserIdContext";
 import patientImage from "../../assets/patientbox.png";
 import Toggle from "../../components/ui/Toggle";
+import Tooltip from "../../components/ui/Tooltip.js";
 
 import {
   DATA_HOST,
@@ -107,16 +108,30 @@ const DoctorModal = ({ closeModal, reportId, patientId, receiverId }) => {
                         {radiologist.consent == 2 && "Pending Consent"}
                         {/* {radiologist.consent} */}
                       </div>
-                      </div>                      
+                      </div>  
+
                       {radiologist.consent === 0 && (
+                      
+
+                      <div className="list-toggle-btn">
+                      <div>
+                        <button className="doct-btn doct-btn-7">
+                          <i className="bx bx-mail-send" onClick={() => askForConsent(radiologist.id)}></i>
+                        </button>
+                      </div>
+                      </div>
+
+                    )}      
+                    {radiologist.consent === 1 && (
                       <div className="list-toggle-btn">
                         <div>
-                          <button className="doct-btn doct-btn-7">
-                            <i className="bx bx-mail-send" onClick={() => askForConsent(radiologist.id)}></i>
+                        <button className="doct-btn doct-btn-7 cursor-not-allowed bg-dark" disabled>
+                        <i class='bx bx-check'></i>
                           </button>
                         </div>
                       </div>
-                    )}                   
+                      
+                    )}               
                     </div>
                   </li>
                 ))}

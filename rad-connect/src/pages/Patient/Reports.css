@@ -118,15 +118,15 @@
 }
 
 .report-image {
-    display: flex; 
+    /* display: flex; 
     justify-content: center;
-    align-items: center;
+    align-items: center; */
     
 }
 
 .image-box{
-    background-color: #322e2e;
-    width: 40%;
+    /* background-color: #322e2e; */
+    /* width: 40%; */
     /* border-radius: 6px; */
 }
 
