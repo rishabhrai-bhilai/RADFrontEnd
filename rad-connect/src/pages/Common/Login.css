@@ -115,3 +115,15 @@
   /* .login-container .heading {
     padding: 20px;
   } */
+
+  .home__img__container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    /* background-color: #ff0331; */
+    height: 100vh;
+  }
+
+  .home__img__container img{
+    width:35vw;
+  }

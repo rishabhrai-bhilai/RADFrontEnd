@@ -4,6 +4,7 @@ import '../Common/Login.css';
 import CredentialForm from './CredentialForm';
 import { useLoginRoleContext } from './LoginRoleContext';
 import Navbar from '../../components/navbar/Navbar';
+import HomeImage from '../../assets/homeImg.svg';
 
 const Login = () => {
   const [selectedRole, setSelectedRole] = useState(null);
@@ -92,6 +93,12 @@ const Login = () => {
       {selectedRole && (
         <div className="selected-role-container">
           <CredentialForm />
+        </div>
+      )}
+
+      {!selectedRole && (
+        <div className="home__img__container">
+          <img className='ml-8 mt-4' src={HomeImage} alt="" />
         </div>
       )}
   </>

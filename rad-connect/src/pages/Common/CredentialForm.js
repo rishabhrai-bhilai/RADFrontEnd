@@ -86,17 +86,17 @@ const CredentialForm = () => {
       <form className="form-group" onSubmit={handleSubmit}>
         <p className="loginrole">Login As {data}</p>
         <br />
-        <p className="paragraph">Username / Email</p>
+        {/* <p className="paragraph">Username / Email</p> */}
         <p />
         <input
           type="text"
-          placeholder="Username"
+          placeholder="Username / Email"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
         <p />
 
-        <p className="paragraph mt-4">Password</p>
+        {/* <p className="paragraph mt-4">Password</p> */}
         <p />
         <input
           type="password"
