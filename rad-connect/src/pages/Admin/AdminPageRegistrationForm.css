@@ -1,7 +1,7 @@
 .admin-form-container {
     /* max-width: 400px; */
-    background-color: #fff;
-    padding: 32px 24px;
+    /* background-color: #fff; */
+    /* padding:; */
     font-size: 14px;
     font-family: inherit;
     color: #212121;
@@ -10,7 +10,7 @@
     gap: 20px;
     box-sizing: border-box;
     border-radius: 10px;
-    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.084), 0px 2px 3px rgba(0, 0, 0, 0.168);
+    /* box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.084), 0px 2px 3px rgba(0, 0, 0, 0.168); */
   }
   
   .admin-form-container button:active {
@@ -27,6 +27,18 @@
     display: flex;
     flex-direction: column;
   }
+
+
+  .admin-form-container .flex {
+    display: flex;
+    width: 100%;
+    background-color: #fff;
+    gap: 6px;
+  }
+
+
+
+
   
   .admin-form-container .form-group {
     display: flex;
@@ -39,9 +51,9 @@
     /* margin-bottom: 5px; */
   }
   
-  .admin-form-container .form-group input {
-    width: 100%;
-    padding: 6px 10px;
+  .admin-form-container .form-group input,select {
+    /* width: 50%; */
+    padding: 4px 8px;
     border-radius: 6px;
     margin-top: 8px;
     font-family: inherit;
@@ -63,7 +75,7 @@
     align-items: center;
     font-family: inherit;
     color: #fff;
-    background-color: hsl(291.43deg 39.77% 34.51%) ;;
+    background-color: var(--blue-extradark);
     border: none;
     width: 100%;
     padding: 12px 16px;
@@ -76,7 +88,7 @@
   }
   
   .admin-form-container .form-submit-btn:hover {
-    background-color: #313131;
+    background-color: var(--black);
   }
   
   .admin-form-container .link {

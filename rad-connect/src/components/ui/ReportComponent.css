@@ -110,13 +110,13 @@
 }
 
 .image-box{
-    background-color: #322e2e;
-    width: 40%;
+    /* background-color: #322e2e; */
+    width: 25%;
     /* border-radius: 6px; */
 }
 
 .image-box > img {
-    width: 100%;
+    /* width: 100%; */
     height: auto;
     object-fit: contain;
     /* border-radius: 6px; */

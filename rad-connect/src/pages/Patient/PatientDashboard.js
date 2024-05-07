@@ -57,7 +57,7 @@ function PatientDashboard() {
     <>
       <Navbar
         options={[
-          { name: "Dashoboard", icon: "bx-home-alt" },
+          { name: "Dashoboard", icon: "bx bxs-dashboard" },
           { name: "Reports", icon: "bx-chart" },
         ]}
         functions={[navigateToDashboard, navigateToReports]}

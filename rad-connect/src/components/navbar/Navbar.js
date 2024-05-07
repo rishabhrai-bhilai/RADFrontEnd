@@ -145,7 +145,7 @@ import { useUserIdContext } from "../../pages/Common/UserIdContext";
 import { HttpPost } from "../../constants";
 import Tooltip from "../ui/Tooltip";
 
-function Navbar({ options, functions, logicalBool }) {
+function Navbar({ options, functions, logicalBool=true }) {
   const [sidebarClosed, setSidebarClosed] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const navigate = useNavigate();

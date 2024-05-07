@@ -11,6 +11,7 @@ import PatientDetails from "./PatientDetails";
 import Navbar from "../../components/navbar/Navbar";
 import PatientInformationCard from "../../components/ui/PatientInformationCard";
 import { RadiologistList } from "./RadiologistList";
+import reportImg from "../../assets/report.png"
 
 import {
   DATA_HOST,
@@ -21,6 +22,7 @@ import {
   CHAT_PORT,
   HttpGet,
 } from "../../constants";
+import Tooltip from "../../components/ui/Tooltip";
 
 function DocReportComponent({ patient }) {
   const { data, token, setIsUserLoggedIn } = useUserIdContext();
@@ -115,7 +117,12 @@ function DocReportComponent({ patient }) {
 
   return (
     <>
-      <Navbar></Navbar>
+      <Navbar
+      options={[
+        { name: "Dashboard", icon: "bx bxs-dashboard" },
+        { name: "Setting", icon: "bx bx-cog" },
+      ]}
+      ></Navbar>
       <section className="home">
         <div className="parent-container">
           <div className="all-items">
@@ -154,7 +161,7 @@ function DocReportComponent({ patient }) {
                           <div className="report-list-box | report-data">
                             <div className="report-image">
                               <div className="image-box">
-                                <img src={reportItem.report} alt="Report" />
+                                <img src={reportImg} alt="Report" />
                               </div>
                             </div>
                             <div className="">{reportItem.reportType}</div>
@@ -162,9 +169,12 @@ function DocReportComponent({ patient }) {
                             <div className="report-button-container">
                               <div className="icon-buttons">
                                 <div className="icon-box">
+                                  <Tooltip content={"Ask for Consent"}>
                                   <ButtonComponent
                                     openModal={() => openModal(reportItem.id)}
                                   />
+                                  </Tooltip>
+                                  
                                   {showModal &&
                                     reportIdInModal === reportItem.id && (
                                       <DoctorModal
@@ -176,6 +186,7 @@ function DocReportComponent({ patient }) {
                                     )}
                                 </div>
                                 <div className="icon-box">
+                                <Tooltip content={"Patient Chat"}>
                                   <i
                                     className="bx bx-plus-medical"
                                     onClick={() =>
@@ -195,14 +206,18 @@ function DocReportComponent({ patient }) {
                                       )
                                     }
                                   ></i>
+                                  </Tooltip>
                                 </div>
+                                
                                 <div className="icon-box">
+                                <Tooltip content={"Radiologist Chat"}>
                                   <i
                                     className="bx bx-chat"
                                     onClick={() => {
                                       toggleRadiologistList(reportItem.id);
                                     }}
                                   ></i>
+                                  </Tooltip>
                                 </div>
                               </div>
                             </div>
@@ -237,7 +252,7 @@ function DocReportComponent({ patient }) {
               className="close-button"
               onClick={() => setShowPopup(false)}
             >
-              X
+              <i class='bx bx-x bx-md'></i>
             </button>
             {popupContent}
           </div>

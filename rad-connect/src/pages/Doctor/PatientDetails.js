@@ -10,7 +10,7 @@ function PatientDetails({ patient }) {
   };
   return (
     <>
-      <div className="doctor-dashboard-right-heading">
+      <div className="doctor-dashboard-right-heading mb-2">
         <p>Patient Details</p>
       </div>
       <div className="doctor-dashboard-right-item-box">
@@ -21,7 +21,7 @@ function PatientDetails({ patient }) {
                 <img src={patientImg} alt="" srcset="" />
               </div>
             </div>
-            <div className="ongoing-patient-details">
+            <div className="ongoing-patient-details mb-1">
               <div className="ongoing-patient-details-data">
                 <div>
                   <span className="fw-bold">

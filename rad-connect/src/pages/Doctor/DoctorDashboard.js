@@ -80,7 +80,12 @@ function DoctorDashboard({ onClickPat }) {
 
   return (
     <>
-      <Navbar></Navbar>
+      <Navbar 
+      options={[
+        { name: "Dashboard", icon: "bx bxs-dashboard" },
+        { name: "Setting", icon: "bx bx-cog" },
+      ]}
+      ></Navbar>
       <section className="home">
         <div className="parent-container">
           <div className="all-items">
@@ -96,9 +101,9 @@ function DoctorDashboard({ onClickPat }) {
               )}
             </div>
 
-            <div className="doctor-dashboard-containers-bottom ">
+            <div className="doctor-dashboard-containers-bottom">
               <div className="doctor-dashboard-left">
-                <div className="doctor-dashboard-left-heading">
+                <div className="doctor-dashboard-left-heading mb-2">
                   <p>Ongoing Diagnosis</p>
                 </div>
                 <div className="doctor-dashboard-left-item-box">

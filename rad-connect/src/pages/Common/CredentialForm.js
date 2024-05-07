@@ -31,7 +31,7 @@ const CredentialForm = () => {
       let roleVal = 0;
 
       if (role === "Patient") roleVal = "ROLE_PATIENT";
-      if (role === "Doctor") roleVal = "ROLE_DOC";
+      if (role === "Doctor") roleVal = "ROLE_DOCTOR";
       if (role === "Radiologist") roleVal = "ROLE_RADIOLOGIST";
       if (role === "Lab") roleVal = "ROLE_LAB";
       if (role === "Admin") roleVal = "ROLE_ADMIN";
