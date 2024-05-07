@@ -165,7 +165,13 @@ class DwvComponent extends React.Component {
           </ToggleButton>
           {(this.props.userRole === "doctor" ||
             this.props.userRole === "radiologist") && (
-            <ScreenshotButton></ScreenshotButton>
+            <ScreenshotButton
+              reportId={this.props.imageId}
+              doctorUserId={this.props.docUserId}
+              radiologistUserId={this.props.radUserId}
+              jwt={this.props.token}
+              logout={this.props.setUserLogin}
+            ></ScreenshotButton>
           )}
 
           <Dialog

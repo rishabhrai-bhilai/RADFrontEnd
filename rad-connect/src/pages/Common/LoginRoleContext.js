@@ -7,14 +7,14 @@ export const useLoginRoleContext = () => {
   return useContext(LoginRoleContext);
 };
 export const LoginRoleContextProvider = ({ children }) => {
-  const [data, setData] = useState(0);
+  const [role, setRole] = useState(0);
 
   const getRole = (role) => {
-    setData(role);
+    setRole(role);
   };
 
   return (
-    <LoginRoleContext.Provider value={{ data, getRole }}>
+    <LoginRoleContext.Provider value={{ role, getRole }}>
       {children}
     </LoginRoleContext.Provider>
   );

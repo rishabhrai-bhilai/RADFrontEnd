@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import patientChatImg from "../../assets/patientbox.png";
 import { useUserIdContext } from "../../pages/Common/UserIdContext";
+import { useLoginRoleContext } from "../../pages/Common/LoginRoleContext";
 import "./DoctorRadioChatPage.css";
 import Message from "./Message";
 import MessageInput from "./MessageInput";
@@ -20,9 +21,13 @@ import {
 import DicomViewer from "../dicom/DicomViewer";
 import ReportPopup from "./ReportPopup";
 import ChatComponent from "./ChatComponent";
+import { useLocation } from "react-router-dom";
 
 const DoctorRadioChatPage = () => {
-  const [userId, setUserId] = useState([]);
+  const location = useLocation();
+
+  const { repId, userId, chatName } = location.state;
+
   const { data, token, setIsUserLoggedIn } = useUserIdContext();
 
   const [selectedId, setSelectedId] = useState();
@@ -30,12 +35,8 @@ const DoctorRadioChatPage = () => {
   const [chats, setChats] = useState([]);
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [repId, setRepId] = useState(-1);
-  const [chatName, setChatName] = useState("");
+  const { role } = useLoginRoleContext();
 
-  const handleReportClick = (repId) => {
-    setRepId(repId);
-  };
   return (
     <>
       {/* <Navbar /> */}
@@ -44,13 +45,13 @@ const DoctorRadioChatPage = () => {
           <div className="chat-heading-name">
             {loading === true ? null : ( // Use null instead of an empty object
               <div className="chat-report-container">
-                <ReportPopup
+                {/* <ReportPopup
                   chatReports={reports}
                   userId={userId}
                   setParticularId={setSelectedId}
                   onRepClick={handleReportClick}
                   removeChat={setRepId}
-                ></ReportPopup>
+                ></ReportPopup> */}
               </div>
             )}
           </div>
@@ -59,7 +60,27 @@ const DoctorRadioChatPage = () => {
         <div className="chat-box">
           {/* DICOM IMAGE WORKING    */}
           <div className="dicom__container border-solid border-4 border-violet-400 p-2 shadow-white shadow-sm">
-            <DicomViewer id={1} role="doctor" />
+          {role === "doctor" && (
+          <DicomViewer
+            repId={repId}
+            role="Doctor"
+            jwt={token}
+            docId={data}
+            radId={userId}
+            logout={setIsUserLoggedIn}
+          />
+          )}
+          {role === "Radiologist" && (
+          <DicomViewer
+            repId={repId}
+            role="radiologist"
+            jwt={token}
+            docId={userId}
+            radId={data}
+            logout={setIsUserLoggedIn}
+          />
+          )}
+
           </div>
 
           <ChatComponent

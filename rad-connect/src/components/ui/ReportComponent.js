@@ -167,8 +167,9 @@ function ReportComponent() {
                               className="bx bxs-bell-ring"
                               onClick={() => togglePermission(report.id)}
                             ></i>
+                            {report.notification === 1 && (                         
                             <div class="notification-number">!</div>
-
+                            )}
                             <div
                               className={`permission-popup ${
                                 isExpanded ? "permission-expanded" : ""

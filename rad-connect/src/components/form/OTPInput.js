@@ -3,7 +3,7 @@ import './OTPInput.css'
 
 
 
-function OTPInput({ length = 6,handleSubmit,setOtpValue }) {
+function OTPInput({ length = 6, handleSub, setOtpValue }) {
   const [values, setValues] = useState(Array(length).fill(''));
   const inputRefs = useRef(Array(length).fill(null));
 
@@ -65,7 +65,7 @@ function OTPInput({ length = 6,handleSubmit,setOtpValue }) {
     });
     console.log(otp);
     setOtpValue(otp);
-    handleSubmit();
+    handleSub();
     // setOtp("");
   };
 

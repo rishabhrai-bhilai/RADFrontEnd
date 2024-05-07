@@ -28,17 +28,17 @@ const CredentialForm = () => {
     e.preventDefault();
 
     try {
-      let role = 0;
+      let roleVal = 0;
 
-      if (data === "Patient") role = "ROLE_PATIENT";
-      if (data === "Doctor") role = "ROLE_DOC";
-      if (data === "Radiologist") role = "ROLE_RADIOLOGIST";
-      if (data === "Lab") role = "ROLE_LAB";
+      if (role === "Patient") roleVal = "ROLE_PATIENT";
+      if (role === "Doctor") roleVal = "ROLE_DOC";
+      if (role === "Radiologist") roleVal = "ROLE_RADIOLOGIST";
+      if (role === "Lab") roleVal = "ROLE_LAB";
 
       const requestBody = {
         email: username,
         password: password,
-        role: role,
+        role: roleVal,
       };
 
       const response = await fetch(
@@ -63,9 +63,10 @@ const CredentialForm = () => {
         getUserToken(responseData.token);
         setIsUserLoggedIn(true);
 
-        if (data === "Patient") navigate("/patientdashboard");
-        if (data === "Lab") navigate("/labdashboard");
-        if (data === "Doctor") navigate("/doctordashboard");
+        if (role === "Patient") navigate("/patientdashboard");
+        if (role === "Lab") navigate("/labdashboard");
+        if (role === "Doctor") navigate("/doctordashboard");
+        if (role === "Radiologist") navigate("/radiologistdashboard");
       } else {
         // Handle errors
         setShowError(true);
@@ -79,12 +80,12 @@ const CredentialForm = () => {
     }
   };
   
-  const { data } = useLoginRoleContext();
+  const { role } = useLoginRoleContext();
 
   return (
     <div className="form-container shadow-md">
       <form className="form-group" onSubmit={handleSubmit}>
-        <p className="loginrole">Login As {data}</p>
+        <p className="loginrole">Login As {role}</p>
         <br />
         {/* <p className="paragraph">Username / Email</p> */}
         <p />
@@ -119,7 +120,7 @@ const CredentialForm = () => {
         <button type="submit" className="submit-btn">
           Login
         </button>
-        {data === "Patient" && (
+        {role === "Patient" && (
           <div>
             <div className="or-Container">
               <hr className="horizontal-line" />
