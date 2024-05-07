@@ -41,8 +41,9 @@ function RadiologistDashboard() {
     if (radiologistData == null) {
       throw new Error("Failed to fetch Radiologist");
     }
-    setRadiologist(radiologistData);
-    setRoleId(radiologistData.id);
+     console.log(radiologistData);
+     setRadiologist(radiologistData);
+     setRoleId(radiologistData.id);
   };
 
   const fetchChats = async (data) => {    
