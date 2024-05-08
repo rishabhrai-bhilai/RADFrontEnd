@@ -27,7 +27,10 @@ export const UserIdContextProvider = ({ children }) => {
     return storedToken ? storedToken : "";
   });
 
-  const [isUserLoggedIn,setIsUserLoggedIn]=useState(false);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(() => {
+    const storedIsLoggedIn = localStorage.getItem("isUserLoggedIn");
+    return storedIsLoggedIn ? JSON.parse(storedIsLoggedIn) : false;
+  });
 
   const getUserToken = (token) => {
     setToken(token);
@@ -45,9 +48,6 @@ export const UserIdContextProvider = ({ children }) => {
     setIsNotification(notification);
   }
 
-  // const getIsUserLoggedIn =(isLoggedIn) => {
-  //   setIsUserLoggedIn(isLoggedIn);
-  // };
 
   useEffect(() => {
     localStorage.setItem("userData", JSON.stringify(data));
@@ -56,6 +56,14 @@ export const UserIdContextProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem("userToken", token);
   }, [token]);
+
+  useEffect(() => {
+    localStorage.setItem("notification", isNotification);
+  }, [isNotification]);
+
+  useEffect(() => {
+    localStorage.setItem("isUserLoggedIn", JSON.stringify(isUserLoggedIn));
+  }, [isUserLoggedIn]);
 
   return (
     <UserIdContext.Provider value={{ data, getUserId, token, getUserToken, isUserLoggedIn, setIsUserLoggedIn, roleId, setRoleId, isNotification, getNotification }}>

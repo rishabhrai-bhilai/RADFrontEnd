@@ -34,6 +34,7 @@ function PersonalInformation({ username, uid }) {
   const [emergencyContact, setEmergencyContact] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
   const [profilePicture, setProfilePicture] = useState(null);
+  const [imageURI, setImageURI] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -68,7 +69,7 @@ function PersonalInformation({ username, uid }) {
     try {
       console.log(formData);
       const response = await fetch(
-        "http://" + DATA_HOST + ":" + DATA_PORT + "/teleRadiology/addPatient",
+        "https://" + DATA_HOST + ":" + DATA_PORT + "/teleRadiology/addPatient",
         {
           method: "POST",
           headers: {
@@ -81,11 +82,53 @@ function PersonalInformation({ username, uid }) {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      setResponseMessage("Patient Registered");      
+      setResponseMessage("Patient Registered");
+      const responseData = await response.json();
+      uploadProfilePicture(responseData);
     } catch (error) {
       console.error("There was a problem saving the data:", error);
     }
   };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      // Convert the image to a data URI
+      const uri = reader.result;
+      setImageURI(uri);
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const uploadProfilePicture = async (patientId) => {
+    try {
+    let requestBody ={
+      userId: patientId,
+      profilePic: imageURI
+    }
+    const response = await fetch(
+      "http://" + IMAGES_HOST + ":" + IMAGES_PORT + "/images/uploadProfilePic",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }    
+  } catch (error) {
+    console.error("There was a problem saving the data:", error);
+  }
+
+};
 
   const handleBackToLogin = () => {
     navigate("/");
@@ -489,7 +532,7 @@ function PersonalInformation({ username, uid }) {
             type="file"
             id="profilePicture"
             accept="image/*"
-            onChange={(e) => setProfilePicture(e.target.value)}
+            onChange={handleImageChange}
           />
         </div>
       </div>

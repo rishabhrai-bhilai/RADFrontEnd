@@ -11,7 +11,7 @@ const hostNames = ["/teleRadiology", "/images", "/chat"];
 export const HttpGet = async (dest, path, token) => {
   try {
     const response = await fetch(
-      "http://" + hosts[dest] + ":" + ports[dest] + hostNames[dest] + path,
+      "https://" + hosts[dest] + ":" + ports[dest] + hostNames[dest] + path,
       {
         method: "GET",
         headers: {
@@ -38,7 +38,7 @@ export const HttpGet = async (dest, path, token) => {
 export const HttpPost = async (dest, path, token, reqBody) => {
   try {
     const response = await fetch(
-      "http://" + hosts[dest] + ":" + ports[dest] + hostNames[dest] + path,
+      "https://" + hosts[dest] + ":" + ports[dest] + hostNames[dest] + path,
       {
         method: "POST",
         headers: {

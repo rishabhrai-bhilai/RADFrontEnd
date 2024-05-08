@@ -66,7 +66,7 @@ const NewPatient = ({ onSubmitEmail, onSubmitCred }) => {
 
     try {
       const response = await fetch(
-        "http://" +
+        "https://" +
           DATA_HOST +
           ":" +
           DATA_PORT +

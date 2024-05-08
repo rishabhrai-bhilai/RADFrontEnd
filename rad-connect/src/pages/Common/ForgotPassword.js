@@ -90,7 +90,7 @@ const ForgotPassword = () => {
                       };
 
                     const response = await fetch(
-                        "http://" +
+                        "https://" +
                         DATA_HOST +
                         ":" +
                         DATA_PORT +

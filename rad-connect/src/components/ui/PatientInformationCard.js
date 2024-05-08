@@ -18,7 +18,7 @@ function PatientInformationCard({ patient }) {
     <div className="personal-info">
       <div className="patient-image">
         <div className="image-circle-box">
-          <img src={patientImg} alt={patient.profilePhoto} />
+          <img src={patient.profilePhoto} alt={patient.profilePhoto} />
         </div>
         <div className="edit-option">Edit</div>
       </div>
