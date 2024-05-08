@@ -7,6 +7,7 @@ import "./DoctorRadioChatPage.css";
 import Message from "./Message";
 import MessageInput from "./MessageInput";
 import Navbar from "../navbar/Navbar";
+import AnnotationList from "./AnnotationList";
 
 import {
   DATA_HOST,
@@ -33,9 +34,40 @@ const DoctorRadioChatPage = () => {
   const [selectedId, setSelectedId] = useState();
 
   const [chats, setChats] = useState([]);
-  const [reports, setReports] = useState([]);
+  const [reports, setReports] = useState([
+    {
+      annotationId: -1,
+      annotatedImage:
+        "https://www.google.com/imgres?q=report%20cartoon%20image%20link&imgurl=https%3A%2F%2Fpng.pngtree.com%2Fpng-clipart%2F20190617%2Foriginal%2Fpngtree-report-white-simple-cartoon-png-image_3854812.jpg&imgrefurl=https%3A%2F%2Fpngtree.com%2Ffreepng%2Freport-white-simple-cartoon_3854812.html&docid=uT9HcDpXyNYNzM&tbnid=jMg5_fC0bo8qDM&vet=12ahUKEwjsh9eknP2FAxXlUGwGHYKFCygQM3oECFwQAA..i&w=1200&h=1200&hcb=2&ved=2ahUKEwjsh9eknP2FAxXlUGwGHYKFCygQM3oECFwQAA",
+    },
+  ]);
   const [loading, setLoading] = useState(false);
   const { role } = useLoginRoleContext();
+  const [annotation, setAnnotation] = useState(-1);
+  const [showAnnotation, setShowAnnotation] = useState(false);
+
+  // console.log(reqBody);
+  useEffect(async () => {
+    let reqBody = null;
+    if (role == "Doctor") {
+      reqBody = { docUserId: data, radUserId: userId, reportId: repId };
+    } else {
+      reqBody = { docUserId: userId, radUserId: data, reportId: repId };
+    }
+    const responseData = await HttpPost(
+      0,
+      "/getAllAnnotations",
+      token,
+      reqBody
+    );
+    if (responseData == "Unauthorized") {
+      setIsUserLoggedIn(false);
+    }
+    if (responseData == null) {
+      throw new Error("Failed to fetch annotations");
+    }
+    setReports((prevReports) => [...prevReports, ...responseData.annotations]);
+  }, []);
 
   return (
     <>
@@ -45,13 +77,10 @@ const DoctorRadioChatPage = () => {
           <div className="chat-heading-name">
             {loading === true ? null : ( // Use null instead of an empty object
               <div className="chat-report-container">
-                {/* <ReportPopup
+                <AnnotationList
                   chatReports={reports}
-                  userId={userId}
-                  setParticularId={setSelectedId}
-                  onRepClick={handleReportClick}
-                  removeChat={setRepId}
-                ></ReportPopup> */}
+                  setParticularId={setAnnotation}
+                ></AnnotationList>
               </div>
             )}
           </div>
@@ -59,29 +88,40 @@ const DoctorRadioChatPage = () => {
 
         <div className="chat-box">
           {/* DICOM IMAGE WORKING    */}
-          <div className="dicom__container border-solid border-4 border-violet-400 p-2 shadow-white shadow-sm">
-          {role === "Doctor" && (
-          <DicomViewer
-            repId={repId}
-            role="Doctor"
-            jwt={token}
-            docId={data}
-            radId={userId}
-            logout={setIsUserLoggedIn}
-          />
+          {annotation == -1 && (
+            <div className="dicom__container border-solid border-4 border-violet-400 p-2 shadow-white shadow-sm">
+              {role === "Doctor" && (
+                <DicomViewer
+                  repId={repId}
+                  role="doctor"
+                  jwt={token}
+                  docId={data}
+                  radId={userId}
+                  logout={setIsUserLoggedIn}
+                />
+              )}
+              {role === "Radiologist" && (
+                <DicomViewer
+                  repId={repId}
+                  role="radiologist"
+                  jwt={token}
+                  docId={userId}
+                  radId={data}
+                  logout={setIsUserLoggedIn}
+                />
+              )}
+            </div>
           )}
-          {role === "Radiologist" && (
-          <DicomViewer
-            repId={repId}
-            role="radiologist"
-            jwt={token}
-            docId={userId}
-            radId={data}
-            logout={setIsUserLoggedIn}
-          />
+          {annotation != -1 && (
+            <div className="dicom__container border-solid border-4 border-violet-400 p-2 shadow-white shadow-sm">
+              {reports.map((report, index) => {
+                if (annotation === report.annotationId) {
+                  return <img src={report.annotatedImage} alt="" />;
+                }
+                return null;
+              })}
+            </div>
           )}
-
-          </div>
 
           <ChatComponent
             rId={repId}
