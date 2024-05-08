@@ -48,25 +48,31 @@ const DoctorRadioChatPage = () => {
 
   // console.log(reqBody);
   useEffect(async () => {
-    let reqBody = null;
-    if (role == "Doctor") {
-      reqBody = { docUserId: data, radUserId: userId, reportId: repId };
-    } else {
-      reqBody = { docUserId: userId, radUserId: data, reportId: repId };
-    }
-    const responseData = await HttpPost(
-      0,
-      "/getAllAnnotations",
-      token,
-      reqBody
-    );
-    if (responseData == "Unauthorized") {
-      setIsUserLoggedIn(false);
-    }
-    if (responseData == null) {
-      throw new Error("Failed to fetch annotations");
-    }
-    setReports((prevReports) => [...prevReports, ...responseData.annotations]);
+    const fetchAnnotation = async () => {
+      let reqBody = null;
+      if (role == "Doctor") {
+        reqBody = { docUserId: data, radUserId: userId, reportId: repId };
+      } else {
+        reqBody = { docUserId: userId, radUserId: data, reportId: repId };
+      }
+      const responseData = await HttpPost(
+        0,
+        "/getAllAnnotations",
+        token,
+        reqBody
+      );
+      if (responseData == "Unauthorized") {
+        setIsUserLoggedIn(false);
+      }
+      if (responseData == null) {
+        throw new Error("Failed to fetch annotations");
+      }
+      setReports((prevReports) => [
+        ...prevReports,
+        ...responseData.annotations,
+      ]);
+    };
+    fetchAnnotation();
   }, []);
 
   return (
