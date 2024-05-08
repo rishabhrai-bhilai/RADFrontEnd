@@ -14,8 +14,8 @@ const AnnotationList = ({ chatReports, setParticularId }) => {
               }}
             >
               <img src={report.annotatedImage} />
-              {index == 0 && <span>Original</span>}
-              {index != 0 && <span>Annotation {index}</span>}
+              {index == 0 && <p>Original</p>}
+              {index != 0 && <p>Annotation {index}</p>}
             </div>
           ))}
       </div>

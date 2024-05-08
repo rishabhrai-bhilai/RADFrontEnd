@@ -72,16 +72,16 @@ const DoctorRadioChatPage = () => {
   return (
     <>
       {/* <Navbar /> */}
-      <div className="dicom-chat-container mx-4">
+      <div className="dicom-chat-container px-2">
         <div className="chat-head">
           <div className="chat-heading-name">
             {loading === true ? null : ( // Use null instead of an empty object
-              <div className="chat-report-container">
+              // <div className="chat-report-container">
                 <AnnotationList
                   chatReports={reports}
                   setParticularId={setAnnotation}
                 ></AnnotationList>
-              </div>
+              // </div>
             )}
           </div>
         </div>
@@ -89,7 +89,7 @@ const DoctorRadioChatPage = () => {
         <div className="chat-box">
           {/* DICOM IMAGE WORKING    */}
           {annotation == -1 && (
-            <div className="dicom__container border-solid border-4 border-violet-400 p-2 shadow-white shadow-sm">
+            <div className="dicom__container border-solid border-4 border-violet-400  shadow-white shadow-sm">
               {role === "Doctor" && (
                 <DicomViewer
                   repId={repId}
