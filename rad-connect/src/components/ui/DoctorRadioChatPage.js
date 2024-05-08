@@ -48,7 +48,7 @@ const DoctorRadioChatPage = () => {
 
   // console.log(reqBody);
   useEffect(async () => {
-    const fetchAnnotation = async () => {
+    // const fetchAnnotation = async () => {
       let reqBody = null;
       if (role == "Doctor") {
         reqBody = { docUserId: data, radUserId: userId, reportId: repId };
@@ -71,14 +71,14 @@ const DoctorRadioChatPage = () => {
         ...prevReports,
         ...responseData.annotations,
       ]);
-    };
-    fetchAnnotation();
+    // };
+    // fetchAnnotation();
   }, []);
 
   return (
     <>
       {/* <Navbar /> */}
-      <div className="dicom-chat-container px-2">
+      <div className="dicom-chat-container px-4">
         <div className="chat-head">
           <div className="chat-heading-name">
             {loading === true ? null : ( // Use null instead of an empty object
@@ -92,7 +92,7 @@ const DoctorRadioChatPage = () => {
           </div>
         </div>
 
-        <div className="chat-box">
+        <div className="chat-box mb-2">
           {/* DICOM IMAGE WORKING    */}
           {annotation == -1 && (
             <div className="dicom__container border-solid border-4 border-violet-400  shadow-white shadow-sm">
@@ -122,7 +122,9 @@ const DoctorRadioChatPage = () => {
             <div className="dicom__container border-solid border-4 border-violet-400 p-2 shadow-white shadow-sm">
               {reports.map((report, index) => {
                 if (annotation === report.annotationId) {
-                  return <img src={report.annotatedImage} alt="" />;
+                 <div className="dicom_img">
+                   return <img className="" src={report.annotatedImage} alt="" />;
+                 </div>
                 }
                 return null;
               })}

@@ -2,11 +2,12 @@
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
+    /* background-color: aqua; */
   }
   
   .report-item {
     display: flex;
-    font-size: 1rem;
+    font-size: 0.8rem;
     flex-direction: column;
     align-items: center;
     margin-right: 10px;

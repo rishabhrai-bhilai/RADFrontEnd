@@ -233,7 +233,7 @@ letter-spacing: 1px;
  
 
 .msg-input-taker{
-  /* flex: 1; */
+  flex: 1;
   margin: 0rem 0rem;
   
 }  

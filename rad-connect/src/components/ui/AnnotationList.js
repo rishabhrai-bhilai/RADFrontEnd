@@ -2,7 +2,7 @@ import React from "react";
 import "./AnnotationList.css";
 const AnnotationList = ({ chatReports, setParticularId }) => {
   return (
-    <div className="chat-report-container">
+    <div className="">
       <div className="report-list">
         {chatReports &&
           chatReports.map((report, index) => (

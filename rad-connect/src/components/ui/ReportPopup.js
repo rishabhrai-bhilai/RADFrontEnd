@@ -82,6 +82,7 @@ const ReportPopup = ({
           </button>
         )}
       </div>
+      
       {reportLoading && (
         <div
           id="expandingDiv"
