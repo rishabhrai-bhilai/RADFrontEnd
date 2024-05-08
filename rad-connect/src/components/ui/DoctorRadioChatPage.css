@@ -65,6 +65,7 @@ align-items: center;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  /* overflow: hidden; */
 }
 
 .dicom-chat-container .dicom__container .dicom_img{
@@ -102,7 +103,7 @@ align-items: center;
   height: 100%;
   flex-direction: column;
   height: 100%;
-  border: 2px solid red;
+  /* border: 2px solid var(--blue-dark); */
   background-color: var(--white-light);
 }
 

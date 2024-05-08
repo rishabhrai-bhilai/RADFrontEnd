@@ -148,7 +148,7 @@ const ChatComponent = ({ rId, uId, myId, chatName }) => {
   };
 
   return (
-    <div className="rightside-chat">
+    <div className="rightside-chat border-solid border-4 border-violet-400">
       <div className="rightside-header">
         <div className="right-side-image-div">
           <div className="right-side-image">
