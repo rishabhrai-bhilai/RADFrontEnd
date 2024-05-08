@@ -40,7 +40,7 @@ const DoctorRadioChatPage = () => {
   return (
     <>
       {/* <Navbar /> */}
-      <div className="dicom-chat-container">
+      <div className="dicom-chat-container mx-4">
         <div className="chat-head">
           <div className="chat-heading-name">
             {loading === true ? null : ( // Use null instead of an empty object
