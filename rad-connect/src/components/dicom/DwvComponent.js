@@ -322,7 +322,7 @@ class DwvComponent extends React.Component {
 
     let imageId = this.props.imageId;
     console.log(imageId);
-    fetch("http://192.168.0.113:8081/teleRadiology/download/" + imageId)
+    fetch("https://192.68.0.101:8081/teleRadiology/download/" + imageId)
       .then((response) => response.arrayBuffer())
       .then((data) => {
         const binaryString = Array.from(new Uint8Array(data))

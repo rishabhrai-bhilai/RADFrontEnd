@@ -27,7 +27,7 @@ const DicomViewer = ({ repId, role, jwt, docId, radId, logout }) => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div className="App">
+      <div className="Appss">
         <DwvComponent
           imageId={repId}
           userRole={role}

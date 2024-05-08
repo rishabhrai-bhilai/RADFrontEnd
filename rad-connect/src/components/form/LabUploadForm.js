@@ -68,7 +68,7 @@ function LabUploadForm() {
     let response = null;
     try {
       response = await axios.post(
-        "https://localhost:8081/teleRadiology/upload/" + val,
+        "https://192.68.0.101:8081/teleRadiology/upload/" + val,
         formData,
         {
           headers: {

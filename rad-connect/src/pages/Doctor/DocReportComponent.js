@@ -91,7 +91,7 @@ function DocReportComponent({ patient }) {
   const getConsentedReports = async (patientId, data) => {
     try {
       const response = await fetch(
-        "http://" +
+        "https://" +
           DATA_HOST +
           ":" +
           DATA_PORT +

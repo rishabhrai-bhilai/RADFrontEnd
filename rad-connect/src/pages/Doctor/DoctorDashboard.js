@@ -48,7 +48,7 @@ function DoctorDashboard({ onClickPat }) {
   const fetchConsentPatients = async (data) => {
     try {
       const response = await fetch(
-        "http://" +
+        "https://" +
           DATA_HOST +
           ":" +
           DATA_PORT +
