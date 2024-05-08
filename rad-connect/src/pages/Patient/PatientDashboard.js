@@ -27,12 +27,12 @@ function PatientDashboard() {
 
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const [notification,setNotification] = useState(true);
+  const [notification,setNotification] = useState(false);
   const[notifaicationIcon ,setNotificationIcon] = useState("bx bx-bell");
 
   const [notify,setNotify] = useState(false);
 
-  const { data, token, setIsUserLoggedIn, setRoleId } = useUserIdContext();
+  const { data, token, setIsUserLoggedIn, setRoleId, getNotification } = useUserIdContext();
   useEffect(() => {
     fetchPatient(data);
   }, []);
@@ -47,8 +47,13 @@ function PatientDashboard() {
     if (patientData == null) {
       throw new Error("Failed to fetch Patient");
     }
+    console.log(patientData);
     setPatient(patientData);
     setRoleId(patientData.id);
+    getNotification(patientData.notification);
+    if(patientData.notification === 1) {
+      setNotification(true);
+    }
   };
 
   const navigateToReports = () => {

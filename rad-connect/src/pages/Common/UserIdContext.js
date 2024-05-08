@@ -22,6 +22,11 @@ export const UserIdContextProvider = ({ children }) => {
     return storedToken ? storedToken : "";
   });
 
+  const [isNotification, setIsNotification] = useState(() => {
+    const storedToken = localStorage.getItem("notification");
+    return storedToken ? storedToken : "";
+  });
+
   const [isUserLoggedIn,setIsUserLoggedIn]=useState(false);
 
   const getUserToken = (token) => {
@@ -34,6 +39,10 @@ export const UserIdContextProvider = ({ children }) => {
 
   const getRoleId = (roleId) => {
     setRoleId(roleId);
+  };
+
+  const getNotification = (notification) => {
+    setIsNotification(notification);
   }
 
   // const getIsUserLoggedIn =(isLoggedIn) => {
@@ -49,7 +58,7 @@ export const UserIdContextProvider = ({ children }) => {
   }, [token]);
 
   return (
-    <UserIdContext.Provider value={{ data, getUserId, token, getUserToken, isUserLoggedIn, setIsUserLoggedIn, roleId, setRoleId }}>
+    <UserIdContext.Provider value={{ data, getUserId, token, getUserToken, isUserLoggedIn, setIsUserLoggedIn, roleId, setRoleId, isNotification, getNotification }}>
       {children}
     </UserIdContext.Provider>
   );
