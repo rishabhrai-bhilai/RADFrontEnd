@@ -10,7 +10,7 @@
     
 }
 
-.card {
+.list__reports__container .card {
     --primary-clr: var(--blue-dark);
     --dot-clr: var(--blue-extradark);
     --play: var(--blue-extradark);
@@ -19,7 +19,7 @@
     border-radius: 10px;
    }
    
-   .card {
+  .list__reports__container .card {
     font-family: "Arial";
     color: #fff;
     display: grid;
@@ -27,11 +27,11 @@
     grid-template-rows: 50px 1fr;
    }
    
-   .card:hover .img-section {
+   .list__reports__container .card:hover .img-section {
     transform: translateY(1em);
    }
    
-   .card-desc {
+   .list__reports__container .card-desc {
     border-radius: 10px;
     padding: 15px;
     position: relative;
@@ -41,52 +41,52 @@
     background: var(--primary-clr);
    }
    
-   .card-time {
-    font-size: 1.7em;
+  .list__reports__container .card-time {
+    font-size: 1.2rem;
     font-weight: 500;
    }
    
-   .img-section {
+   .list__reports__container .img-section {
     transition: 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     background: var(--dot-clr);
    }
    
-   .card-header {
+   .list__reports__container .card-header {
     display: flex;
     align-items: center;
     width: 100%;
    }
    
-   .card-title {
+   .list__reports__container .card-title {
     flex: 1;
-    letter-spacing: 1px;
-    font-size: 0.9em;
+    /* letter-spacing: 1px; */
+    font-size: 0.8rem;
     font-weight: 500;
    }
    
-   .card-menu {
+   .list__reports__container .card-menu {
     display: flex;
     gap: 4px;
     margin-inline: auto;
    }
    
-   .card svg {
+   .list__reports__container .card svg {
     float: right;
     max-width: 100%;
     max-height: 100%;
    }
    
-   .card .dot {
+   .list__reports__container .card .dot {
     width: 5px;
     height: 5px;
     border-radius: 50%;
     background: var(--dot-clr);
    }
    
-   .card .recent {
+   .list__reports__container .card .recent {
     line-height: 0;
-    letter-spacing: 1px;
-    font-size: 0.8em;
+    /* letter-spacing: 1px; */
+    font-size: 0.8rem;
    }
