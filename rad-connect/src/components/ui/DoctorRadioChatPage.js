@@ -119,12 +119,16 @@ const DoctorRadioChatPage = () => {
             </div>
           )}
           {annotation != -1 && (
-            <div className="dicom__container border-solid border-4 border-violet-400 p-2 shadow-white shadow-sm">
+            <div className="dicom__container border-solid border-4 border-violet-400  shadow-white shadow-sm">
               {reports.map((report, index) => {
                 if (annotation === report.annotationId) {
-                 <div className="dicom_img">
-                   return <img className="" src={report.annotatedImage} alt="" />;
+                  return(
+                    <div className="dicom_img">
+                    <img className="" src={report.annotatedImage} alt="" />;
                  </div>
+
+                  )
+                 
                 }
                 return null;
               })}
