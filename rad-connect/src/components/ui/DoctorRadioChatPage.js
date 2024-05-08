@@ -60,27 +60,26 @@ const DoctorRadioChatPage = () => {
         <div className="chat-box">
           {/* DICOM IMAGE WORKING    */}
           <div className="dicom__container border-solid border-4 border-violet-400 p-2 shadow-white shadow-sm">
-          {role === "Doctor" && (
-          <DicomViewer
-            repId={repId}
-            role="Doctor"
-            jwt={token}
-            docId={data}
-            radId={userId}
-            logout={setIsUserLoggedIn}
-          />
-          )}
-          {role === "Radiologist" && (
-          <DicomViewer
-            repId={repId}
-            role="radiologist"
-            jwt={token}
-            docId={userId}
-            radId={data}
-            logout={setIsUserLoggedIn}
-          />
-          )}
-
+            {role === "Doctor" && (
+              <DicomViewer
+                repId={repId}
+                role="doctor"
+                jwt={token}
+                docId={data}
+                radId={userId}
+                logout={setIsUserLoggedIn}
+              />
+            )}
+            {role === "Radiologist" && (
+              <DicomViewer
+                repId={repId}
+                role="radiologist"
+                jwt={token}
+                docId={userId}
+                radId={data}
+                logout={setIsUserLoggedIn}
+              />
+            )}
           </div>
 
           <ChatComponent
