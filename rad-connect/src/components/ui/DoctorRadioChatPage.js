@@ -72,7 +72,7 @@ const DoctorRadioChatPage = () => {
         ...responseData.annotations,
       ]);
     };
-    fetchAnnotation();
+    await fetchAnnotation();
   }, []);
 
   return (
@@ -83,10 +83,10 @@ const DoctorRadioChatPage = () => {
           <div className="chat-heading-name">
             {loading === true ? null : ( // Use null instead of an empty object
               // <div className="chat-report-container">
-                <AnnotationList
-                  chatReports={reports}
-                  setParticularId={setAnnotation}
-                ></AnnotationList>
+              <AnnotationList
+                chatReports={reports}
+                setParticularId={setAnnotation}
+              ></AnnotationList>
               // </div>
             )}
           </div>
