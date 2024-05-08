@@ -48,7 +48,7 @@ const DoctorRadioChatPage = () => {
 
   // console.log(reqBody);
   useEffect(async () => {
-    // const fetchAnnotation = async () => {
+    const fetchAnnotation = async () => {
       let reqBody = null;
       if (role == "Doctor") {
         reqBody = { docUserId: data, radUserId: userId, reportId: repId };
@@ -71,8 +71,8 @@ const DoctorRadioChatPage = () => {
         ...prevReports,
         ...responseData.annotations,
       ]);
-    // };
-    // fetchAnnotation();
+    };
+    await fetchAnnotation();
   }, []);
 
   return (
@@ -83,10 +83,10 @@ const DoctorRadioChatPage = () => {
           <div className="chat-heading-name">
             {loading === true ? null : ( // Use null instead of an empty object
               // <div className="chat-report-container">
-                <AnnotationList
-                  chatReports={reports}
-                  setParticularId={setAnnotation}
-                ></AnnotationList>
+              <AnnotationList
+                chatReports={reports}
+                setParticularId={setAnnotation}
+              ></AnnotationList>
               // </div>
             )}
           </div>
