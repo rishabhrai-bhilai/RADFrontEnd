@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import Modal from "./Modal";
 import { useUserIdContext } from "../../pages/Common/UserIdContext";
 import imgg from "../../assets/mri_img.png";
+import reportImg from "../../assets/report.png"
 import ButtonComponent from "./ButtonComponent";
 import "./ReportComponent.css";
-
 import Snackbar from "./Snackbar.js";
 import {
   DATA_HOST,
@@ -16,7 +16,7 @@ import {
   HttpPost,
 } from "../../constants";
 import { useNavigate } from "react-router-dom";
-function ReportComponent() {
+function ReportComponent({handleReportId}) {
   const [showModal, setShowModal] = useState(false);
   const { data, token, setIsUserLoggedIn } = useUserIdContext();
   const [reports, setReports] = useState([]);
@@ -102,6 +102,8 @@ function ReportComponent() {
   }, [roleId]);
 
   const openDicom = async (id) => {
+    console.log(id);
+    handleReportId(id);
     localStorage.setItem("imageId", id);
     navigate("/patient/dicom");
   };
@@ -153,7 +155,7 @@ function ReportComponent() {
                             openDicom(report.id);
                           }}
                         >
-                          <img src={report.report} alt="Report" />
+                          <img src={reportImg} alt="Report" />
                         </div>
                       </div>
                       {/* <div className="">{report.id}</div> */}

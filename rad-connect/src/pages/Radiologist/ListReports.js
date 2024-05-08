@@ -30,15 +30,15 @@ function ListReports({ reports, doctorName, doctorCredId }) {
             <div class="img-section"></div>
             <div class="card-desc">
               <div class="card-header">
-                <div class="card-title">AB-</div>
+                <div class="card-title">BloodGroup: {report.patientBloodGroup}</div>
                 <div class="card-menu">
                   <div class="dot"></div>
                   <div class="dot"></div>
                   <div class="dot"></div>
                 </div>
               </div>
-              <div class="card-time">City Scan</div>
-              <p class="recent">Age : 36years</p>
+              <div class="card-time">{report.reportType}</div>
+              <p class="recent">Age: {report.patientAge} years</p>
             </div>
           </div>
         ))}

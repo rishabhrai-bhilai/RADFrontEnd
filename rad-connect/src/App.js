@@ -30,7 +30,8 @@ function App() {
   const [email, setEmail] = useState("");
   const [credId, setCredId] = useState();
   const [pat, setPat] = useState(null);
-  const { isUserLoggedIn } = useUserIdContext();
+  const [reportId, setReportId] = useState(0);
+  const { isUserLoggedIn } = useUserIdContext();  
 
   const handleSubmitEmail = (email) => {
     setEmail(email);
@@ -43,6 +44,10 @@ function App() {
   const handlePat = (patient) => {
     setPat(patient);
   };
+
+  const handleReportId = (repId) => {
+    setReportId(repId);
+  }
 
   return (
     <div className="App">
@@ -68,7 +73,7 @@ function App() {
             <Route path="/patientdashboard" element={<PatientDashboard />} />
             <Route path="/radiologistdashboard" element={<RadiologistDashboard />} />
             <Route path="/admindashboard" element={<AdminDashboard />} />
-            <Route path="/patientreports" element={<Reports />} />
+            <Route path="/patientreports" element={<Reports handleRepId={handleReportId}/>} />
             <Route path="/labdashboard" element={<ReportUpload />} />
             <Route path="/patientchat" element={<ChatPage />} />
             <Route
@@ -79,10 +84,10 @@ function App() {
               path="/patient/reports"
               element={<DocReportComponent patient={pat} />}
             />
-            {/* <Route
+            <Route
               path="/patient/dicom"
-              element={<DicomViewer id={1} role={"patient"} />}
-            /> */}
+              element={<DicomViewer repId={reportId} role={"patient"} />}
+            />
             <Route path="/doctor/radioChat" element={<DoctorRadioChatPage />} />
           </>
         )}

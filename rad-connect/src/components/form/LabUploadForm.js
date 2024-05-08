@@ -22,15 +22,23 @@ function LabUploadForm() {
   const { data, token, setIsUserLoggedIn } = useUserIdContext();
   const [responseMessage, setResponseMessage] = useState("");
 
+  function formatDate(dateString) {
+    const [day, month, year] = dateString.split('/');
+  // Reassemble the date parts in the format "YYYY-MM-DD"
+    const formattedDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+    return formattedDate;
+  }
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     // Get today's date
     const today = new Date();
     const formattedDate = today.toLocaleDateString();
+    const todayDate = formatDate(formattedDate);
 
     const formData = {
-      dateOfIssue: "2024-04-05",
+      dateOfIssue: todayDate,
       initialRemarks: remarks,
       reportType: type,
       lid: data,
