@@ -1,0 +1,69 @@
+.notify-container{
+    position: fixed;
+    /* background-color: #b61717; */
+    z-index: 2000;
+    
+    right: 40px;
+    top: 15%;
+}
+
+.notify-card {
+    width: 100%;
+    max-width: 300px;
+    height: 70px;
+    background: #353535;
+    background: var(--blue-dark);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    backdrop-filter: blur(10px);
+    transition: 0.5s ease-in-out;
+  }
+  
+  .notify-card:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+  }
+  
+  .notify-img {
+    width: 50px;
+    height: 50px;
+    margin-left: 10px;
+    border-radius: 10px;
+    background: linear-gradient(#d7cfcf, #9198e5);
+  }
+  
+  .notify-card:hover > .notify-img {
+    transition: 0.5s ease-in-out;
+    background: linear-gradient(#9198e5, #712020);
+  }
+  
+  .notify-textBox {
+    width: calc(100% - 90px);
+    margin-left: 10px;
+    color: white;
+    font-family: 'Poppins' sans-serif;
+  }
+  
+  .notify-textContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .notify-span {
+    font-size: 10px;
+  }
+  
+  .notify-h1 {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .notify-p {
+    font-size: 12px;
+    font-weight: lighter;
+  }
+  
+  

@@ -11,9 +11,9 @@
 }
 
 .card {
-    --primary-clr: #1C204B;
-    --dot-clr: #BBC0FF;
-    --play: hsl(195, 74%, 62%);
+    --primary-clr: var(--blue-dark);
+    --dot-clr: var(--blue-extradark);
+    --play: var(--blue-extradark);
     width: 160px;
     height: 140px;
     border-radius: 10px;
@@ -50,7 +50,7 @@
     transition: 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    background: hsl(195, 74%, 62%);
+    background: var(--dot-clr);
    }
    
    .card-header {

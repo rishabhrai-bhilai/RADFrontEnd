@@ -16,6 +16,7 @@ import {
   HttpPost,
 } from "../../constants";
 import { useNavigate } from "react-router-dom";
+import NotificationsBox from "../../components/ui/NotificationsBox";
 
 function PatientDashboard() {
   const [patient, setPatient] = useState(() => {
@@ -26,6 +27,10 @@ function PatientDashboard() {
 
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const [notification,setNotification] = useState(true);
+  const[notifaicationIcon ,setNotificationIcon] = useState("bx bx-bell");
+
+  const [notify,setNotify] = useState(false);
 
   const { data, token, setIsUserLoggedIn, setRoleId } = useUserIdContext();
   useEffect(() => {
@@ -53,16 +58,34 @@ function PatientDashboard() {
     navigate("/patientdashboard");
   };
 
+  const showNotificationBar = () => {
+    if(notification) {
+      setNotify(true);
+      setNotificationIcon("bx bx-bell bx-tada");
+    }
+
+    const timeout = setTimeout(() => {
+      // Do something after the delay
+      setNotify(false);
+    }, 3000);
+
+  };
+
   return (
     <>
       <Navbar
         options={[
           { name: "Dashoboard", icon: "bx bxs-dashboard" },
           { name: "Reports", icon: "bx-chart" },
+          { name: "Notification", icon: notifaicationIcon },
         ]}
-        functions={[navigateToDashboard, navigateToReports]}
+        functions={[navigateToDashboard, navigateToReports,showNotificationBar]}
+
       ></Navbar>
+
+      {notify && <NotificationsBox></NotificationsBox>}
       <section className="home">
+
         <div className="parent-container">
           <div className="all-items">
             <div className="static-dashboard-heading | text-blue-extradark">
