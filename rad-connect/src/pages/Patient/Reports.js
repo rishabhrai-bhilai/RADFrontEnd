@@ -10,7 +10,7 @@ import ButtonComponent from "../../components/ui/ButtonComponent";
 import Modal from "../../components/ui/Modal";
 import ReportComponent from "../../components/ui/ReportComponent";
 
-function Reports() {
+function Reports({handleRepId}) {
   return (
     <>
     <Navbar></Navbar>
@@ -26,7 +26,7 @@ function Reports() {
             {/* <div className="nav-2">Accesses</div>
             <div className="nav-3">History</div> */}
           </div>
-          <ReportComponent></ReportComponent>
+          <ReportComponent handleReportId={handleRepId}></ReportComponent>
         </div>
       </div>
     </section>
